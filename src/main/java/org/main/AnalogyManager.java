@@ -2,33 +2,41 @@ package org.main;
 
 import org.main.Interfaces.Predicate;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class AnalogyManager {
 
-    // given
-    public Predicate ConvertToOOP(String analogy){
+    public static Predicate ConvertToOOP(String analogy){
         char[] chars  = analogy.toCharArray();
-        ArrayList<String> words = new ArrayList<>();
-        Predicate head = null,curr = null,next = null;
-        for (char aChar : chars) {
-            if (aChar == '(') {
+        String[] words = analogy.replace(")","").split("\\(");
+        String[] currWords;
+        Predicate head ,curr , next ;
+        int count = 1;
+
+        head = new Clause();
+        curr = head;
+        currWords = words[count].split(" ");
+        head.setName(findName(currWords));
+        head.setSubject(currWords[currWords.length-1]);
+        head.increaseEmbedded();
+        count++;
+
+        for (int i = 1; i < chars.length; i++) {
+            if (chars[i] == '(') {
+                currWords = words[count].split(" ");
                 next = new Clause();
-                if(curr != null) {
-                    curr.setName(getName(words));
-                    if (words.size() > 1) {
-                        curr.setSubject(words.getLast());
-                    }
-                    words.clear();
-                    curr.setEmbedded(next);
+                next.setName(findName(currWords));
+                if(currWords.length > 1) {
+                    next.setSubject(currWords[currWords.length - 1]);
                 }
+                curr.setEmbedded(next);
                 curr = next;
-                if (head == null) {
-                    head = curr;
-                }
                 head.increaseEmbedded();
+                count++;
             }
         }
+
         return head;
     }
 
@@ -51,14 +59,16 @@ public class AnalogyManager {
         return output.toString();
     }
 
-    private String getName(ArrayList<String> words){
-        if(words.size() == 1){
-            return words.getFirst();
+    private static String findName(String[] str){
+        if(str.length ==  1){
+            return str[0];
         }
-        String str = "";
-        for (int i = 0; i < words.size() - 1; i++) {
-           str = str.concat(words.get(i));
+        String str2 = "";
+        for (int i = 0; i < str.length - 1; i++) {
+            str2 = str2.concat(" ");
+           str2 = str2.concat(str[i]);
         }
-        return str;
+        return str2;
     }
+
 }

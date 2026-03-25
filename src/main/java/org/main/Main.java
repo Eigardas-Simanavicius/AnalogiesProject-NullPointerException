@@ -13,6 +13,12 @@ public class Main {
         c2.setEmbedded(c3);
         c3.setEmbedded(c4);
 
-        System.out.println(AnalogyManager.ConvertToString(c1));
+        // System.out.println(AnalogyManager.ConvertToString(c1));
+
+        String input = "(work in scientist (some lab (that (conduct experiment))))";
+        Clause c5 = (Clause) AnalogyManager.ConvertToOOP(input);
+        System.out.println(c5.getName() + " which has " + c5.getSubject() + " and  " +c5.getEmbedded().getName());
+        System.out.println(AnalogyManager.ConvertToString(c5));
+
     }
 }
