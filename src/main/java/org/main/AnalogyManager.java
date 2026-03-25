@@ -80,7 +80,7 @@ public class AnalogyManager {
         int subject = 0;
         do{
             flatAbstractString.append("(");
-            flatAbstractString.append(currentPredicate.getName());
+            flatAbstractString.append(currentPredicate.getName().trim());
 
             if(currentPredicate.getSubject() != null && !currentPredicate.getSubject().isBlank()){
                 flatAbstractString.append(" ");
