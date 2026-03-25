@@ -14,5 +14,6 @@ public class Main {
         c3.setEmbedded(c4);
 
         System.out.println(AnalogyManager.ConvertToString(c1));
+        System.out.println(AnalogyManager.convertToFlatAbstractString(c1));
     }
 }

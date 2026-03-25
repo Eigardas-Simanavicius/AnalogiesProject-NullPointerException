@@ -61,4 +61,38 @@ public class AnalogyManager {
         }
         return str;
     }
+
+    public static String convertToFlatAbstractString(Predicate predicate){
+        StringBuilder flatAbstractString = new StringBuilder();
+        Predicate currentPredicate = predicate;
+
+        if (predicate == null) return "";
+
+        int depth = 0;
+        int subject = 0;
+        do{
+            flatAbstractString.append("(");
+            flatAbstractString.append(currentPredicate.getName());
+
+            if(currentPredicate.getSubject() != null && !currentPredicate.getSubject().isBlank()){
+                flatAbstractString.append(" ");
+                flatAbstractString.append(subject++);
+            }
+
+            currentPredicate = currentPredicate.getEmbedded();
+
+            if(currentPredicate != null){
+                flatAbstractString.append(" ");
+            }
+
+            depth += 1;
+
+        }while(currentPredicate != null);
+
+        for(int i = 0; i < depth; i++) {
+            flatAbstractString.append(")");
+        }
+
+        return flatAbstractString.toString();
+    }
 }
