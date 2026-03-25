@@ -3,15 +3,16 @@ package org.main;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
+    public static void main(String[] args) {
+        Clause c1 = new Clause("serve", "priest");
+        Clause c2 = new Clause("some", "congregation");
+        Clause c3 = new Clause();
+        c3.setName("that");
+        Clause c4 = new Clause("perform", "worship");
+        c1.setEmbedded(c2);
+        c2.setEmbedded(c3);
+        c3.setEmbedded(c4);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
-        }
+        System.out.println(AnalogyManager.ConvertToString(c1));
     }
 }

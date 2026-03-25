@@ -13,7 +13,7 @@ public class AnalogyManager {
         Predicate head = null,curr = null,next = null;
         for (char aChar : chars) {
             if (aChar == '(') {
-                next = new Predicate();
+                next = new Clause();
                 if(curr != null) {
                     curr.setName(getName(words));
                     if (words.size() > 1) {
@@ -30,6 +30,25 @@ public class AnalogyManager {
             }
         }
         return head;
+    }
+
+    public static String ConvertToString(Predicate predicate){
+        StringBuilder output = new StringBuilder();
+        Predicate current = predicate;
+        int counter = 0;
+        while(current != null){
+            output.append("(").append(current.getName());
+            if(current.getSubject() != null){
+                output.append(" ").append(current.getSubject());
+            }
+            counter++;
+            current = current.getEmbedded();
+        }
+        for(int i = 0; i < counter; i++){
+            output.append(")");
+        }
+
+        return output.toString();
     }
 
     private String getName(ArrayList<String> words){
