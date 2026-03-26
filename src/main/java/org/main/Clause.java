@@ -47,7 +47,7 @@ public class Clause implements Predicate {
     // both of these cant exist, I dont want to touch the second one rn since it breaks your funcs
     // -Eigardas
 
-    public int getPredicatesEmbedded2(){
+    public int getPredicatesCount(){
         return predicatesEmbedded;
     }
 
@@ -83,7 +83,7 @@ public class Clause implements Predicate {
         if(predicatesEmbedded > 0){
             return predicatesEmbedded;
         }else{
-           return head.getPredicatesEmbedded2();
+           return head.getPredicatesCount();
         }
     }
 
