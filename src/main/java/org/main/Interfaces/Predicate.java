@@ -12,5 +12,10 @@ public interface Predicate {
     public String getName();
     public void increaseEmbedded();
     public int getPredicatesEmbedded();
+    public int getPredicatesEmbedded2();
+    public Predicate get(int i );
+    public int length();
+    public Predicate getHead();
+    public void setHead(Predicate head);
 }
 

@@ -10,12 +10,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(Parameterized.class)
-public class convertToFlatAbstractStringTest {
+public class convertToOOPTest {
 
-    @Parameter(0)
+    @Parameterized.Parameter(0)
     public String input;
 
-    @Parameter(1)
+    @Parameterized.Parameter(1)
     public String output;
 
     @Parameterized.Parameters

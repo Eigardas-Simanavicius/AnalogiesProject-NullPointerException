@@ -21,6 +21,7 @@ public class AnalogyManager {
         head.setSubject(currWords[currWords.length-1]);
         head.increaseEmbedded();
         count++;
+        curr.setHead(head);
 
         for (int i = 1; i < chars.length; i++) {
             if (chars[i] == '(') {
@@ -33,6 +34,7 @@ public class AnalogyManager {
                 curr.setEmbedded(next);
                 curr = next;
                 head.increaseEmbedded();
+                curr.setHead(head);
                 count++;
             }
         }

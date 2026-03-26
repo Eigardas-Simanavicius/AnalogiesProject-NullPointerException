@@ -16,13 +16,6 @@
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-<<<<<<< HEAD
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>6.0.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-=======
             <artifactId>junit-jupiter</artifactId>
             <version>RELEASE</version>
             <scope>test</scope>
@@ -35,5 +28,4 @@
         </dependency>
     </dependencies>
 
->>>>>>> refs/remotes/origin/master
 </project>

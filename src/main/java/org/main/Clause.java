@@ -4,11 +4,12 @@ import org.main.Interfaces.Predicate;
 
 public class Clause implements Predicate {
     Predicate embedded = null;
+    Predicate head = null;
     int predicatesEmbedded = 0;
     String subject;
     String name;
 
-    public Clause(){};
+    public Clause(){}
 
     public Clause(String name, String subject){
         this.name = name;
@@ -42,6 +43,13 @@ public class Clause implements Predicate {
     public void increaseEmbedded(){
         predicatesEmbedded++;
     }
+    // TODO
+    // both of these cant exist, I dont want to touch the second one rn since it breaks your funcs
+    // -Eigardas
+
+    public int getPredicatesEmbedded2(){
+        return predicatesEmbedded;
+    }
 
     public int getPredicatesEmbedded(){
         if( embedded == null){
@@ -49,5 +57,40 @@ public class Clause implements Predicate {
         }else{
             return embedded.getPredicatesEmbedded() + 1;
         }
+    }
+
+    public Predicate get(int i) {
+        try {
+            if(i > predicatesEmbedded){
+                throw new IndexOutOfBoundsException("Failed To get");
+            }else {
+                Clause curr = this;
+                for (int j = 0; j < i; j++) {
+                    if (curr.getEmbedded() != null) {
+                        curr = (Clause) curr.getEmbedded();
+                    }
+                }
+
+                return curr;
+            }
+        } catch (Exception e) {
+            System.out.println("Clause get failed");
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int length() {
+        if(predicatesEmbedded > 0){
+            return predicatesEmbedded;
+        }else{
+           return head.getPredicatesEmbedded2();
+        }
+    }
+
+    public Predicate getHead(){
+        return head;
+    }
+    public void setHead(Predicate head){
+        this.head = head;
     }
 }

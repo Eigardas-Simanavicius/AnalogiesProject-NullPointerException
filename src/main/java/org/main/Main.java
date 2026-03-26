@@ -20,7 +20,8 @@ public class Main {
         String input = "(work in scientist (some lab (that (conduct experiment))))";
         Clause c5 = (Clause) AnalogyManager.ConvertToOOP(input);
         System.out.println(c5.getName() + " which has " + c5.getSubject() + " and  " +c5.getEmbedded().getName());
-        System.out.println(AnalogyManager.ConvertToString(c5));
+        //System.out.println(AnalogyManager.ConvertToString(c5));
+        System.out.println(c5.get(2).length() + " and " + c5.length());
 
 
 
