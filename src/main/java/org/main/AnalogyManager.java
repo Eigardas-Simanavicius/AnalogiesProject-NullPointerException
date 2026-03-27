@@ -18,7 +18,7 @@ public class AnalogyManager {
                 next = new Clause();
                 if(curr != null){
                     next.setParent(curr);
-                    curr.addChild(next);
+                    curr.addEmbedded(next);
                 }
                 curr = next;
 

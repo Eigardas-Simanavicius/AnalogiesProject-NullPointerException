@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Clause implements Predicate {
     ArrayList<Predicate> children = new ArrayList<Predicate>();
     Predicate parent = null;
-    int predicatesEmbedded = 0;
     String subject;
     String name;
 
@@ -50,13 +49,6 @@ public class Clause implements Predicate {
         return name;
     }
 
-    public void increaseEmbedded(){
-        predicatesEmbedded++;
-    }
-
-    public int getPredicatesCount(){
-        return predicatesEmbedded;
-    }
 
     public int getPredicatesEmbedded(){
         if( embedded == null){
@@ -66,9 +58,6 @@ public class Clause implements Predicate {
         }
     }
 
-    public void addChild(Predicate child){
-        children.add(child);
-    }
     public ArrayList<Predicate> getChildren(){return children;}
     public Predicate getParent(){
         return parent;
