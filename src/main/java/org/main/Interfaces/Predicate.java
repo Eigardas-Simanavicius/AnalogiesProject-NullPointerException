@@ -1,11 +1,14 @@
 package org.main.Interfaces;
 
+import java.util.ArrayList;
+
 public interface Predicate {
-    Predicate embedded = null;
+    ArrayList<Predicate> embedded = null;
     // Probably useful in the future
     int predicatesEmbedded = 0;
-    public void setEmbedded(Predicate predicate);
-    public Predicate getEmbedded();
+    public void addEmbedded(Predicate predicate);
+    public ArrayList<Predicate> getChildren();
+    public ArrayList<Predicate> getAllChildren();
     public void setSubject(String subject);
     public String getSubject();
     public void setName(String name);

@@ -41,21 +41,19 @@ public class AnalogyManager {
 
     public static String ConvertToString(Predicate predicate, Boolean prettify){
         StringBuilder output = new StringBuilder();
-        Predicate current = predicate;
-        int counter = 0;
-        while(current != null){
-            output.append("(").append(current.getName());
-            if(current.getSubject() != null){
-                output.append(" ").append(current.getSubject());
-                if(prettify && current.getEmbedded() != null) {
+        ArrayList<Predicate> clauseList = predicate.getAllChildren();
+        for(int i = 0; i < clauseList.size(); i++){
+            output.append("(").append(clauseList.get(i).getName());
+            if(clauseList.get(i).getSubject() != null){
+                output.append(" ").append(clauseList.get(i).getSubject());
+                if(prettify && i != clauseList.size() -1) {
                     output.append("\n");
-                    output.repeat("\t", counter+1);
+                    output.repeat("\t", i+1);
                 }
             }
-            counter++;
-            current = current.getEmbedded();
         }
-        output.repeat(")", counter);
+
+        output.repeat(")", clauseList.size());
 
         return output.toString();
     }
@@ -89,7 +87,7 @@ public class AnalogyManager {
                 flatAbstractString.append(subject++);
             }
 
-            currentPredicate = currentPredicate.getEmbedded();
+            currentPredicate = currentPredicate.getChildren().getFirst();
 
             if(currentPredicate != null){
                 flatAbstractString.append(" ");
@@ -120,11 +118,11 @@ public class AnalogyManager {
                 indentedAbstractString.append(subject++);
             }
 
-            currentPredicate = currentPredicate.getEmbedded();
+            currentPredicate = currentPredicate.getChildren().getFirst();
 
-            if(currentPredicate != null && currentPredicate.getEmbedded() != null){
+            if(currentPredicate != null && currentPredicate.getChildren() != null){
                 indentedAbstractString.append("\n");
-            }else if (currentPredicate != null && currentPredicate.getEmbedded() == null){
+            }else if (currentPredicate != null && currentPredicate.getChildren() == null){
                 greatestDepth = 0;
                 indentedAbstractString.append(" ");
             }

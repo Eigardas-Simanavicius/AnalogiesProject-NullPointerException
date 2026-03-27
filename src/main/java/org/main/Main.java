@@ -8,19 +8,31 @@ public class Main {
         Clause c2 = new Clause("some", "congregation");
         Clause c3 = new Clause();
         c3.setName("that");
-        Clause c4 = new Clause("perform", "worship");
-        c1.setEmbedded(c2);
-        c2.setEmbedded(c3);
-        c3.setEmbedded(c4);
+        Clause c4 = new Clause();
+        c4.setName("perform");
+        Clause c5 = new Clause();
+        c5.setName("for");
+        Clause c6 = new Clause("some", "god");
+        Clause c7 = new Clause("some", "worship");
+        c1.addEmbedded(c2);
+        c2.addEmbedded(c3);
+        c3.addEmbedded(c4);
+        c4.addEmbedded(c5);
+        c4.addEmbedded(c7);
+        c5.addEmbedded(c6);
 
-        //System.out.println(AnalogyManager.ConvertToString(c1, true));
-        //System.out.println(AnalogyManager.convertToIndentedAbstractString(c1));
+        System.out.println(AnalogyManager.ConvertToString(c1, true));
+
+        /*
+        System.out.println(AnalogyManager.convertToIndentedAbstractString(c1));
         // System.out.println(AnalogyManager.ConvertToString(c1));
 
-        String input = "(serve priest (some congregation (that (perform (for (some god)) (some worship))))";
+        String input = "(work in scientist (some lab (that (conduct experiment))))";
         Clause c5 = (Clause) AnalogyManager.ConvertToOOP(input);
-        System.out.println(c5.getName() + " and " + c5.getSubject());
-
+        //System.out.println(c5.getName() + " which has " + c5.getSubject() + " and  " +c5.getEmbedded().getName());
+        //System.out.println(AnalogyManager.ConvertToString(c5));
+        System.out.println(c5.get(2).length() + " and " + c5.length());
+        */
 
 
     }

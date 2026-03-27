@@ -18,12 +18,20 @@ public class Clause implements Predicate {
         this.subject = subject;
     }
 
-    public void setEmbedded(Predicate predicate){
-        //this.embedded = predicate;
+    public void addEmbedded(Predicate predicate){
+        this.children.add(predicate) ;
     }
 
-    public Predicate getEmbedded(){
-        return this.embedded;
+    public ArrayList<Predicate> getAllChildren(){
+        ArrayList<Predicate> output = new ArrayList<>();
+        for(Predicate child : children){
+            output.add(child);
+            if(!child.getChildren().isEmpty()){
+                ArrayList<Predicate> temp = child.getAllChildren();
+                output.addAll(temp);
+            }
+        }
+        return output;
     }
 
     public void setSubject(String subject) {
@@ -57,7 +65,7 @@ public class Clause implements Predicate {
         if( embedded == null){
             return 0;
         }else{
-            return embedded.getPredicatesEmbedded() + 1;
+            return embedded.getFirst().getPredicatesEmbedded() + 1;
         }
     }
 
@@ -68,8 +76,8 @@ public class Clause implements Predicate {
             }else {
                 Clause curr = this;
                 for (int j = 0; j < i; j++) {
-                    if (curr.getEmbedded() != null) {
-                        curr = (Clause) curr.getEmbedded();
+                    if (curr.getChildren() != null) {
+                        curr = (Clause) curr.getChildren().getFirst();
                     }
                 }
 
