@@ -107,11 +107,15 @@ public class AnalogyManager {
 
         stringBuilder.append("(");
 
-        stringBuilder.append(predicate.getName());
+        stringBuilder.append(predicate.getName().trim());
 
         if(predicate.getSubject() != null){
             stringBuilder.append(" ");
-            stringBuilder.append(abstractionMapping.get(predicate.getSubject()));
+            if(predicate.getSubject().contains("*")){
+                stringBuilder.append("*");
+            }else{
+                stringBuilder.append(abstractionMapping.get(predicate.getSubject().trim()));
+            }
         }
 
         for(Predicate child : predicate.getChildren()){
@@ -137,11 +141,16 @@ public class AnalogyManager {
 
         stringBuilder.append("(");
 
-        stringBuilder.append(predicate.getName());
+        stringBuilder.append(predicate.getName().trim());
 
         if(predicate.getSubject() != null){
             stringBuilder.append(" ");
-            stringBuilder.append(abstractionMapping.get(predicate.getSubject()));
+            if(predicate.getSubject().contains("*")){
+                stringBuilder.append("*");
+            }else{
+                stringBuilder.append(abstractionMapping.get(predicate.getSubject().trim()));
+            }
+
         }
 
         for(Predicate child : predicate.getChildren()){
@@ -158,13 +167,13 @@ public class AnalogyManager {
         HashMap<String,Integer> abstractionMapping = new HashMap<>();
         int currentMapping = 0;
 
-        if(predicate.getSubject() != null){
-            abstractionMapping.put(predicate.getSubject(),currentMapping++);
+        if(predicate.getSubject() != null && !predicate.getSubject().contains("*") ){
+            abstractionMapping.put(predicate.getSubject().trim(),currentMapping++);
         }
 
         for(Predicate child : predicate.getAllChildren()){
-            if(child.getSubject() != null && !abstractionMapping.containsKey(child.getSubject())){
-                abstractionMapping.put(child.getSubject(), currentMapping++);
+            if(child.getSubject() != null && !child.getSubject().contains("*")  && !abstractionMapping.containsKey(child.getSubject().trim())){
+                abstractionMapping.put(child.getSubject().trim(), currentMapping++);
             }
         }
 
