@@ -20,7 +20,8 @@ public class convertToFlatAbstractStringTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data(){
         Object[][] data = new Object[][]{
-                {"(work in scientist (some lab (that (conduct experiment))))","(work in 0 (some 1 (that (conduct 2))))"}
+                {"(work in scientist (some lab (that (conduct experiment))))","(work in 0 (some 1 (that (conduct 2))))"},
+                {"(if (can (cause.0 *AIDS (some death (when crushing (crush something))))) (can (succeed_at *AIDS (crush something))))","(if (can (cause.0 * (some 0 (when 1 (crush 2))))) (can (succeed_at * (crush 2))))"}
         };
         return Arrays.asList(data);
     }
