@@ -19,6 +19,7 @@ public class Clause implements Predicate {
     }
 
     public void addEmbedded(Predicate predicate){
+        predicate.setParent(this);
         this.children.add(predicate) ;
     }
 

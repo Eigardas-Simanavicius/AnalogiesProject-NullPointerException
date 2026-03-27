@@ -43,14 +43,29 @@ public class AnalogyManager {
         StringBuilder output = new StringBuilder();
         ArrayList<Predicate> clauseList = predicate.getAllChildren();
         for(int i = 0; i < clauseList.size(); i++){
-            output.append("(").append(clauseList.get(i).getName());
-            if(clauseList.get(i).getSubject() != null){
-                output.append(" ").append(clauseList.get(i).getSubject());
-                if(prettify && i != clauseList.size() -1) {
-                    output.append("\n");
-                    output.repeat("\t", i+1);
+            Predicate current = clauseList.get(i);
+            output.append("(").append(current.getName());
+            if(current.getSubject() != null){
+                output.append(" ").append(current.getSubject());
+                if(i != clauseList.size() -1){
+                    Predicate next = clauseList.get(i+1);
+                    if(next.getParent() != current){
+                        int counter = 1;
+                        Predicate possibleParent = current.getParent();
+                        while(next.getParent() != possibleParent){
+                            possibleParent = possibleParent.getParent();
+                            counter++;
+                        }
+                        output.repeat(")",counter);
+                    }
+                    if(prettify) {
+                        output.append("\n");
+                        output.repeat("\t", i+1);
+                    }
                 }
+
             }
+
         }
 
         output.repeat(")", clauseList.size());
