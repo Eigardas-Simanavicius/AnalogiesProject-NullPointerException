@@ -42,11 +42,14 @@ public class AnalogyManager {
     public static String ConvertToString(Predicate predicate, Boolean prettify){
         StringBuilder output = new StringBuilder();
         ArrayList<Predicate> clauseList = predicate.getAllChildren();
+        int endParenthesesCounter = 0;
         for(int i = 0; i < clauseList.size(); i++){
             Predicate current = clauseList.get(i);
             output.append("(").append(current.getName());
             if(current.getSubject() != null){
                 output.append(" ").append(current.getSubject());
+
+                //Assuming that parantheses only need to be closed if the predicate has a subject
                 if(i != clauseList.size() -1){
                     Predicate next = clauseList.get(i+1);
                     if(next.getParent() != current){
@@ -57,6 +60,7 @@ public class AnalogyManager {
                             counter++;
                         }
                         output.repeat(")",counter);
+                        endParenthesesCounter -= counter;
                     }
                     if(prettify) {
                         output.append("\n");
@@ -65,10 +69,10 @@ public class AnalogyManager {
                 }
 
             }
-
+            endParenthesesCounter++;
         }
 
-        output.repeat(")", clauseList.size());
+        output.repeat(")", endParenthesesCounter);
 
         return output.toString();
     }

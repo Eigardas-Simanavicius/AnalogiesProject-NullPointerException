@@ -25,11 +25,10 @@ public class Clause implements Predicate {
 
     public ArrayList<Predicate> getAllChildren(){
         ArrayList<Predicate> output = new ArrayList<>();
-        for(Predicate child : children){
-            output.add(child);
-            if(!child.getChildren().isEmpty()){
-                ArrayList<Predicate> temp = child.getAllChildren();
-                output.addAll(temp);
+        output.add(this);
+        if(!children.isEmpty()) {
+            for (Predicate child : children) {
+                output.addAll(child.getAllChildren());
             }
         }
         return output;
