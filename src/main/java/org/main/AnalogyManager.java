@@ -3,6 +3,7 @@ package org.main;
 import org.main.Interfaces.Predicate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class AnalogyManager {
@@ -96,65 +97,47 @@ public class AnalogyManager {
     }
 
     public static String convertToFlatAbstractString(Predicate predicate){
-        StringBuilder flatAbstractString = new StringBuilder();
-        Predicate currentPredicate = predicate;
+        HashMap<String,Integer> abstractionMapping = getAbstractionMappings(predicate);
 
-        if (predicate == null) return "";
-
-        int subject = 0;
-        do{
-            flatAbstractString.append("(");
-            flatAbstractString.append(currentPredicate.getName().trim());
-
-            if(currentPredicate.getSubject() != null && !currentPredicate.getSubject().isBlank()){
-                flatAbstractString.append(" ");
-                flatAbstractString.append(subject++);
-            }
-
-            currentPredicate = currentPredicate.getChildren().getFirst();
-
-            if(currentPredicate != null){
-                flatAbstractString.append(" ");
-            }
-
-        }while(currentPredicate != null);
-
-        flatAbstractString.append(")".repeat(predicate.getPredicatesEmbedded() + 1));
-
-        return flatAbstractString.toString();
+        return convertToFlatAbstractStringHelper(predicate,abstractionMapping);
     }
 
-    public static String convertToIndentedAbstractString(Predicate predicate){
-        StringBuilder indentedAbstractString = new StringBuilder();
-        Predicate currentPredicate = predicate;
+    private static String convertToFlatAbstractStringHelper(Predicate predicate, HashMap<String, Integer> abstractionMapping){
+        StringBuilder stringBuilder = new StringBuilder();
 
-        if (predicate == null) return "";
+        stringBuilder.append("(");
 
-        int subject = 0;
-        int greatestDepth = currentPredicate.getPredicatesEmbedded();
-        do{
-            indentedAbstractString.append("\t".repeat(greatestDepth - currentPredicate.getPredicatesEmbedded()));
-            indentedAbstractString.append("(");
-            indentedAbstractString.append(currentPredicate.getName());
+        stringBuilder.append(predicate.getName());
 
-            if(currentPredicate.getSubject() != null && !currentPredicate.getSubject().isBlank()){
-                indentedAbstractString.append(" ");
-                indentedAbstractString.append(subject++);
+        if(predicate.getSubject() != null){
+            stringBuilder.append(" ");
+            stringBuilder.append(abstractionMapping.get(predicate.getSubject()));
+        }
+
+        for(Predicate child : predicate.getChildren()){
+            stringBuilder.append(" ");
+            stringBuilder.append(convertToFlatAbstractStringHelper(child,abstractionMapping));
+        }
+
+        stringBuilder.append(")");
+
+        return stringBuilder.toString();
+    }
+
+    private static HashMap<String,Integer> getAbstractionMappings(Predicate predicate){
+        HashMap<String,Integer> abstractionMapping = new HashMap<>();
+        int currentMapping = 0;
+
+        if(predicate.getSubject() != null){
+            abstractionMapping.put(predicate.getSubject(),currentMapping++);
+        }
+
+        for(Predicate child : predicate.getAllChildren()){
+            if(child.getSubject() != null && !abstractionMapping.containsKey(child.getSubject())){
+                abstractionMapping.put(child.getSubject(), currentMapping++);
             }
+        }
 
-            currentPredicate = currentPredicate.getChildren().getFirst();
-
-            if(currentPredicate != null && currentPredicate.getChildren() != null){
-                indentedAbstractString.append("\n");
-            }else if (currentPredicate != null && currentPredicate.getChildren() == null){
-                greatestDepth = 0;
-                indentedAbstractString.append(" ");
-            }
-
-        }while(currentPredicate != null);
-
-        indentedAbstractString.append(")".repeat(predicate.getPredicatesEmbedded() + 1));
-
-        return indentedAbstractString.toString();
+        return abstractionMapping;
     }
 }

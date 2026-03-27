@@ -11,9 +11,9 @@ public interface Predicate {
     public String getSubject();
     public void setName(String name);
     public String getName();
-    public int getPredicatesEmbedded();
     public Predicate getParent();
     public void setParent(Predicate head);
+    int depth();
 
 }
 
