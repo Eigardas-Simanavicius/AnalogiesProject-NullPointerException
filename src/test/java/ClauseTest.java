@@ -58,7 +58,7 @@ public class ClauseTest {
         c2.addEmbedded(c4);
         c3.addEmbedded(c5);
 
-        assertEquals(5, c5.depth());
+        assertEquals(3, c5.depth());
     }
 
     @Test

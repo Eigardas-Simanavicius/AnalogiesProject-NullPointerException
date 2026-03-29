@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class convertToOOPTest {
 
@@ -41,5 +42,11 @@ public class convertToOOPTest {
     @Test
     public void ParentTest() {
         assertEquals(Head, Head.getChildren().getFirst().getParent());
+    }
+
+    @Test
+    public void nullSubjectTest(){
+        Head = (Clause) AnalogyManager.ConvertToOOP("(One (Two 2)" );
+        assertNull(Head.getSubject());
     }
 }

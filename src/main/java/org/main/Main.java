@@ -25,24 +25,17 @@ public class Main {
         c4.addEmbedded(c7);
         c5.addEmbedded(c6);
 
-        String input = "(serve and priest (some congregation (that (perform (for (some god)) (some worship)))))";
+        String input = "(One (two )";
         ArrayList<Predicate> children =  AnalogyManager.ConvertToOOP(input).getAllChildren();
         for(Predicate pred:children){
             System.out.println(pred.getName() + ":" + pred.getSubject());
         }
 
-        System.out.println(AnalogyManager.ConvertToString(c1, true));
+        //System.out.println(AnalogyManager.ConvertToString(c1, true));
         // System.out.println(AnalogyManager.ConvertToString(c1));
 
-        System.out.println(AnalogyManager.convertToPrettifiedAbstractString(AnalogyManager.ConvertToOOP("(if (can (cause.0 *AIDS (some death (when crushing (crush something))))) (can (succeed_at *AIDS (crush something))))")));
+        //System.out.println(AnalogyManager.convertToPrettifiedAbstractString(AnalogyManager.ConvertToOOP("(if (can (cause.0 *AIDS (some death (when crushing (crush something))))) (can (succeed_at *AIDS (crush something))))")));
 
-/*
-        String input = "(work in scientist (some lab (that (conduct experiment))))";
-        Clause c5 = (Clause) AnalogyManager.ConvertToOOP(input);
-        //System.out.println(c5.getName() + " which has " + c5.getSubject() + " and  " +c5.getEmbedded().getName());
-        //System.out.println(AnalogyManager.ConvertToString(c5));
-        System.out.println(c5.get(2).length() + " and " + c5.length());
-        */
 
 
     }

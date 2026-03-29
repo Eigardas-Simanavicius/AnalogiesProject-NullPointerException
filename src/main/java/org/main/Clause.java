@@ -8,7 +8,7 @@ import java.util.Iterator;
 public class Clause implements Predicate{
     ArrayList<Predicate> children = new ArrayList<Predicate>();
     Predicate parent = null;
-    String subject;
+    String subject = null;
     String name;
 
     public Clause(){}

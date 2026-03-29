@@ -29,6 +29,8 @@ public class AnalogyManager {
                 count++;
                 if(currWords.length > 1){
                     curr.setSubject(currWords[currWords.length-1].replace(")",""));
+                }else {
+                    curr.setSubject(null);
                 }
 
 
