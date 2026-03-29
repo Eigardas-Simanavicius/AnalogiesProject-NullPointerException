@@ -23,10 +23,14 @@ public class Main {
         c4.addEmbedded(c7);
         c5.addEmbedded(c6);
 
+        System.out.println("Flat Abstract String");
+        System.out.println(AnalogyManager.convertToFlatAbstractString(AnalogyManager.ConvertToOOP("(if (can (cause.0 *AIDS (some death (when crushing (crush something))))) (can (succeed_at *AIDS (crush something))))")));
+
+        System.out.println("\nPrettified Abstract String");
+        System.out.println(AnalogyManager.convertToPrettifiedAbstractString(AnalogyManager.ConvertToOOP("(if (can (cause.0 *AIDS (some death (when crushing (crush something))))) (can (succeed_at *AIDS (crush something))))")));
 
 
-
-        String input = ")(()()())())()))))())";
-        System.out.println(AnalogyManager.ConvertToOOP(input));
+        System.out.println("Converting to OOP and then back to String");
+        System.out.println(AnalogyManager.ConvertToString(AnalogyManager.ConvertToOOP("(work in scientist (some lab (that (conduct experiment))))"),true));
     }
 }
