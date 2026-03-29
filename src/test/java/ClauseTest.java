@@ -76,4 +76,12 @@ public class ClauseTest {
 
         assertEquals(c3, c5.getParent());
     }
+
+    @Test
+    public void selfEmbeddingTest(){
+        Clause c1 = new Clause("c1", "c1");
+        c1.addEmbedded(c1);
+
+        assert(c1.getChildren().isEmpty());
+    }
 }

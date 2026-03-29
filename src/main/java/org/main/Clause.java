@@ -24,8 +24,13 @@ public class Clause implements Predicate{
 
     @Override
     public void addEmbedded(Predicate predicate){
-        predicate.setParent(this);
-        this.children.add(predicate) ;
+        if(!predicate.equals(this)) {
+            predicate.setParent(this);
+            this.children.add(predicate);
+        }
+        else{
+            System.out.println("You cannot embed a predicate in itself.");
+        }
     }
 
     @Override
