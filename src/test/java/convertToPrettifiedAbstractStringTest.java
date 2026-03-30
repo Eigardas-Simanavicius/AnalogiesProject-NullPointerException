@@ -20,7 +20,7 @@ public class convertToPrettifiedAbstractStringTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data(){
         Object[][] data = new Object[][]{
-                {"(work in scientist (some lab (that (conduct experiment))))","(work in 0\n\t(some 1\n\t\t(that\n\t\t\t(conduct 2))))"},
+                {"(work_in scientist (some lab (that (conduct experiment))))","(work_in 0\n\t(some 1\n\t\t(that\n\t\t\t(conduct 2))))"},
                 {"(if (can (cause.0 *AIDS (some death (when crushing (crush something))))) (can (succeed_at *AIDS (crush something))))","(if\n\t(can\n\t\t(cause.0 *\n\t\t\t(some 0\n\t\t\t\t(when 1\n\t\t\t\t\t(crush 2)))))\n\t(can\n\t\t(succeed_at *\n\t\t\t(crush 2))))"}
         };
         return Arrays.asList(data);

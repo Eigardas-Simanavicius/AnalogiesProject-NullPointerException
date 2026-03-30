@@ -128,33 +128,45 @@ public class AnalogyManager {
 
     public static String convertToAbstractString(Predicate analogicalObject, Boolean prettified){
         HashMap<String,Integer> abstractionMapping = new HashMap<>();
+        Stack<AnalogicalObject> stack = new Stack<>();
+
+        stack.add(analogicalObject);
 
         StringBuilder stringBuilder = new StringBuilder();
 
         int mappingsCount = 0;
+        AnalogicalObject next;
+        while(!stack.empty()){
+            next = stack.pop();
 
-        for(AnalogicalObject child : analogicalObject.getAllChildrenPostOrder()){
-            if(child instanceof Predicate){
-                stringBuilder.insert(0," ");
-                stringBuilder.insert(0, ((Predicate)child).getName());
-                stringBuilder.insert(0,"(");
+            if(next instanceof Predicate){
+                stringBuilder.append(" (");
+                stringBuilder.append(next.getName());
+
+                stack.add(null);
+                stack.addAll(((Predicate) next).getChildren().reversed());
+
+            }else if(next == null){
                 stringBuilder.append(")");
             }else{
-                if(child.getName().contains("*")){
+                if(next.getName().contains("*")){
                     stringBuilder.append(" *");
-                }else if(!abstractionMapping.containsKey(child.getName())){
-                    abstractionMapping.put(child.getName(),mappingsCount++);
+                }else if(abstractionMapping.containsKey(next.getName())){
+                    stringBuilder.append(" ");
+                    stringBuilder.append(abstractionMapping.get(next.getName()));
+                }else{
+                    abstractionMapping.put(next.getName(),mappingsCount++);
+                    stringBuilder.append(" ");
+                    stringBuilder.append(mappingsCount - 1);
                 }
-
-                stringBuilder.append(" ");
-                stringBuilder.append(abstractionMapping.get(child.getName()));
             }
+
         }
 
         if(prettified){
-            return prettify(stringBuilder.toString());
+            return prettify(stringBuilder.toString().trim());
         }else{
-            return stringBuilder.toString();
+            return stringBuilder.toString().trim();
         }
 
 
@@ -168,12 +180,13 @@ public class AnalogyManager {
         for(int curr = 1; curr < prettifiedStringBuilder.length(); curr++){
             if(prettifiedStringBuilder.charAt(curr) == '('){
 
+                while(prettifiedStringBuilder.charAt(curr-1) == ' '){prettifiedStringBuilder.deleteCharAt(--curr);}
+
                 prettifiedStringBuilder.insert(curr++,"\n");
                 prettifiedStringBuilder.insert(curr,"\t".repeat(++depth));
 
                 curr += depth;
             }else if(prettifiedStringBuilder.charAt(curr) == ')'){
-                prettifiedStringBuilder.insert(++curr,"\n");
                 depth--;
             }
         }

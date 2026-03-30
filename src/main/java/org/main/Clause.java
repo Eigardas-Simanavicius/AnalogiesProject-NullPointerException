@@ -57,17 +57,6 @@ public class Clause implements Predicate{
     @Override
     public ArrayList<AnalogicalObject> getChildren(){return children;}
 
-    public ArrayList<AnalogicalObject> getAllChildrenPostOrder(){
-        ArrayList<AnalogicalObject> output = new ArrayList<>();
-        for(AnalogicalObject child : children){
-            if(child instanceof Predicate){
-                output.addAll(((Predicate)child).getAllChildrenPostOrder());
-            }
-        }
-        output.add(this);
-        return output;
-    }
-
     @Override
     public AnalogicalObject fromString(String stringRepresentation) {
         return null;
