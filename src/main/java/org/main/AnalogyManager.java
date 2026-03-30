@@ -1,5 +1,6 @@
 package org.main;
 
+import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 
 import java.util.*;
@@ -16,36 +17,19 @@ public class AnalogyManager {
                 throw new IllegalArgumentException("Brackets Dont match");
             }
             String[] currWords;
-            Predicate curr = null, next;
+            Predicate curr = null;
             int count = 1;
 
-            for (int i = 0; i < brackets.length; i++) {
-                if (brackets[i] == '(') {
-                    next = new Clause("test");
-                    Subject test = new Subject("test");
-                    if (curr != null) {
-                        next.setParent(curr);
-                        curr.addEmbedded(next);
-                    }
-                    curr = next;
+            for (char bracket : brackets) {
+                if (bracket == '(') {
                     currWords = words[count].split(" ");
-
                     if (Objects.equals(currWords[0], ")")) {
                         throw new InputMismatchException("Null input");
                     }
-
-                    curr.setName(findName(currWords));
+                   curr = predicateBuilder(curr,currWords);
                     count++;
-                    if (currWords.length > 1) {
-                        curr.setSubject(currWords[currWords.length - 1].replace(")", ""));
-                    } else {
-                        curr.setSubject(null);
-                    }
-
-
                 } else {
-                    if (brackets[i] == ')') {
-                        assert curr != null;
+                    if (bracket == ')') {
                         if (curr.getParent() != null) {
                             curr = curr.getParent();
                         }
@@ -80,24 +64,26 @@ public class AnalogyManager {
         return stack.isEmpty();
     }
 
-    private static String findName(String[] str){
-
-        if(str.length ==  1){
-            return str[0];
+    private static Predicate predicateBuilder(Predicate parent,String[] currWords){
+        Predicate next = new Clause(currWords[0]);
+        AnalogicalObject subject;
+        for (int i = 1; i < currWords.length; i++) {
+            subject = new Subject(currWords[i]);
+            subject.setParent(next);
+            next.addEmbedded(subject);
         }
-        StringBuilder str2 = new StringBuilder("");
-        for (int i = 0; i < (str.length - 1); i++) {
-            str2.append(str[i]);
-            if(i != str.length-2){
-                str2.append(" ");
-            }
+        if (parent != null) {
+            next.setParent(parent);
+            parent.addEmbedded(next);
         }
-        return str2.toString();
+        return next;
     }
+
+
 
     public static String ConvertToString(Predicate predicate, Boolean prettify){
         StringBuilder output = new StringBuilder();
-        ArrayList<Predicate> clauseList = predicate.getAllChildren();
+        ArrayList<AnalogicalObject> clauseList = predicate.getAllChildren();
         int endParenthesesCounter = 0;
         int tabulationFixer = 0;
         for(int i = 0; i < clauseList.size(); i++){

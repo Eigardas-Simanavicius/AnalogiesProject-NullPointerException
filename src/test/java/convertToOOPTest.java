@@ -5,6 +5,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.main.AnalogyManager;
 import org.main.Clause;
+import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class convertToOOPTest {
         names.add("some");
         names.add("some");
 
-        ArrayList<Predicate> children = Head.getAllChildren();
+        ArrayList<AnalogicalObject> children = Head.getAllChildren();
         for (int i = 0; i < children.size(); i++) {
             assertEquals(children.get(i).getName(),names.get(i));
         }
@@ -57,7 +58,7 @@ public class convertToOOPTest {
         String input = "(serve priest (some congregation (that (perform (for (some god)) (some worship)))))";
         Clause Head = (Clause) AnalogyManager.ConvertToOOP(input);
         Head = (Clause) AnalogyManager.ConvertToOOP("(One (Two 2))" );
-        assertNull(Head.getSubject());
+        assertNull(Head.getChildren().get(0));
     }
     @Test
     public void unbalancedBrackets(){
