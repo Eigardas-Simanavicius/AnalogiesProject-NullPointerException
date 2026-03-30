@@ -6,6 +6,7 @@ import org.main.Interfaces.Predicate;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Stack;
 
 public class Clause implements Predicate{
     private ArrayList<AnalogicalObject> children = new ArrayList<AnalogicalObject>();
@@ -80,6 +81,10 @@ public class Clause implements Predicate{
         }
     }
 
+    public Iterator<AnalogicalObject> getPreOrderIterator(){
+        return new PreOrderAnalogicalObjectIterator(this);
+    }
+
     private class Subject implements AnalogicalObject{
         private Predicate parent;
         private String name;
@@ -129,6 +134,31 @@ public class Clause implements Predicate{
             }else{
                 return parent.getDepth() + 1;
             }
+        }
+    }
+
+    private class PreOrderAnalogicalObjectIterator implements Iterator<AnalogicalObject>{
+        Stack<AnalogicalObject>  stack;
+
+        public PreOrderAnalogicalObjectIterator(AnalogicalObject analogicalObject){
+            stack = new Stack<>();
+            stack.push(analogicalObject);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+
+        @Override
+        public AnalogicalObject next() {
+            AnalogicalObject next = stack.pop();
+
+            if(next instanceof Predicate){
+                stack.addAll(((Predicate) next).getChildren());
+            }
+
+            return next;
         }
     }
 }
