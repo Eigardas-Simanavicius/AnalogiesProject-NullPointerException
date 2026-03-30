@@ -80,5 +80,55 @@ public class Clause implements Predicate{
         }
     }
 
+    private class Subject implements AnalogicalObject{
+        private Predicate parent;
+        private String name;
 
+        private Subject(String name){
+            this.name = name;
+        }
+
+        @Override
+        public AnalogicalObject fromString(String subject){
+            if(subject.contains("(") || subject.contains(")")){
+                throw new InvalidParameterException("Subject value cannot contain formating characters such as ')' or '('.");
+            }else{
+                return new Subject(subject);
+            }
+        }
+
+        @Override
+        public String toString(){
+            return name;
+        }
+
+        @Override
+        public void setParent(Predicate parent) {
+            this.parent = parent;
+        }
+
+        @Override
+        public Predicate getParent() {
+            return parent;
+        }
+
+        @Override
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public int getDepth() {
+            if(parent == null){
+                return 0;
+            }else{
+                return parent.getDepth() + 1;
+            }
+        }
+    }
 }
