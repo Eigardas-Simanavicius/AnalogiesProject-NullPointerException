@@ -79,6 +79,49 @@ public class AnalogyManager {
         return next;
     }
 
+    public static String ConvertToString(Predicate predicate, Boolean prettify){
+        StringBuilder output = new StringBuilder();
+        ArrayList<AnalogicalObject> clauseList = predicate.getAllChildren();
+        int endParenthesesCounter = 0;
+        int tabulationFixer = 0;
+        for(int i = 0; i < clauseList.size(); i++){
+            Predicate current = clauseList.get(i);
+            output.append("(");
+            if(current.getName() != null){
+                output.append(current.getName());
+            }
+            if(current.getSubject() != null){
+                output.append(" ").append(current.getSubject());
+
+                //Assuming that parantheses only need to be closed if the predicate has a subject
+                if(i != clauseList.size() -1){
+                    Predicate next = clauseList.get(i+1);
+                    if(next.getParent() != current){
+                        int counter = 1;
+                        Predicate possibleParent = current.getParent();
+                        while(next.getParent() != possibleParent){
+                            possibleParent = possibleParent.getParent();
+                            counter++;
+                        }
+                        output.repeat(")",counter);
+                        endParenthesesCounter -= counter;
+                        tabulationFixer = counter-1;
+                    }
+                    if(prettify) {
+                        output.append("\n");
+                        output.repeat("\t", i+1-tabulationFixer);
+                        tabulationFixer = 0;
+                    }
+                }
+
+            }
+            endParenthesesCounter++;
+        }
+
+        output.repeat(")", endParenthesesCounter);
+
+        return output.toString();
+    }
 
 
 
