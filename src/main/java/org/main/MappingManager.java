@@ -9,31 +9,34 @@ public class MappingManager {
     public static Boolean canMap(Predicate head1, Predicate head2){
         Iterator<AnalogicalObject> struct1 = ((Clause) head1).getPreOrderIterator();
         Iterator<AnalogicalObject> struct2 = ((Clause) head1).getPreOrderIterator();
+
         while (struct1.hasNext()){
+            AnalogicalObject curr1 = struct1.next();
+            AnalogicalObject curr2 = struct2.next();
+            System.out.println(curr1.getName() + " " + curr2.getName());
+            System.out.println(curr1.getClass() + " " + curr2.getClass());
             // this does not look create right now, will fix later
-            if(struct1 instanceof Clause){
-                System.out.println("here");
-                if(((Clause) struct1).getName().equals(((Clause) struct2).getName())){
-                    struct1.next();
-                    struct2.next();
+            if(isClause(curr1) && isClause(curr2)){
+                if(!(((Clause) curr1).getName().equals(((Clause) curr2).getName()))){
+                    return false;
                 }
-            }else if(struct1 instanceof Subject && struct2 instanceof Subject){
-                if(((Subject) struct1).isHasAsterisk() && ((Subject) struct2).isHasAsterisk()){
-                    struct1.next();
-                    struct2.next();
+            }else if(isSubject(curr1) && isSubject(curr2)){
+                if((((Subject) curr1).isHasAsterisk() && ((Subject) curr2).isHasAsterisk())){
+                  return false;
                 }
             }else{
-
-                System.out.println(struct1.next().getClass());
-                System.out.println(struct1.next() instanceof AnalogicalObject);
-                System.out.println(struct2.next().getClass());
-                return false;}
+                return false;
+            }
         }
         return true;
     }
 
-    public static void preOrderTraversalTogether(Predicate curr1, Predicate curr2){
+    private static boolean isClause(AnalogicalObject clause){
+        return  clause.getClass().getName().equals(Clause.class.getName());
+    }
 
+    private static boolean isSubject(AnalogicalObject subject){
+        return  subject.getClass().getName().equals(Subject.class.getName());
     }
 
 }
