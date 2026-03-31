@@ -3,7 +3,10 @@ package org.main;
 import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.TreeMap;
 
 public class MappingManager {
     public static Boolean canMap(Predicate head1, Predicate head2){
@@ -16,7 +19,7 @@ public class MappingManager {
         while (struct1.hasNext()){
             curr1 = struct1.next();
             curr2 = struct2.next();
-            
+
             if(isClause(curr1) && isClause(curr2)){
                 if(!(sameNames((Clause) curr1,(Clause) curr2))){
                     return false;
@@ -48,4 +51,23 @@ public class MappingManager {
         return (a).getName().equals((b).getName());
     }
 
+
+    public static HashMap<Subject,Subject> mapAnalogies(Predicate head1, Predicate head2){
+        if(canMap(head1,head2)){
+            Iterator<AnalogicalObject> struct1 = ((Clause) head1).getPreOrderIterator();
+            Iterator<AnalogicalObject> struct2 = ((Clause) head2).getPreOrderIterator();
+            HashMap<Subject,Subject> mapping = new HashMap<>();
+            while (struct1.hasNext()){
+                AnalogicalObject obj1 = struct1.next();
+                AnalogicalObject obj2 = struct2.next();
+                if(isSubject(obj1)) {
+                    mapping.put((Subject) obj1, (Subject) obj2);
+                }
+            }
+            return mapping;
+        }
+        else{
+            return null;
+        }
+    }
 }
