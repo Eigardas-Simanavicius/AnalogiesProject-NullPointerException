@@ -1,12 +1,8 @@
-import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
 import org.main.AnalogyManager;
 import org.main.Clause;
 import org.main.Interfaces.AnalogicalObject;
-import org.main.Interfaces.Predicate;
+import org.main.Subject;
 
 import java.util.*;
 
@@ -69,5 +65,25 @@ public class convertToOOPTest {
         assertNull(AnalogyManager.ConvertToOOP(input));
     }
 
+    @Test
+    public void hasAsteriskSimpleTest(){
+        Clause c1 = (Clause) AnalogyManager.ConvertToOOP("(c1 *s1)");
 
+        assertTrue(((Subject) c1.getChildren().getFirst()).isHasAsterisk());
+    }
+
+    @Test
+    public void hasAsteriskNestedTest1(){
+        Clause c1 = (Clause) AnalogyManager.ConvertToOOP("(c1 *s1(c2 s2))");
+
+        assertTrue(((Subject) c1.getChildren().getFirst()).isHasAsterisk());
+    }
+
+    @Test
+    public void hasAsteriskNestedTest2(){
+        Clause c1 = (Clause) AnalogyManager.ConvertToOOP("(c1 s1(c2 *s2))");
+
+        Clause c2 = (Clause)c1.getChildren().get(1);
+        assertTrue(((Subject) c2.getChildren().getFirst()).isHasAsterisk());
+    }
 }
