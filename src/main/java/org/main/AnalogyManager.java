@@ -3,6 +3,7 @@ package org.main;
 import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 
+import java.security.InvalidParameterException;
 import java.util.*;
 
 
@@ -82,11 +83,93 @@ public class AnalogyManager {
         return next;
     }
 
+    // Returns Null if source and target structures are different
+    public static HashMap<String,String> flatStringMapping(String source, String target){
+        HashMap<String,String> mapping = new HashMap<>();
 
+        AbstractMap.SimpleEntry<String,Integer> sourceStringPositionPair;
+        AbstractMap.SimpleEntry<String,Integer> targetStringPositionPair;
 
+        int sourceCursor = 0;
+        int targetCursor = 0;
 
+        //Setup which assumes that the string consists of a predicate contained in brackets that it will enter, Will return null otherwise
+        boolean predicateCheck = true;
 
+        while (source.charAt(sourceCursor) == ' ') sourceCursor++;
+        while (target.charAt(targetCursor) == ' ') targetCursor++;
 
+        if (source.charAt(sourceCursor++) != '(' || target.charAt(targetCursor++) != '(') return null;
+
+        int depth = 1;
+
+        while(depth > 0 || sourceCursor > source.length() || targetCursor > target.length()){
+            while (source.charAt(sourceCursor) == ' ') sourceCursor++;
+            while (target.charAt(targetCursor) == ' ') targetCursor++;
+
+            if(predicateCheck) { // Parses relations in predicate
+
+                sourceStringPositionPair = constructStringFromPosition(source,sourceCursor);
+                targetStringPositionPair = constructStringFromPosition(target,targetCursor);
+
+                if(sourceStringPositionPair == null) throw new InvalidParameterException("Source string presented has incorrect structure");
+                if(targetStringPositionPair == null) throw new InvalidParameterException("Target string presented has incorrect structure");
+
+                sourceCursor = sourceStringPositionPair.getValue();
+                targetCursor = targetStringPositionPair.getValue();
+
+                if(sourceStringPositionPair.getKey().compareTo(targetStringPositionPair.getKey()) != 0) return null;
+
+                predicateCheck = false;
+            }else if(source.charAt(sourceCursor) == ')' || target.charAt(targetCursor) == ')'){ // Step Out of predicate
+                if(source.charAt(sourceCursor++) != ')' || target.charAt(targetCursor++) != ')') {
+                    return null;
+                }
+                depth--;
+                if(depth < 0){
+                    throw new InvalidParameterException("Source string presented has incorrect structure");
+                }
+            }else if(source.charAt(sourceCursor) == '(' || target.charAt(targetCursor) == '(') { // Step into predicate
+                if (source.charAt(sourceCursor++) != '(' || target.charAt(targetCursor++) != '(') {
+                    return null;
+                }
+                predicateCheck = true;
+                depth++;
+
+            }else{ // Compare non predicates
+                sourceStringPositionPair = constructStringFromPosition(source,sourceCursor);
+                targetStringPositionPair = constructStringFromPosition(target,targetCursor);
+
+                if(sourceStringPositionPair == null) throw new InvalidParameterException("Source string presented has incorrect structure");
+                if(targetStringPositionPair == null) throw new InvalidParameterException("Target string presented has incorrect structure");
+
+                sourceCursor = sourceStringPositionPair.getValue();
+                targetCursor = targetStringPositionPair.getValue();
+
+                mapping.put(sourceStringPositionPair.getKey(),targetStringPositionPair.getKey());
+            }
+
+        }
+
+        if(depth != 0) {
+            return null;
+        }else {
+            return mapping;
+        }
+    }
+
+    // Is helper function for flatStringMapping method. Do not use elsewhere
+    private static AbstractMap.SimpleEntry<String,Integer> constructStringFromPosition(String string,int position){
+        StringBuilder stringBuilder = new StringBuilder();
+        while (string.charAt(position) != ' ' && string.charAt(position) != '(' && string.charAt(position) != ')') {
+
+            if (string.length() < position) return null;
+
+            stringBuilder.append(string.charAt(position++));
+
+        }
+        return  new AbstractMap.SimpleEntry<>(stringBuilder.toString(),position);
+    }
 
     public static String convertToAbstractString(Predicate analogicalObject, Boolean prettified){
         HashMap<String,Integer> abstractionMapping = new HashMap<>();
