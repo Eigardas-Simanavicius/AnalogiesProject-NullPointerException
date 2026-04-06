@@ -6,6 +6,10 @@ import org.main.Interfaces.Predicate;
 import org.main.Interfaces.Rule;
 
 import java.util.ArrayList;
+//README!!
+//The written rule structure is as follows:
+// [original predicate]         [verbPredicate]_[prepositionPredicate]:[newArgument]{optional asterisk}&[byArgument]
+//Hope this helps when writing a parser
 
 public class rewriteRule implements Rule {
     private String originalRule;
