@@ -19,7 +19,7 @@ public class Clause implements Predicate{
     }
 
 
-
+    @Override
     public String toString(){
         return toStringHelper(false);
     }
@@ -171,5 +171,9 @@ public class Clause implements Predicate{
 
             return next;
         }
+    }
+
+    public boolean hasParent(){
+        return !(this.getParent() == null);
     }
 }

@@ -1,5 +1,8 @@
 package org.main;
 
+import com.sun.jdi.event.ClassUnloadEvent;
+import org.main.Interfaces.AnalogicalObject;
+import org.main.Interfaces.Predicate;
 import org.main.Interfaces.Rule;
 
 import java.util.ArrayList;
@@ -64,5 +67,48 @@ public class rewriteRule implements Rule {
         this.modifiers = mods;
         this.newArgument = newArg;
         this.newArgumentHasAsterisk = newArgAsterisk;
+    }
+
+
+    public Predicate rewrite(Predicate source){
+        validatePredicate(source);
+        //TODO:modifier processing goes here
+
+        Clause output = new Clause("by");
+        output.addEmbedded(new Subject(byArgument));
+        Clause secondClause = new Clause(verbPredicate);
+        AnalogicalObject firstArg = source.getChildren().get(0);
+        AnalogicalObject secondArg = source.getChildren().get(1);
+        Clause thirdClause = new Clause(prepositionPredicate);
+        secondClause.addEmbedded(firstArg);
+
+        if(newArgumentHasAsterisk) {
+            secondClause.addEmbedded(new Subject(newArgument));
+            thirdClause.addEmbedded(secondArg);
+        }
+        else{
+            secondClause.addEmbedded(secondArg);
+            thirdClause.addEmbedded(new Subject(newArgument));
+        }
+
+        secondClause.addEmbedded(thirdClause);
+        output.addEmbedded(secondClause);
+
+
+        return output;
+    }
+
+    private void validatePredicate(Predicate source){
+        if(!source.getName().equals(this.originalPredicate)){
+            throw new IllegalArgumentException("Predicates do not match between rule and source");
+        }
+        for(AnalogicalObject child : source.getChildren()){
+            if(!(child instanceof Subject)){
+                throw new IllegalArgumentException("Predicate has predicate children, processing undefined");
+            }
+        }
+        if(source.getChildren().size() > 2){
+            throw new IllegalArgumentException("Predicate has more than 2 subjects, processing undefined");
+        }
     }
 }

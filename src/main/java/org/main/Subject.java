@@ -63,5 +63,9 @@ public class Subject implements AnalogicalObject {
     public void setHasAsterisk(){
         hasAsterisk = true;
     }
+
+    public boolean hasParent(){
+        return !(this.getParent()==null);
+    }
 }
 

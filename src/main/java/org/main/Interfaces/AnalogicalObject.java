@@ -9,4 +9,5 @@ public interface AnalogicalObject {
     String getName();
     void setName(String name);
     int getDepth();
+    boolean hasParent();
 }
