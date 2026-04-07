@@ -30,7 +30,7 @@ public class Main {
         rules.add(rule1);
         rules.add(rule2);
         rules.add(rule3);
-        Clause testClause2 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (exercise athelete muscle) (explode Gregs legs))");
+        Clause testClause2 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (exercise.0 athelete muscle) (explode Gregs legs))");
         ArrayList<Predicate> ans = ReWriter.reWriteAnalogyAllPermuatations(rules,testClause2);
         System.out.println(ans.size());
         System.out.println(ans.toString());

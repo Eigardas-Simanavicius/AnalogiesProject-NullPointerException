@@ -36,6 +36,7 @@ public class ReWriter {
 
     public static ArrayList<Predicate> reWriteAnalogyAllPermuatations(ArrayList<rewriteRule> rules,Predicate source)  {
         // I am going to make the assumption that each clause can atmost have one rewrite.
+        removeNumbers((Clause) source);
         LinkedHashMap<String,ArrayList<rewriteRule>> rulesMap = mapRulesMany(rules);
         ArrayList<Predicate> permutations = new ArrayList<>();
         int[] maxCount = new int[rulesMap.size()];
@@ -56,7 +57,7 @@ public class ReWriter {
 
         return permutations;
     }
-    
+
     private static LinkedHashMap<String,ArrayList<rewriteRule>> mapRulesMany(ArrayList<rewriteRule> rules){
         LinkedHashMap<String,ArrayList<rewriteRule>> map = new LinkedHashMap<>();
         for(rewriteRule r: rules){
@@ -86,6 +87,16 @@ public class ReWriter {
         }else{
             currCount[n] = 0;
             updatePermutation(currCount,n-1,maxCount);
+        }
+    }
+    private static void removeNumbers(Clause source){
+        Iterator<AnalogicalObject> it = source.getPreOrderIterator();
+        AnalogicalObject curr = null;
+        while (it.hasNext()){
+            curr = it.next();
+            if(curr.getName().contains(".0")){
+                curr.setName(curr.getName().replace(".0",""));
+            }
         }
     }
 

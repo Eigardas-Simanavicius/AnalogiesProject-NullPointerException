@@ -6,6 +6,7 @@ import org.main.Interfaces.Predicate;
 import org.main.Interfaces.Rule;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 //README!!
 //The written rule structure is as follows:
 // [original predicate]         [verbPredicate]_[prepositionPredicate]:[newArgument]{optional asterisk}&[byArgument]
@@ -115,4 +116,5 @@ public class rewriteRule implements Rule {
             throw new IllegalArgumentException("Predicate has more than 2 subjects, processing undefined");
         }
     }
+
 }
