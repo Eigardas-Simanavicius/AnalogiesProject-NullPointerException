@@ -146,41 +146,6 @@ public class Clause implements Predicate{
         }
     }
 
-    public Predicate reWriteAnalogy(ArrayList<rewriteRule> rules){
-        // I am going to make the assumption that each clause can atmost have one rewrite.
-        HashMap<String,rewriteRule> rulesMap = mapRules(rules);
-        Iterator<AnalogicalObject> it = this.getPreOrderIterator();
-        AnalogicalObject curr = null;
-        Predicate replacement = null;
-        Predicate head = null;
-        while (it.hasNext()){
-            curr = it.next();
-            if(curr.getClass().equals(Clause.class)){
-
-                if(rulesMap.containsKey(curr.getName())){
-                    Predicate parent = curr.getParent();
-                    curr.setParent(null);
-                    parent.getChildren().remove(curr);
-                    replacement = rulesMap.get(curr.getName()).rewrite((Predicate) curr);
-                    replacement.setParent(parent);
-                    parent.addEmbedded(replacement);
-                }
-
-                if(head == null) {
-                    head = (Predicate) curr;
-                }
-            }
-        }
-        return head;
-    }
-
-    public static HashMap<String,rewriteRule> mapRules(ArrayList<rewriteRule> rules){
-        HashMap<String,rewriteRule> map = new HashMap<>();
-        for(rewriteRule r: rules){
-            map.put(r.getOriginalPredicate(),r);
-        }
-        return map;
-    }
 
 
     public Iterator<AnalogicalObject> getPreOrderIterator(){

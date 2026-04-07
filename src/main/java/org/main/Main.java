@@ -20,21 +20,19 @@ public class Main {
         System.out.println("Converting to OOP and then back to String");
         //System.out.println(AnalogyManager.ConvertToString(AnalogyManager.ConvertToOOP("(work in scientist (some lab (that (conduct experiment))))"),true));
 
-
-
-       rewriteRule rule1 = new rewriteRule("exercise perform_of");
-       rewriteRule rule2 = new rewriteRule("explode destroy_of");
-       rule1.testConstructor("exercise", "perform", "of", "exercising", null, "exercise", true);
-       rule2.testConstructor("explode","destroy","of","exploding",null,"explode",true);
-       ArrayList<rewriteRule> rules = new ArrayList<>();
-       rules.add(rule1);
-       rules.add(rule2);
-       Clause testClause2 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (exercise athelete muscle) (explode Gregs legs))");
-        Clause testClause = (Clause)AnalogyManager.ConvertToOOP("(exercise athelete muscle)");
-        //System.out.println(((Clause)rule1.rewrite(testClause)).toIndentedString());
-        //System.out.println((testClause2.toIndentedString()));
-        //System.out.println(((Clause) testClause2.reWriteAnalogy(rules)).toIndentedString());
-        Predicate ans = testClause2.reWriteAnalogy(rules);
-        System.out.println(((Clause) ans) + " :" + ans.getChildren().size());
+        rewriteRule rule1 = new rewriteRule("exercise perform_of");
+        rewriteRule rule2 = new rewriteRule("explode destroy_of");
+        rewriteRule rule3 = new rewriteRule("explode boom_of");
+        rule1.testConstructor("exercise", "perform", "of", "exercising", null, "exercise", true);
+        rule2.testConstructor("explode","destroy","of","exploding",null,"explode",true);
+        rule3.testConstructor("explode","boom","of","booming",null,"explode",true);
+        ArrayList<rewriteRule> rules = new ArrayList<>();
+        rules.add(rule1);
+        rules.add(rule2);
+        rules.add(rule3);
+        Clause testClause2 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (exercise athelete muscle) (explode Gregs legs))");
+        ArrayList<Predicate> ans = ReWriter.reWriteAnalogyAllPermuatations(rules,testClause2);
+        System.out.println(ans.size());
+        System.out.println(ans.toString());
     }
 }
