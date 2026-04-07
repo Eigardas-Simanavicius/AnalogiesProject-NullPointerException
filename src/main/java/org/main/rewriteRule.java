@@ -5,7 +5,9 @@ import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 import org.main.Interfaces.Rule;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 //README!!
@@ -25,8 +27,35 @@ public class rewriteRule implements Rule {
     private Boolean exponent = false;
     private Boolean lessThan = false;
 
-    public rewriteRule(String rule){
-        this.originalRule = rule;
+    public rewriteRule(String originalPredicate, String rule){
+        // ^<!provide_to:benefactor*&denying
+
+        this.originalPredicate = originalPredicate;
+
+        List<String> ruleSubParts = List.of(rule.split("[_:&]"));
+
+        for(String ruleSubPart : ruleSubParts){
+            if(ruleSubPart.isBlank()){
+                throw new InvalidParameterException("The rewrite rule given has an invalid structure.");
+            }
+        }
+
+        verbPredicate = ruleSubParts.get(0);
+
+        negation = verbPredicate.contains("!");
+        exponent = verbPredicate.contains("^");
+        lessThan = verbPredicate.contains("<");
+
+        verbPredicate = verbPredicate.replaceAll("[!<^]","");
+
+        prepositionPredicate = ruleSubParts.get(1);
+
+        newArgument = ruleSubParts.get(2);
+
+        newArgumentHasAsterisk = newArgument.contains("*");
+        newArgument = newArgument.replaceAll("\\*","");
+
+        byArgument = ruleSubParts.get(3);
     }
 
     public String getOriginalPredicate(){
