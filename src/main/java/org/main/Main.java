@@ -29,7 +29,7 @@ public class Main {
         ArrayList<rewriteRule> rules = new ArrayList<>();
         rules.add(rule1);
         rules.add(rule2);
-        Clause testClause2 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (exercise.0 athelete muscle (big mac)) (explode Gregs legs))");
+        Clause testClause2 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (Whopper jr) (exercise.0 athelete muscle (big mac)) (explode Gregs legs))");
         ArrayList<Predicate> ans = ReWriter.reWriteAnalogyAllPermuatations(rules,testClause2);
         System.out.println(ans.size());
         System.out.println(ans.toString());

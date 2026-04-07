@@ -11,8 +11,6 @@ public class ReWriter {
         Predicate reWrite = AnalogyManager.ConvertToOOP(source.toString());
         Iterator<AnalogicalObject> it = ((Clause)reWrite).getPreOrderIterator();
         AnalogicalObject curr = null;
-        ArrayList<AnalogicalObject> children = null;
-        Predicate replacement = null;
         Predicate head = null;
         // essentially just check if we need to rewrite this predicate, and if we do we remove the old one and attach the rewritten one
         while (it.hasNext()){
@@ -20,15 +18,7 @@ public class ReWriter {
             if(curr.getClass().equals(Clause.class)){
                 rulesMap.get(curr.getName());
                 if(rulesMap.containsKey(curr.getName())){
-                    Predicate parent = curr.getParent();
-                    curr.setParent(null);
-                    children = ((Clause) curr).getClauseChildren();
-                    ((Clause) curr).removeClauses();
-                    parent.getChildren().remove(curr);
-                    replacement = rulesMap.get(curr.getName()).rewrite((Predicate) curr);
-                    replacement.setParent(parent);
-                    replacement.addAllEmbedded(children);
-                    parent.addEmbedded(replacement);
+                    replacePredicate((Clause) curr,rulesMap);
                 }
 
                 if(head == null) {
@@ -39,6 +29,22 @@ public class ReWriter {
         return head;
     }
 
+    private static void replacePredicate(Clause curr,HashMap<String,rewriteRule> rulesMap){
+        ArrayList<AnalogicalObject> children = null;
+        Predicate replacement = null;
+
+        Predicate parent = curr.getParent();
+        curr.setParent(null);
+        children = ((Clause) curr).getClauseChildren();
+        ((Clause) curr).removeClauses();
+        parent.getChildren().remove(curr);
+
+        replacement = rulesMap.get(curr.getName()).rewrite((Predicate) curr);
+        replacement.setParent(parent);
+        replacement.addAllEmbedded(children);
+        parent.addEmbedded(replacement);
+
+    }
     // this is the main controller function,
     public static ArrayList<Predicate> reWriteAnalogyAllPermuatations(ArrayList<rewriteRule> rules,Predicate source)  {
         removeNumbers((Clause) source);
