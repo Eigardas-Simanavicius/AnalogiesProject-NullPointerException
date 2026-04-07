@@ -20,12 +20,13 @@ public class Main {
         System.out.println("Converting to OOP and then back to String");
         //System.out.println(AnalogyManager.ConvertToString(AnalogyManager.ConvertToOOP("(work in scientist (some lab (that (conduct experiment))))"),true));
 
-        rewriteRule rule1 = new rewriteRule("","exercise perform_of");
-        rewriteRule rule2 = new rewriteRule("","explode destroy_of");
-        rewriteRule rule3 = new rewriteRule("","explode boom_of");
-        rule1.testConstructor("exercise", "perform", "of", "exercising", null, "exercise", true);
-        rule2.testConstructor("explode","destroy","of","exploding",null,"explode",true);
-        rule3.testConstructor("explode","boom","of","booming",null,"explode",true);
+        // [original predicate]         {modifiers}[verbPredicate]_[prepositionPredicate]:[newArgument]{optional asterisk}&[byArgument]
+        rewriteRule rule1 = new rewriteRule("exercise","preform_of:exercise*&exercising");
+        rewriteRule rule2 = new rewriteRule("explode","destroy_of:explode*&exploding");
+        rewriteRule rule3 = new rewriteRule("explode","boom_of:explode*:booming");
+//        rule1.testConstructor("exercise", "perform", "of", "exercising", null, "exercise", true);
+//        rule2.testConstructor("explode","destroy","of","exploding",null,"explode",true);
+//        rule3.testConstructor("explode","boom","of","booming",null,"explode",true);
         ArrayList<rewriteRule> rules = new ArrayList<>();
         rules.add(rule1);
         rules.add(rule2);
