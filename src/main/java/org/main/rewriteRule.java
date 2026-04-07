@@ -84,17 +84,21 @@ public class rewriteRule implements Rule {
     public Predicate rewrite(Predicate source){
         validatePredicate(source);
 
+        //instantiate all "building blocks" for the resulting structure
         Clause output = new Clause("by");
         output.addEmbedded(new Subject(byArgument));
         Clause secondClause = new Clause(verbPredicate);
+        Clause thirdClause = new Clause(prepositionPredicate);
         AnalogicalObject firstArg = source.getChildren().get(0);
         AnalogicalObject secondArg = source.getChildren().get(1);
+
+        //swaps arguments around if the '<' modifier is present
         if(lessThan){
             firstArg = source.getChildren().get(1);
             secondArg = source.getChildren().get(0);
         }
-        Clause thirdClause = new Clause(prepositionPredicate);
 
+        //asterisk and '^' processing is bundled together, because they seem to be mutually exclusive
         if(newArgumentHasAsterisk) {
             secondClause.addEmbedded(firstArg);
             secondClause.addEmbedded(new Subject(newArgument));
@@ -111,6 +115,7 @@ public class rewriteRule implements Rule {
             thirdClause.addEmbedded(new Subject(newArgument));
         }
 
+        //wraps everything in negation if necessary
         if(negation){
             Clause negateWrapper = new Clause("not");
             output.addEmbedded(negateWrapper);
