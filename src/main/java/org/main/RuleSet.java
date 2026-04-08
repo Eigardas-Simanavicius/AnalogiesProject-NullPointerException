@@ -1,62 +1,73 @@
 package org.main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.security.InvalidParameterException;
 import java.util.*;
 
 public class RuleSet {
 
-    private static TreeMap<String, List<String>> rules;
-    private TreeMap<String,List<rewriteRule>> parsedRules;
+    // Variables are static to reduce memory usage across multiple instances
+    private static TreeMap<String, ArrayList<String>> stringRules;      // Represents rules as strings (Populated on first instantiation)
+    private static TreeMap<String,ArrayList<rewriteRule>> parsedRules;  // Represents rules using rewriteRule class (Populated as needed)
 
-    public RuleSet(){
-        if(rules == null){
-            rules = new TreeMap<>();
+    public RuleSet() throws FileNotFoundException {
+        if(stringRules == null){ // Creates and populates the stringRules if not done so already
+            stringRules = new TreeMap<>();
             loadRulesFromFile();
-        }else if(rules.isEmpty()){
+        }else if(stringRules.isEmpty()){
             loadRulesFromFile();
         }
-        parsedRules = new TreeMap<>();
+
+        if(parsedRules == null){
+            parsedRules = new TreeMap<>();
+        }
     }
 
-    private void loadRulesFromFile(){
-        String ruleFileDir = "rewrite rules.txt";
-        Scanner scanner = new Scanner(ruleFileDir);
+    private void loadRulesFromFile() throws FileNotFoundException {
+        File ruleFile = new File("rewrite rules.txt"); // Replace with the location of file on your system (Is currently a placeholder)
+        Scanner scanner = new Scanner(ruleFile);
 
-        for(String line : scanner.delimiter().split("\n")){
+        String line;
+        while(scanner.hasNextLine()){
+            line = scanner.nextLine();
+
             ArrayList<String> delimitedLine = new ArrayList<>(List.of(line.split(" ")));
 
-            rules.put(
+            stringRules.put(
                     delimitedLine.removeFirst(),
-                    delimitedLine.stream().map(x -> x.replace(",","").trim()).toList()
+                    (ArrayList<String>) delimitedLine.stream().map(x -> x.replace(",","").trim()).toList()
             );
         }
     }
 
-    public ArrayList<String> getRulesForAsString(String ruleSubject){
-        return (ArrayList<String>) rules.get(ruleSubject);
+    // Returns string representation of rewriting rules for a given verb
+    public ArrayList<String> getRulesAsStringFor(String ruleVerb){
+        return stringRules.get(ruleVerb);
     }
 
-    public ArrayList<rewriteRule> getRulesFor(String ruleSubject){
-        List<rewriteRule> r;
-        if((r = parsedRules.get(ruleSubject)) != null ){
-            return (ArrayList<rewriteRule>) r;
+    // Returns rewriteRule representation for rewriting rules for a given verb
+    public ArrayList<rewriteRule> getRulesFor(String ruleVerb){
+        ArrayList<rewriteRule> r;
+        if((r = parsedRules.get(ruleVerb)) != null ){ // Only parses rule string as they are needed
+            return r;
         }else{
-            return (ArrayList<rewriteRule>) parseRules(ruleSubject, rules.get(ruleSubject));
+            return parseRules(ruleVerb, stringRules.get(ruleVerb));
         }
     }
 
-    private List<rewriteRule> parseRules(String ruleSubject,List<String> stringRules){
-        if(stringRules == null) return Collections.emptyList();
+    private ArrayList<rewriteRule> parseRules(String ruleSubject,List<String> stringRewriteRules){
+        if(stringRewriteRules == null) return new ArrayList<>();
 
-        ArrayList<rewriteRule> rewriteRules = new ArrayList<>(stringRules.size());
+        ArrayList<rewriteRule> rewriteRules = new ArrayList<>(stringRewriteRules.size());
 
-        for(String stringRule : stringRules){
+        for(String stringRewriteRule : stringRewriteRules){
             try {
-                rewriteRules.add(new rewriteRule(ruleSubject, stringRule));
-            }catch(InvalidParameterException e){
+                rewriteRules.add(new rewriteRule(ruleSubject, stringRewriteRule));
+            }catch(InvalidParameterException e){ // Prints error message if rule is written with invalid syntax
                 e.printStackTrace();
-                System.out.println(e.getMessage() + " : " + stringRule);
-            }// Handles poorly formatted rules strings
+                System.out.println(e.getMessage() + " : " + stringRewriteRule);
+            } // Continues parsing valid rules rather than crashing
         }
 
         parsedRules.put(ruleSubject,rewriteRules);
