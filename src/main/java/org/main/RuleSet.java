@@ -8,24 +8,20 @@ import java.util.*;
 public class RuleSet {
 
     // Variables are static to reduce memory usage across multiple instances
-    private static TreeMap<String, ArrayList<String>> stringRules;      // Represents rules as strings (Populated on first instantiation)
-    private static TreeMap<String,ArrayList<rewriteRule>> parsedRules;  // Represents rules using rewriteRule class (Populated as needed)
+    private static TreeMap<String, ArrayList<String>> stringRules = new TreeMap<>();     // Represents rules as strings (Populated on first instantiation)
+    private static TreeMap<String,ArrayList<rewriteRule>> parsedRules = new TreeMap<>();  // Represents rules using rewriteRule class (Populated as needed)
+    private static ArrayList<String> loadedFiles = new ArrayList<>();
 
-    public RuleSet() throws FileNotFoundException {
-        if(stringRules == null){ // Creates and populates the stringRules if not done so already
-            stringRules = new TreeMap<>();
-            loadRulesFromFile();
-        }else if(stringRules.isEmpty()){
-            loadRulesFromFile();
-        }
 
-        if(parsedRules == null){
-            parsedRules = new TreeMap<>();
+    public RuleSet(String fileDir) throws FileNotFoundException {
+        if(!loadedFiles.contains(fileDir)){ // Creates and populates the stringRules with content from a file if not done so already
+            loadRulesFromFile(fileDir);
+            loadedFiles.add(fileDir);
         }
     }
 
-    private void loadRulesFromFile() throws FileNotFoundException {
-        File ruleFile = new File("rewrite rules.txt"); // Replace with the location of file on your system (Is currently a placeholder)
+    private void loadRulesFromFile(String fileDir) throws FileNotFoundException {
+        File ruleFile = new File(fileDir); // Replace with the location of file on your system (Is currently a placeholder)
         Scanner scanner = new Scanner(ruleFile);
 
         String line;
@@ -33,11 +29,17 @@ public class RuleSet {
             line = scanner.nextLine();
 
             ArrayList<String> delimitedLine = new ArrayList<>(List.of(line.split(" ")));
+            String verb = delimitedLine.removeFirst();
 
-            stringRules.put(
-                    delimitedLine.removeFirst(),
-                    (ArrayList<String>) delimitedLine.stream().map(x -> x.replace(",","").trim()).toList()
-            );
+            if(stringRules.containsKey(delimitedLine.getFirst())){
+                stringRules.get(verb).addAll(delimitedLine);
+                parsedRules.remove(verb); // Removes parsed rules as they will be incorrect if more rules apply then there are currently
+            }else {
+                stringRules.put(
+                        verb,
+                        (ArrayList<String>) delimitedLine.stream().map(x -> x.replace(",", "").trim()).toList()
+                );
+            }
         }
     }
 
