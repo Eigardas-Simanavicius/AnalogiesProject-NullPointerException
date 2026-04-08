@@ -21,7 +21,7 @@ public class RuleSet {
     }
 
     private void loadRulesFromFile(String fileDir) throws FileNotFoundException {
-        File ruleFile = new File(fileDir); // Replace with the location of file on your system (Is currently a placeholder)
+        File ruleFile = new File(fileDir);
         Scanner scanner = new Scanner(ruleFile);
 
         String line;
