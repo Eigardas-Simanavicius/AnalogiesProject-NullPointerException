@@ -3,6 +3,8 @@ import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 import org.main.Interfaces.Rule;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -24,10 +26,9 @@ public class rewriteRule implements Rule {
 
     public rewriteRule(String originalPredicate, String rule){
         // ^<!provide_to:benefactor*&denying
-
         this.originalPredicate = originalPredicate;
-
         List<String> ruleSubParts = List.of(rule.split("[_:&]"));
+
 
         if(ruleSubParts.size() != 4){
             for (String s: ruleSubParts){
@@ -162,6 +163,7 @@ public class rewriteRule implements Rule {
 
     private void validatePredicate(Predicate source){
         if(!source.getName().equals(this.originalPredicate)){
+            System.out.println(source.getName()  + " and " + this.originalPredicate);
             throw new IllegalArgumentException("Predicates do not match between rule and source");
         }
         if(source.getChildren().size() > 2){
