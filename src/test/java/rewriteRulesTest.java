@@ -71,13 +71,15 @@ public class rewriteRulesTest {
     static Stream<Arguments> badRuleConstructors(){
         return Stream.of(
                 Arguments.of("exercise", "test"),
-                Arguments.of("exercise", "test_ _ _  _ & &::::")
+                Arguments.of("exercise", "test_ _ _  _ & &::::"),
+                Arguments.of("exercise", "perform:exercise&exercising"),
+                Arguments.of("exercise", "perform_of:exercise")
         );
     }
 
     @ParameterizedTest
     @MethodSource("badRuleConstructors")
-    public void nestedRules(String originalPredicate, String rule){
+    public void badConstructors(String originalPredicate, String rule){
         assertThrows(InvalidParameterException.class, () -> {
             new rewriteRule(originalPredicate, rule);
         });

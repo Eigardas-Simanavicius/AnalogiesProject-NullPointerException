@@ -46,6 +46,10 @@ public class rewriteRule implements Rule {
 
         List<String> predicatePair = (List.of(ruleSubParts.getFirst().split("_",2)));
 
+        if(predicatePair.size() != 2){
+            throw new InvalidParameterException("The rewrite rule given has an invalid structure");
+        }
+
         verbPredicate = predicatePair.getFirst();
 
         negation = verbPredicate.contains("!");
