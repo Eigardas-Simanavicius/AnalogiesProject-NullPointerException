@@ -12,6 +12,7 @@ public class Main {
         //logger initialization
         Logger rootLogger = Logger.getLogger("");
         try{
+            //getting rid of logging errors to console in order to isolate them to the log file
             for(Handler handler : rootLogger.getHandlers()){
                 rootLogger.removeHandler(handler);
             }

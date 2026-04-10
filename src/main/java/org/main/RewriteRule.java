@@ -4,6 +4,7 @@ import org.main.Interfaces.Predicate;
 import org.main.Interfaces.Rule;
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -37,11 +38,13 @@ public class RewriteRule implements Rule {
             for (String s: ruleSubParts){
                 System.out.println(s);
             }
+            logger.log(Level.WARNING, "Attempted to create rule with an invalid structure: " + rule);
             throw new InvalidParameterException("The rewrite rule given has an invalid structure.");
         }
 
         for(String ruleSubPart : ruleSubParts){
             if(ruleSubPart.isBlank()){
+                logger.log(Level.WARNING, "Attempted to create rule with an invalid structure: " + rule);
                 throw new InvalidParameterException("The rewrite rule given has an invalid structure.");
             }
         }
@@ -49,6 +52,7 @@ public class RewriteRule implements Rule {
         List<String> predicatePair = (List.of(ruleSubParts.getFirst().split("_",2)));
 
         if(predicatePair.size() != 2){
+            logger.log(Level.WARNING, "Attempted to create rule with an invalid structure: " + rule);
             throw new InvalidParameterException("The rewrite rule given has an invalid structure");
         }
 
@@ -103,7 +107,7 @@ public class RewriteRule implements Rule {
         return prepositionPredicate;
     }
 
-
+    //returns null on bad input
     public Predicate rewrite(Predicate source){
         if(!validatePredicate(source)){
             System.out.println("Input validation failed, check log file for details.");
