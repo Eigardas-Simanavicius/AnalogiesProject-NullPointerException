@@ -9,7 +9,7 @@ public class RuleSet {
 
     // Variables are static to reduce memory usage across multiple instances
     private static TreeMap<String, ArrayList<String>> stringRules = new TreeMap<>();     // Represents rules as strings (Populated on first instantiation)
-    private static TreeMap<String,ArrayList<rewriteRule>> parsedRules = new TreeMap<>();  // Represents rules using rewriteRule class (Populated as needed)
+    private static TreeMap<String,ArrayList<RewriteRule>> parsedRules = new TreeMap<>();  // Represents rules using rewriteRule class (Populated as needed)
     private static ArrayList<String> loadedFiles = new ArrayList<>();
 
 
@@ -49,8 +49,8 @@ public class RuleSet {
     }
 
     // Returns rewriteRule representation for rewriting rules for a given verb
-    public ArrayList<rewriteRule> getRulesFor(String ruleVerb){
-        ArrayList<rewriteRule> r;
+    public ArrayList<RewriteRule> getRulesFor(String ruleVerb){
+        ArrayList<RewriteRule> r;
         if((r = parsedRules.get(ruleVerb)) != null ){ // Only parses rule string as they are needed
             return r;
         }else{
@@ -58,21 +58,21 @@ public class RuleSet {
         }
     }
 
-    private ArrayList<rewriteRule> parseRules(String ruleSubject,List<String> stringRewriteRules){
+    private ArrayList<RewriteRule> parseRules(String ruleSubject, List<String> stringRewriteRules){
         if(stringRewriteRules == null) return new ArrayList<>();
 
-        ArrayList<rewriteRule> rewriteRules = new ArrayList<>(stringRewriteRules.size());
+        ArrayList<RewriteRule> RewriteRules = new ArrayList<>(stringRewriteRules.size());
 
         for(String stringRewriteRule : stringRewriteRules){
             try {
-                rewriteRules.add(new rewriteRule(ruleSubject, stringRewriteRule));
+                RewriteRules.add(new RewriteRule(ruleSubject, stringRewriteRule));
             }catch(InvalidParameterException e){ // Prints error message if rule is written with invalid syntax
                 e.printStackTrace();
                 System.out.println(e.getMessage() + " : " + stringRewriteRule);
             } // Continues parsing valid rules rather than crashing
         }
 
-        parsedRules.put(ruleSubject,rewriteRules);
-        return rewriteRules;
+        parsedRules.put(ruleSubject, RewriteRules);
+        return RewriteRules;
     }
 }

@@ -1,17 +1,12 @@
 import org.jspecify.annotations.NonNull;
-import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.main.AnalogyManager;
 import org.main.Clause;
 import org.main.Interfaces.Predicate;
 import org.main.ReWriter;
-import org.main.rewriteRule;
+import org.main.RewriteRule;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,9 +15,9 @@ public class ReWritertests  {
 
     @Test
     public void retainChildrenTest(){
-        rewriteRule rule1 = new rewriteRule("exercise","preform_of:exercise*&exercising");
-        rewriteRule rule2 = new rewriteRule("explode","destroy_of:explode*&exploding");
-        ArrayList<rewriteRule> rules = new ArrayList<>();
+        RewriteRule rule1 = new RewriteRule("exercise","preform_of:exercise*&exercising");
+        RewriteRule rule2 = new RewriteRule("explode","destroy_of:explode*&exploding");
+        ArrayList<RewriteRule> rules = new ArrayList<>();
         rules.add(rule1);
         rules.add(rule2);
         Clause testClause2 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (Whopper jr) (exercise.0 athelete muscle (big mac)) (explode Gregs legs))");
@@ -32,7 +27,7 @@ public class ReWritertests  {
 
     @Test
     public void allPermutationsTest(){
-        ArrayList<rewriteRule> rules = getRewriteRules();
+        ArrayList<RewriteRule> rules = getRewriteRules();
 
         Clause testClause1 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (exercise.0 athelete muscle) (explode Gregs legs))");
         Clause testClause2 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (exercise.0 athelete muscle) (explode Gregs legs) (walk Steve road))");
@@ -43,15 +38,15 @@ public class ReWritertests  {
 
     }
 
-    private static @NonNull ArrayList<rewriteRule> getRewriteRules() {
-        rewriteRule rule1 = new rewriteRule("exercise","preform_of:exercise*&exercising");
-        rewriteRule rule2 = new rewriteRule("explode","destroy_of:explode*&exploding");
-        rewriteRule rule3 = new rewriteRule("explode","boom_of:boom*&booming");
-        rewriteRule rule4 = new rewriteRule("walk","run_of:sprint*&sprinting");
-        rewriteRule rule5 = new rewriteRule("walk","fly_with:fly*:flying");
-        rewriteRule rule6 = new rewriteRule("exercise","lift_of:lift*&lifting");
+    private static @NonNull ArrayList<RewriteRule> getRewriteRules() {
+        RewriteRule rule1 = new RewriteRule("exercise","preform_of:exercise*&exercising");
+        RewriteRule rule2 = new RewriteRule("explode","destroy_of:explode*&exploding");
+        RewriteRule rule3 = new RewriteRule("explode","boom_of:boom*&booming");
+        RewriteRule rule4 = new RewriteRule("walk","run_of:sprint*&sprinting");
+        RewriteRule rule5 = new RewriteRule("walk","fly_with:fly*:flying");
+        RewriteRule rule6 = new RewriteRule("exercise","lift_of:lift*&lifting");
 
-        ArrayList<rewriteRule> rules = new ArrayList<>();
+        ArrayList<RewriteRule> rules = new ArrayList<>();
         rules.add(rule1);
         rules.add(rule2);
         rules.add(rule3);

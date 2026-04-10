@@ -1,11 +1,8 @@
 package org.main;
 
-import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 public class Main {
     public static void main(String[] args) throws IllegalArgumentException {
@@ -21,13 +18,13 @@ public class Main {
         //System.out.println(AnalogyManager.ConvertToString(AnalogyManager.ConvertToOOP("(work in scientist (some lab (that (conduct experiment))))"),true));
 
         // [original predicate]         {modifiers}[verbPredicate]_[prepositionPredicate]:[newArgument]{optional asterisk}&[byArgument]
-        rewriteRule rule1 = new rewriteRule("exercise","preform_of:exercise*&exercising");
-        rewriteRule rule2 = new rewriteRule("explode","destroy_of:explode*&exploding");
-        rewriteRule rule3 = new rewriteRule("explode","boom_of:boom*&booming");
-        rewriteRule rule4 = new rewriteRule("walk","run_of:sprint*&sprinting");
-        rewriteRule rule5 = new rewriteRule("walk","fly_with:fly*:flying");
+        RewriteRule rule1 = new RewriteRule("exercise","preform_of:exercise*&exercising");
+        RewriteRule rule2 = new RewriteRule("explode","destroy_of:explode*&exploding");
+        RewriteRule rule3 = new RewriteRule("explode","boom_of:boom*&booming");
+        RewriteRule rule4 = new RewriteRule("walk","run_of:sprint*&sprinting");
+        RewriteRule rule5 = new RewriteRule("walk","fly_with:fly*:flying");
 
-        ArrayList<rewriteRule> rules = new ArrayList<>();
+        ArrayList<RewriteRule> rules = new ArrayList<>();
         rules.add(rule1);
         rules.add(rule2);
         rules.add(rule3);

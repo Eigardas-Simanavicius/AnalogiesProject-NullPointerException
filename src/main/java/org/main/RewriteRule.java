@@ -3,7 +3,6 @@ import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 import org.main.Interfaces.Rule;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -12,7 +11,7 @@ import java.util.List;
 // [original predicate]         {modifiers}[verbPredicate]_[prepositionPredicate]:[newArgument]{optional asterisk}&[byArgument]
 //Hope this helps when writing a parser
 
-public class rewriteRule implements Rule {
+public class RewriteRule implements Rule {
     private String originalPredicate;
     private String verbPredicate;
     private String prepositionPredicate;
@@ -23,7 +22,7 @@ public class rewriteRule implements Rule {
     private Boolean exponent;
     private Boolean lessThan;
 
-    public rewriteRule(String originalPredicate, String rule){
+    public RewriteRule(String originalPredicate, String rule){
         // ^<!provide_to:benefactor*&denying
 
         this.originalPredicate = originalPredicate;

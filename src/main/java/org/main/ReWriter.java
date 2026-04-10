@@ -8,7 +8,7 @@ import java.util.*;
 public class ReWriter {
 
     // This takes an analogy and re-writes according to the provided rule set
-    private static Predicate reWriteAnalogy(LinkedHashMap<String,ArrayList<rewriteRule>> rulesMap, Predicate source, int[] currCount, ArrayList<Integer> locations)  {
+    private static Predicate reWriteAnalogy(LinkedHashMap<String,ArrayList<RewriteRule>> rulesMap, Predicate source, int[] currCount, ArrayList<Integer> locations)  {
         Predicate reWrite = AnalogyManager.ConvertToOOP(source.toString());
         ArrayList<Predicate> predicates = reWrite.getAllChildren();
         Predicate curr = null;
@@ -21,7 +21,7 @@ public class ReWriter {
         return reWrite;
     }
 
-    private static void replacePredicate(Predicate curr,rewriteRule rule){
+    private static void replacePredicate(Predicate curr, RewriteRule rule){
         ArrayList<AnalogicalObject> children = null;
         Predicate replacement = null;
 
@@ -38,11 +38,11 @@ public class ReWriter {
 
     }
     // this is the main controller function,
-    public static ArrayList<Predicate> reWriteAnalogyAllPermuatations(ArrayList<rewriteRule> rules,Predicate source)  {
+    public static ArrayList<Predicate> reWriteAnalogyAllPermuatations(ArrayList<RewriteRule> rules, Predicate source)  {
 
         removeNumbers((Clause) source);
         // Linked hash maps ensure items are returned in order of insertion, very important here
-        LinkedHashMap<String,ArrayList<rewriteRule>> rulesMap = mapAllRules(rules,source);
+        LinkedHashMap<String,ArrayList<RewriteRule>> rulesMap = mapAllRules(rules,source);
         ArrayList<Integer> targets = findPredicatestoChange(source,rulesMap);
         ArrayList<Predicate> permutations = new ArrayList<>();
         int[] maxCount = createMaxCount(targets,source,rulesMap);
@@ -58,7 +58,7 @@ public class ReWriter {
         return permutations;
     }
     // we need to know what predicates inside the analogy the rules will be applied to, since the structure is the same evertime thsis how we will do it
-    private static ArrayList<Integer> findPredicatestoChange(Predicate head,LinkedHashMap<String,ArrayList<rewriteRule>> rules){
+    private static ArrayList<Integer> findPredicatestoChange(Predicate head,LinkedHashMap<String,ArrayList<RewriteRule>> rules){
         ArrayList<Integer> locations = new ArrayList<Integer>();
         Set<String> keys = rules.keySet();
         ArrayList<Predicate> children = head.getAllChildren();
@@ -71,7 +71,7 @@ public class ReWriter {
         return locations;
     }
 
-    private static int[] createMaxCount(ArrayList<Integer> locations,Predicate head,LinkedHashMap<String,ArrayList<rewriteRule>> rules){
+    private static int[] createMaxCount(ArrayList<Integer> locations,Predicate head,LinkedHashMap<String,ArrayList<RewriteRule>> rules){
         int[] maxCount = new int[locations.size()];
         ArrayList<Predicate> children = head.getAllChildren();
         for (int i = 0; i < locations.size(); i++) {
@@ -89,18 +89,18 @@ public class ReWriter {
     }
 
     // maps all rules to their respective predicate, only keeping the ones that apply to this predicate
-    private static LinkedHashMap<String,ArrayList<rewriteRule>> mapAllRules(ArrayList<rewriteRule> rules,Predicate source){
+    private static LinkedHashMap<String,ArrayList<RewriteRule>> mapAllRules(ArrayList<RewriteRule> rules, Predicate source){
 
-        LinkedHashMap<String,ArrayList<rewriteRule>> releventRules = new LinkedHashMap<>();
+        LinkedHashMap<String,ArrayList<RewriteRule>> releventRules = new LinkedHashMap<>();
         ArrayList<String> releventPredicates = new ArrayList<>();
         for(Predicate pred: source.getAllChildren()){
             releventPredicates.add(pred.getName());
         }
 
-        for(rewriteRule r: rules){
+        for(RewriteRule r: rules){
             if(releventPredicates.contains(r.getOriginalPredicate())) {
                 if (!releventRules.containsKey(r.getOriginalPredicate())) {
-                    releventRules.put(r.getOriginalPredicate(), new ArrayList<rewriteRule>());
+                    releventRules.put(r.getOriginalPredicate(), new ArrayList<RewriteRule>());
                 }
                 releventRules.get(r.getOriginalPredicate()).add(r);
             }
