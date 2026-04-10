@@ -2,10 +2,27 @@ package org.main;
 
 import org.main.Interfaces.Predicate;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.*;
 
 public class Main {
     public static void main(String[] args) throws IllegalArgumentException {
+
+        //logger initialization
+        Logger rootLogger = Logger.getLogger("");
+        try{
+            for(Handler handler : rootLogger.getHandlers()){
+                rootLogger.removeHandler(handler);
+            }
+
+            FileHandler fileHandler = new FileHandler("logs/errorLog.log", true);
+            fileHandler.setFormatter(new SimpleFormatter());
+            rootLogger.addHandler(fileHandler);
+            rootLogger.setLevel(Level.WARNING);
+        }catch(IOException e){
+            System.out.println("failed config " + e.getMessage());
+        }
 
         System.out.println("Flat Abstract String");
         System.out.println(AnalogyManager.convertToAbstractString(AnalogyManager.ConvertToOOP("(if (can (cause.0 *AIDS (some death (when crushing (crush something))))) (can (succeed_at *AIDS (crush something))))"),false));
@@ -23,6 +40,8 @@ public class Main {
         RewriteRule rule3 = new RewriteRule("explode","boom_of:boom*&booming");
         RewriteRule rule4 = new RewriteRule("walk","run_of:sprint*&sprinting");
         RewriteRule rule5 = new RewriteRule("walk","fly_with:fly*:flying");
+
+        rule4.rewrite(AnalogyManager.ConvertToOOP("(exercise *athlete muscles)"));
 
         ArrayList<RewriteRule> rules = new ArrayList<>();
         rules.add(rule1);

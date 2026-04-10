@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class rewriteRulesTest {
+public class RewriteRulesTest {
 
     static Stream<Arguments> simpleRules () {
         return Stream.of(
@@ -45,9 +45,7 @@ public class rewriteRulesTest {
     @ParameterizedTest
     @MethodSource ("inputValidation")
     public void inputValidation(Predicate input, RewriteRule rule){
-        assertThrows(IllegalArgumentException.class, () -> {
-            rule.rewrite(input);
-        });
+        assertNull(rule.rewrite(input));
     }
 
     static Stream<Arguments> nestedRules(){

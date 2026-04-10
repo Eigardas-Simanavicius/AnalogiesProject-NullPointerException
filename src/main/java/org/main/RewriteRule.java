@@ -4,6 +4,7 @@ import org.main.Interfaces.Predicate;
 import org.main.Interfaces.Rule;
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.logging.Logger;
 
 
 //README!!
@@ -21,6 +22,8 @@ public class RewriteRule implements Rule {
     private Boolean negation;
     private Boolean exponent;
     private Boolean lessThan;
+
+    private static final Logger logger = Logger.getLogger(RewriteRule.class.getName());
 
     public RewriteRule(String originalPredicate, String rule){
         // ^<!provide_to:benefactor*&denying
@@ -102,7 +105,10 @@ public class RewriteRule implements Rule {
 
 
     public Predicate rewrite(Predicate source){
-        validatePredicate(source);
+        if(!validatePredicate(source)){
+            System.out.println("Input validation failed, check log file for details.");
+            return null;
+        }
 
         //instantiate all "building blocks" for the resulting structure
         Clause output = new Clause("by");
@@ -149,16 +155,20 @@ public class RewriteRule implements Rule {
         return output;
     }
 
-    private void validatePredicate(Predicate source){
+    private boolean validatePredicate(Predicate source){
         if(source == null){
-            throw new IllegalArgumentException("Null input not allowed");
+            logger.warning("Null input passed as predicate input to rewriteRule");
+            return false;
         }
         if(!source.getName().equals(this.originalPredicate)){
-            throw new IllegalArgumentException("Predicates do not match between rule and source");
+            logger.warning("Rule not applicable to input predicate, as predicates are mismatched.");
+            return false;
         }
         if(source.getChildren().size() > 2){
-            throw new IllegalArgumentException("Predicate has more than 2 children, processing undefined");
+            logger.warning("Input predicate has more than 2 children, rule does not apply");
+            return false;
         }
+        return true;
     }
 
 }
