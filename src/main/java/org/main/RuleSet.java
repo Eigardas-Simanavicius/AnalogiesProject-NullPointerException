@@ -36,7 +36,7 @@ public class RuleSet {
 
 
 
-            if(delimitedLine.size() > 2) {
+            if(delimitedLine.size() > 1) {
                 String verb = delimitedLine.removeFirst();
                 delimitedLine.removeIf(x -> !x.matches("^.*_.*:.*&.*$"));
 
