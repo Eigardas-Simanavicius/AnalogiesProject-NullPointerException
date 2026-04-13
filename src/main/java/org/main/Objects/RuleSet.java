@@ -16,13 +16,18 @@ public class RuleSet {
 
 
     public RuleSet(String fileDir) throws FileNotFoundException {
-        if (!loadedFiles.contains(fileDir)) { // Creates and populates the stringRules with content from a file if not done so already
-            loadRulesFromFile(fileDir);
-            loadedFiles.add(fileDir);
-        }
+        loadRulesFromFile(fileDir);
     }
 
-    private void loadRulesFromFile(String fileDir) throws FileNotFoundException {
+    public RuleSet(){}
+
+    public void loadRulesFromFile(String fileDir) throws FileNotFoundException {
+        if(loadedFiles.contains(fileDir)){ // Creates and populates the stringRules with content from a file if not done so already
+            return;
+        }
+
+        loadedFiles.add(fileDir);
+
         File ruleFile = new File(fileDir);
         Scanner scanner = new Scanner(ruleFile);
 
@@ -52,7 +57,6 @@ public class RuleSet {
                 }
             }
         }
-        System.out.println(stringRules);
     }
 
     // Returns string representation of rewriting rules for a given verb
