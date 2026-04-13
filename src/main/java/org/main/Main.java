@@ -1,6 +1,8 @@
 package org.main;
 
 import org.main.Interfaces.Predicate;
+import org.main.Objects.Clause;
+import org.main.Objects.RewriteRule;
 
 import java.io.IOException;
 import java.util.ArrayList;

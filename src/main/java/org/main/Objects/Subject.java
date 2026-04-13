@@ -1,9 +1,7 @@
-package org.main;
+package org.main.Objects;
 
 import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
-
-import java.security.InvalidParameterException;
 
 public class Subject implements AnalogicalObject {
     private Predicate parent;

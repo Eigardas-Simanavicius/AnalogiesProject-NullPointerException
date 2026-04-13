@@ -1,11 +1,9 @@
-package org.main;
+package org.main.Objects;
 
 import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
-import org.main.Interfaces.Rule;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Stack;
 

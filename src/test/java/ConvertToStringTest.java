@@ -1,7 +1,6 @@
 import org.junit.Test;
-import org.main.AnalogyManager;
-import org.main.Clause;
-import org.main.Subject;
+import org.main.Objects.Clause;
+import org.main.Objects.Subject;
 
 import static org.junit.Assert.assertEquals;
 

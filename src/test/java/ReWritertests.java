@@ -1,10 +1,10 @@
 import org.jspecify.annotations.NonNull;
 import org.junit.Test;
 import org.main.AnalogyManager;
-import org.main.Clause;
+import org.main.Objects.Clause;
 import org.main.Interfaces.Predicate;
 import org.main.ReWriter;
-import org.main.RewriteRule;
+import org.main.Objects.RewriteRule;
 
 import java.util.ArrayList;
 

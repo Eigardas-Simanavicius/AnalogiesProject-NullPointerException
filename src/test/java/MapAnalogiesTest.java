@@ -1,8 +1,8 @@
 import org.junit.Test;
 import org.main.AnalogyManager;
-import org.main.Clause;
+import org.main.Objects.Clause;
 import org.main.MappingManager;
-import org.main.Subject;
+import org.main.Objects.Subject;
 
 import java.util.HashMap;
 

@@ -2,8 +2,9 @@ package org.main;
 
 import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
+import org.main.Objects.Clause;
+import org.main.Objects.Subject;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 

@@ -3,7 +3,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.main.AnalogyManager;
 import org.main.Interfaces.Predicate;
-import org.main.RewriteRule;
+import org.main.Objects.RewriteRule;
 
 import java.security.InvalidParameterException;
 import java.util.stream.Stream;

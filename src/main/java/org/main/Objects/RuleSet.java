@@ -1,4 +1,4 @@
-package org.main;
+package org.main.Objects;
 
 import java.io.File;
 import java.io.FileNotFoundException;

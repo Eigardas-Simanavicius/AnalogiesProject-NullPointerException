@@ -1,9 +1,7 @@
 import org.junit.Test;
-import org.main.AnalogyManager;
-import org.main.Clause;
-import org.main.Interfaces.AnalogicalObject;
+import org.main.Objects.Clause;
 import org.main.Interfaces.Predicate;
-import org.main.Subject;
+import org.main.Objects.Subject;
 
 import java.util.ArrayList;
 

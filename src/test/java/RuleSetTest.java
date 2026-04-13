@@ -1,6 +1,6 @@
 import org.junit.Test;
-import org.main.RewriteRule;
-import org.main.RuleSet;
+import org.main.Objects.RewriteRule;
+import org.main.Objects.RuleSet;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

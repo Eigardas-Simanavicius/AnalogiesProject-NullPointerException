@@ -1,7 +1,8 @@
-package org.main;
+package org.main.Objects;
 import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 import org.main.Interfaces.Rule;
+
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.logging.Level;

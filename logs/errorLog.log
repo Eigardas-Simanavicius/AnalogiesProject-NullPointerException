@@ -1,20 +1,20 @@
-Apr 10, 2026 5:43:46 AM org.main.RewriteRule validatePredicate
+Apr 10, 2026 5:43:46 AM org.main.Objects.RewriteRule validatePredicate
 WARNING: Rule not applicable to input predicate, as predicates are mismatched.
-Apr 10, 2026 5:44:21 AM org.main.RewriteRule validatePredicate
+Apr 10, 2026 5:44:21 AM org.main.Objects.RewriteRule validatePredicate
 WARNING: Rule not applicable to input predicate, as predicates are mismatched.
 Apr 10, 2026 11:57:03 A.M. org.main.ConfigSetup createDefaultConfig
 WARNING: No config found or provided, will create default file, empty by default,nothing will be loaded
-Apr 10, 2026 11:57:03 A.M. org.main.RewriteRule validatePredicate
+Apr 10, 2026 11:57:03 A.M. org.main.Objects.RewriteRule validatePredicate
 WARNING: Rule not applicable to input predicate, as predicates are mismatched.
 Apr 10, 2026 11:59:05 A.M. org.main.ConfigSetup createDefaultConfig
 WARNING: No config found or provided, will create default file, empty by default,nothing will be loaded
-Apr 10, 2026 11:59:05 A.M. org.main.RewriteRule validatePredicate
+Apr 10, 2026 11:59:05 A.M. org.main.Objects.RewriteRule validatePredicate
 WARNING: Rule not applicable to input predicate, as predicates are mismatched.
 Apr 10, 2026 12:02:19 P.M. org.main.ConfigSetup createDefaultConfig
 WARNING: No config found or provided, will create default file, empty by default,nothing will be loaded
-Apr 10, 2026 12:02:19 P.M. org.main.RewriteRule validatePredicate
+Apr 10, 2026 12:02:19 P.M. org.main.Objects.RewriteRule validatePredicate
 WARNING: Rule not applicable to input predicate, as predicates are mismatched.
 Apr 10, 2026 12:02:33 P.M. org.main.ConfigSetup createDefaultConfig
 WARNING: No config found or provided, will create default file, empty by default,nothing will be loaded
-Apr 10, 2026 12:02:33 P.M. org.main.RewriteRule validatePredicate
+Apr 10, 2026 12:02:33 P.M. org.main.Objects.RewriteRule validatePredicate
 WARNING: Rule not applicable to input predicate, as predicates are mismatched.
