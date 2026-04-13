@@ -180,7 +180,8 @@ public class AnalogyManager {
         int layerSize = nestedLayer.size();
         int layerDepth = 0;
 
-        do{
+        // Loops through each layer of
+        while(layerSize != 0){
             richness += Math.pow(10,layerDepth) * nestedLayer.size();
 
             for(int i = 0; i < layerSize; i++){
@@ -195,10 +196,12 @@ public class AnalogyManager {
 
             layerSize = nestedLayer.size();
 
-        }while(layerSize != 0);
+        }
 
         richness = Math.log10(richness);
         return richness;
     }
+
+
 }
 
