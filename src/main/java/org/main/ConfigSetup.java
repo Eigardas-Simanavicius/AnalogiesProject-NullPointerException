@@ -1,5 +1,8 @@
 package org.main;
 
+import org.main.Objects.Config;
+import org.main.Objects.RuleSet;
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -35,22 +38,27 @@ public class ConfigSetup {
         logger.log(Level.WARNING, "No config found or provided, will create default file, empty by default,nothing will be loaded");
     }
 
-    private static void setupConfig(File config) {
+    private static Config setupConfig(File configFile) {
         System.out.println("here");
-
-        try (Scanner myReader = new Scanner(config)) {
+        Config config = new Config();
+        try (Scanner myReader = new Scanner(configFile)) {
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
                 String[] currLine = line.replace(" ","").split("=");
                 if(currLine[0].equals("rules")){
-                    //new RuleSet(line.split("=")[1]);
-                    // TODO fix when ruleset works
-                }else if(currLine[1].equals("analogies")){
-                    //TODO analogyDataHolder will do stuff here , for next week tho
+                    config.setRuleFilePath(new RuleSet(currLine[1]));
+                }else if(currLine[0].equals("analogies")){
+                    config.setAnalogiesFilePath(currLine[1]);
+                }else if(currLine[0].equals("rewrite")){
+                    config.setRewrite(Boolean.parseBoolean(currLine[1]));
+                }else if(currLine[0].equals("abstracts")){
+                    config.setRewrite(Boolean.parseBoolean(currLine[1]));
                 }
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        return config;
     }
 }

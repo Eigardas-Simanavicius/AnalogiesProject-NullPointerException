@@ -10,7 +10,7 @@ import java.util.logging.*;
 
 
 public class Main {
-    public static void main(String[] args) throws IllegalArgumentException, IOException {
+    public static void main(String[] args) throws InterruptedException {
 
         //logger initialization
         Logger rootLogger = Logger.getLogger("");
@@ -36,7 +36,7 @@ public class Main {
             ConfigSetup.applyConfig(args[0]);
         }
 
-        AnalogyDataHolder.addAnalogiesFromFile("/home/eigardas/Documents/Github/AnalogiesProject/structureddomains.txt",4);
+        AnalogyDataHolder.addAnalogiesFromFile("/home/eigardas/Documents/Github/AnalogiesProject/test.txt",1,false);
 
     }
 }
