@@ -36,7 +36,7 @@ public class Main {
             ConfigSetup.applyConfig(args[0]);
         }
 
-        AnalogyDataHolder.addAnalogiesFromFile("/home/eigardas/Documents/Github/AnalogiesProject/structureddomains.txt");
+        AnalogyDataHolder.addAnalogiesFromFile("/home/eigardas/Documents/Github/AnalogiesProject/structureddomains.txt",4);
 
     }
 }
