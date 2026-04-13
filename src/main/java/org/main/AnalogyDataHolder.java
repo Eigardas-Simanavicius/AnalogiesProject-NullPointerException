@@ -61,7 +61,10 @@ public class AnalogyDataHolder {
         int endline;
         CountDownLatch latch;
         sortAnalogies(String filename,int startLine,int endline,CountDownLatch latch){
-
+            this.filename = filename;
+            this.endline = endline;
+            this.startLine = startLine;
+            this.latch = latch;
         }
 
         public void run(){
