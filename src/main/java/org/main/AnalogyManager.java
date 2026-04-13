@@ -180,10 +180,11 @@ public class AnalogyManager {
         int layerSize = nestedLayer.size();
         int layerDepth = 0;
 
-        // Loops through each layer of
+        // Loops through each layer of analogical objects and sums the richness at each point
         while(layerSize != 0){
             richness += Math.pow(10,layerDepth) * nestedLayer.size();
 
+            // replaces queue with next layer in depth
             for(int i = 0; i < layerSize; i++){
                 AnalogicalObject analogicalObject = nestedLayer.remove();
 
