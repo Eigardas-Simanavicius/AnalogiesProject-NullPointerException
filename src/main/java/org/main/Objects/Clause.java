@@ -207,6 +207,7 @@ public class Clause implements Predicate{
                 new ArrayList<>(
                         children.stream().map(
                                 x -> {
+                                    if(x == null) return null;
                                     AnalogicalObject newChild = x.getDeepCopy();
                                     newChild.setParent(copy);
                                     return newChild;
