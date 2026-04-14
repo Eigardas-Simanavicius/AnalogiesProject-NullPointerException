@@ -52,6 +52,7 @@ public class Clause implements Predicate{
                         hasSubjects = true;
                     }
                 }
+
             }
             if(hasSubjects){
                 //Assuming that parantheses only need to be closed if the predicate has a subject
@@ -61,6 +62,7 @@ public class Clause implements Predicate{
                         int counter = 1;
                         Predicate possibleParent = current.getParent();
                         while(next.getParent() != possibleParent){
+                            System.out.println(possibleParent.getName());
                             possibleParent = possibleParent.getParent();
                             counter++;
                         }

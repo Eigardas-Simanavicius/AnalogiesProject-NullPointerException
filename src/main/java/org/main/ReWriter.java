@@ -21,20 +21,16 @@ public class ReWriter {
             curr = predicates.get(locations.get(i));
             replacePredicate(curr,rulesMap.get(curr.getName()).get(currCount[i]));
         }
-
         return reWrite;
     }
 
     private static void replacePredicate(Predicate curr, RewriteRule rule){
         ArrayList<AnalogicalObject> children = null;
         Predicate replacement = null;
-
         Predicate parent = curr.getParent();
         curr.setParent(null);
         children = ((Clause) curr).getClauseChildren();
-        ((Clause) curr).removeClauses();
         parent.getChildren().remove(curr);
-        System.out.println(rule.getOriginalPredicate());
         replacement = rule.rewrite((Predicate) curr);
         if(replacement != null) {
             replacement.setParent(parent);
@@ -51,7 +47,6 @@ public class ReWriter {
         removeNumbers((Clause) source);
         // Linked hash maps ensure items are returned in order of insertion, very important here
         LinkedHashMap<String,ArrayList<RewriteRule>> rulesMap = mapAllRules(rules,source);
-        System.out.println(rulesMap.toString());
         if(rulesMap.isEmpty()){
             logger.log(Level.WARNING, "no relevant rules for analogy " + source + " returning nothing");
             return null;
@@ -63,7 +58,6 @@ public class ReWriter {
         int[] currCount = new int[targets.size()];
 
         for (int i = 0; i < permutationCount; i++) {
-            System.out.println(source.toString());
             permutations.add(reWriteAnalogy(rulesMap, AnalogyManager.ConvertToOOP(source.toString()),currCount,targets));
             updatePermutation(currCount,currCount.length-1,maxCount);
         }
@@ -128,7 +122,6 @@ public class ReWriter {
     // we will write them in the following way
     // 0,0,0 -> 0,0,1 -> 0,0,2 -> 0,0,3 -> 0,1,0 .. etc etc , this way we create all permutations
     private static void updatePermutation(int[] currCount,int n,int[] maxCount){
-        System.out.println(Arrays.toString(currCount) + " " + Arrays.toString(maxCount));
         if(currCount[n] < maxCount[n]){
             currCount[n]++;
         }else if(n != 0){

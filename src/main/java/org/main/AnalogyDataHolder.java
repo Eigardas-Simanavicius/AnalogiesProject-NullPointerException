@@ -1,6 +1,8 @@
 package org.main;
 
+import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
+import org.main.Objects.Clause;
 import org.main.Objects.Config;
 import org.main.Objects.RewriteRule;
 
@@ -8,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
@@ -77,7 +80,6 @@ public class AnalogyDataHolder {
             try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
                 String line ;
                 for (int i = 0; i < endline; i++){
-                    System.out.println(startLine  + " " + endline);
                     if(i >= startLine){
                         line = br.readLine();
                         processLine(line,config);
@@ -113,7 +115,8 @@ public class AnalogyDataHolder {
                     Analogies.put(topic, new ArrayList<String>());
                     Analogies.get(topic).add(arr[i]);
                     if(config.isRewrite()){
-                        Analogies.putAll((Map<? extends String, ? extends ArrayList<String>>) getRewrites(arr[i],config));
+                        ArrayList<String> array =  getRewrites(arr[i],config);
+                        System.out.println();
                     }
                 }
             }
@@ -123,8 +126,13 @@ public class AnalogyDataHolder {
 
         // incase we need all the rewrites
         private static ArrayList<String> getRewrites(String Source, Config config){
-           return  (ArrayList<String>) (ReWriter.reWriteAnalogyAllPermuatations(config.getRuleSet().getRuleForAnalogy(Source),AnalogyManager.ConvertToOOP(Source))).stream().map(f -> f.toString());
+            ArrayList<String> re = new ArrayList<>();
+            ArrayList<Predicate> preds = ReWriter.reWriteAnalogyAllPermuatations(config.getRuleSet().getRuleForAnalogy(Source),AnalogyManager.ConvertToOOP(Source));
 
+            System.out.println(preds.getFirst().toString());
+            preds.getFirst().getAllChildren().forEach(f -> System.out.println(f.getName()));
+
+            return null;
         }
 
     }

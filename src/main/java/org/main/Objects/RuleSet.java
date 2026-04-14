@@ -52,6 +52,7 @@ public class RuleSet {
                 }
             }
         }
+        System.out.println(stringRules);
     }
 
     // Returns string representation of rewriting rules for a given verb
