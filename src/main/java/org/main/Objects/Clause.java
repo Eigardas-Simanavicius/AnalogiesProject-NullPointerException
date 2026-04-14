@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Stack;
 
 public class Clause implements Predicate{
-    private ArrayList<AnalogicalObject> children = new ArrayList<AnalogicalObject>();
+    private final ArrayList<AnalogicalObject> children = new ArrayList<AnalogicalObject>();
     private Predicate parent = null;
     private String name;
 
@@ -194,8 +194,28 @@ public class Clause implements Predicate{
         }
     }
 
+    @Override
     public boolean hasParent(){
         return !(this.getParent() == null);
+    }
+
+    @Override
+    public AnalogicalObject getDeepCopy(){
+        Clause copy = new Clause(name);
+
+        copy.addAllEmbedded(
+                new ArrayList<>(
+                        children.stream().map(
+                                x -> {
+                                    AnalogicalObject newChild = x.getDeepCopy();
+                                    newChild.setParent(copy);
+                                    return newChild;
+                                }
+                        ).toList()
+                )
+        );
+
+        return copy;
     }
 
 

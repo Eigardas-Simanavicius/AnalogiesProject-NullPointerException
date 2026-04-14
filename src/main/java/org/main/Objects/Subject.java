@@ -46,6 +46,11 @@ public class Subject implements AnalogicalObject {
         }
     }
 
+    @Override
+    public AnalogicalObject getDeepCopy(){
+        return new Subject(name);
+    }
+
     public boolean isHasAsterisk(){
         return hasAsterisk;
     }
@@ -53,8 +58,10 @@ public class Subject implements AnalogicalObject {
         hasAsterisk = true;
     }
 
+    @Override
     public boolean hasParent(){
         return !(this.getParent()==null);
     }
+
 }
 

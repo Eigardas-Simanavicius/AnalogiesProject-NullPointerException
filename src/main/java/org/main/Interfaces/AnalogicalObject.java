@@ -1,6 +1,8 @@
 package org.main.Interfaces;
 
 
+import org.main.AnalogyManager;
+
 public interface AnalogicalObject {
     String toString();
     Predicate getParent();
@@ -9,4 +11,5 @@ public interface AnalogicalObject {
     void setName(String name);
     int getDepth();
     boolean hasParent();
+    AnalogicalObject getDeepCopy();
 }
