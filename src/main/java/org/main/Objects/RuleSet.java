@@ -72,12 +72,10 @@ public class RuleSet {
 
     public ArrayList<RewriteRule> getRuleForAnalogy(String analogy) {
         ArrayList<RewriteRule> rules = new ArrayList<>();
-        System.out.println(Arrays.toString(analogy.split(" ")));
         String[] words = analogy.split(" ");
         for (String word : words) {
             if (word.charAt(0) == '(') {
                 rules.addAll(getRulesFor(word.replace("(", "").replace(".0", "")));
-                System.out.println(word);
             }
         }
         return rules;

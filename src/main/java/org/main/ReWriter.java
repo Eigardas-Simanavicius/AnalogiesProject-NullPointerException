@@ -34,7 +34,7 @@ public class ReWriter {
         children = ((Clause) curr).getClauseChildren();
         ((Clause) curr).removeClauses();
         parent.getChildren().remove(curr);
-        System.out.println(curr.getName());
+        System.out.println(rule.getOriginalPredicate());
         replacement = rule.rewrite((Predicate) curr);
         if(replacement != null) {
             replacement.setParent(parent);
