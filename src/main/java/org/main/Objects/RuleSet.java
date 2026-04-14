@@ -10,8 +10,8 @@ import java.util.*;
 public class RuleSet {
 
     // Variables are static to reduce memory usage across multiple instances
-    private static TreeMap<String, ArrayList<String>> stringRules = new TreeMap<>();     // Represents rules as strings (Populated on first instantiation)
-    private static TreeMap<String, ArrayList<RewriteRule>> parsedRules = new TreeMap<>();  // Represents rules using rewriteRule class (Populated as needed)
+    private static HashMap<String, ArrayList<String>> stringRules = new HashMap<>();     // Represents rules as strings (Populated on first instantiation)
+    private static HashMap<String, ArrayList<RewriteRule>> parsedRules = new HashMap<>();  // Represents rules using rewriteRule class (Populated as needed)
     private static ArrayList<String> loadedFiles = new ArrayList<>();
 
 

@@ -1,8 +1,6 @@
 package org.main;
 
-import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
-import org.main.Objects.Clause;
 import org.main.Objects.Config;
 import org.main.Objects.RewriteRule;
 
@@ -10,8 +8,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;
@@ -127,7 +123,7 @@ public class AnalogyDataHolder {
         // incase we need all the rewrites
         private static ArrayList<String> getRewrites(String Source, Config config){
             ArrayList<String> re = new ArrayList<>();
-            ArrayList<Predicate> preds = ReWriter.reWriteAnalogyAllPermuatations(config.getRuleSet().getRuleForAnalogy(Source),AnalogyManager.ConvertToOOP(Source));
+            ArrayList<Predicate> preds = ReWriter.reWriteAnalogyAllPermutations(config.getRuleSet().getRuleForAnalogy(Source),AnalogyManager.ConvertToOOP(Source));
 
             System.out.println(preds.getFirst().toString());
             preds.getFirst().getAllChildren().forEach(f -> System.out.println(f.getName()));

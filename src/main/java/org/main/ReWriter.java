@@ -42,7 +42,7 @@ public class ReWriter {
         }
     }
     // this is the main controller function,
-    public static ArrayList<Predicate> reWriteAnalogyAllPermuatations(ArrayList<RewriteRule> rules, Predicate source)  {
+    public static ArrayList<Predicate> reWriteAnalogyAllPermutations(ArrayList<RewriteRule> rules, Predicate source)  {
 
         removeNumbers((Clause) source);
         // Linked hash maps ensure items are returned in order of insertion, very important here
