@@ -150,11 +150,11 @@ public class Clause implements Predicate{
             return parent.getDepth() + 1;
         }
     }
-    public ArrayList<AnalogicalObject> getClauseChildren(){
+    public ArrayList<AnalogicalObject> getChildrensChildren(){
         ArrayList<AnalogicalObject> clauses = new ArrayList<>();
         for (AnalogicalObject obj: this.getChildren()){
             if(obj instanceof Clause){
-                clauses.add( obj);
+                clauses.addAll(((Clause) obj).getChildren());
             }
         }
         return clauses;

@@ -29,12 +29,10 @@ public class ReWriter {
         Predicate replacement = null;
         Predicate parent = curr.getParent();
         curr.setParent(null);
-        children = ((Clause) curr).getClauseChildren();
         parent.getChildren().remove(curr);
         replacement = rule.rewrite((Predicate) curr);
         if(replacement != null) {
             replacement.setParent(parent);
-            replacement.addAllEmbedded(children);
             parent.addEmbedded(replacement);
         }else{
 
