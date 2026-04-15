@@ -1,6 +1,7 @@
 package org.main;
 
 import org.main.Interfaces.Predicate;
+import org.main.Objects.Clause;
 import org.main.Objects.Config;
 import org.main.Objects.RewriteRule;
 
@@ -129,6 +130,12 @@ public class AnalogyDataHolder {
             preds.getFirst().getAllChildren().forEach(f -> System.out.println(f.getName()));
 
             return null;
+        }
+
+        private int hashPredicate(String predicate){
+            Clause pred = (Clause)AnalogyManager.ConvertToOOP(predicate);
+            String abstractPred = AnalogyManager.convertToAbstractString(pred, false);
+            return abstractPred.hashCode();
         }
 
     }

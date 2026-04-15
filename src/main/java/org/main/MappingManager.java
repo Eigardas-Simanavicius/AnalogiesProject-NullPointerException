@@ -141,10 +141,4 @@ public class MappingManager {
     private static boolean checkEquality(String s1,String s2){
         return (s1.toCharArray()[0] == '*') == (s2.toCharArray()[0] == '*');
     }
-
-    public int hashPredicate(String predicate){
-        Clause pred = (Clause)AnalogyManager.ConvertToOOP(predicate);
-        String abstractPred = AnalogyManager.convertToAbstractString(pred, false);
-        return abstractPred.hashCode();
-    }
 }
