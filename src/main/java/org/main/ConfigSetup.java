@@ -58,8 +58,6 @@ public class ConfigSetup {
                     config.setRewrite(Boolean.parseBoolean(currLine[1]));
                 }else if(currLine[0].equals("abstracts")){
                     config.setRewrite(Boolean.parseBoolean(currLine[1]));
-                } else if (currLine[0].equals("threads")) {
-                    config.setThreadsUsed(Integer.parseInt(currLine[1]));
                 }
             }
         } catch (FileNotFoundException e) {

@@ -55,10 +55,10 @@ public class AnalogyDataHolder {
                 analogies.get(topic).add(arr[i]);
             }
             if (structuresHash.containsKey(hashPredicate(arr[i]))) {
-                structuresHash.get(hashPredicate(arr[i])).add(arr[i]);
+                structuresHash.get(hashPredicate(arr[i])).add(arr[i].intern());
             } else {
                 structuresHash.put(hashPredicate(arr[i]), new ArrayList<String>());
-                structuresHash.get(hashPredicate(arr[i])).add(arr[i]);
+                structuresHash.get(hashPredicate(arr[i])).add(arr[i].intern());
             }
 
 
@@ -70,10 +70,10 @@ public class AnalogyDataHolder {
 
             for (String rewrite : rewrites) {
                 if (structuresHash.containsKey(hashPredicate(rewrite))) {
-                    structuresHash.get(hashPredicate(rewrite)).add(rewrite);
+                    structuresHash.get(hashPredicate(rewrite)).add(rewrite.intern());
                 } else {
                     structuresHash.put(hashPredicate(rewrite), new ArrayList<String>());
-                    structuresHash.get(hashPredicate(rewrite)).add(rewrite);
+                    structuresHash.get(hashPredicate(rewrite)).add(rewrite.intern());
                 }
             }
         }
@@ -99,5 +99,12 @@ public class AnalogyDataHolder {
         String abstractPred = AnalogyManager.convertToAbstractString(pred, false);
         return abstractPred.hashCode();
     }
+    public static HashMap<String, ArrayList<String>> getAnalogies(){
+        return analogies;
+    }
+    public static HashMap<Integer, ArrayList<String>> getStructureHash(){
+        return structuresHash;
+    }
+
 }
 

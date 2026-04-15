@@ -42,5 +42,6 @@ public class Main {
         config = ConfigSetup.applyConfig("/home/eigardas/Documents/Github/AnalogiesProject/config.txt");
         AnalogyDataHolder.addAnalogiesFromFile(config.getAnalogiesFilePath(),config);
 
+
     }
 }
