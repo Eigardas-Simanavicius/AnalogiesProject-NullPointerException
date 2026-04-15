@@ -232,3 +232,11 @@ Apr 15, 2026 12:00:39 P.M. org.main.AnalogyDataHolder addAnalogiesFromFile
 WARNING: Threads given was less then zero, will default to one thread
 Apr 15, 2026 12:00:59 P.M. org.main.AnalogyDataHolder addAnalogiesFromFile
 WARNING: Threads given was less then zero, will default to one thread
+Apr 15, 2026 12:01:53 P.M. org.main.AnalogyDataHolder addAnalogiesFromFile
+WARNING: Threads given was less then zero, will default to one thread
+Apr 15, 2026 12:01:53 P.M. org.main.ReWriter reWriteAnalogyAllPermutations
+WARNING: no relevant rules for analogy (if(can(exercise *Adonis muscle))(can(flex *Adonis muscle))) returning nothing
+Apr 15, 2026 12:02:23 P.M. org.main.AnalogyDataHolder addAnalogiesFromFile
+WARNING: Threads given was less then zero, will default to one thread
+Apr 15, 2026 12:02:23 P.M. org.main.ReWriter reWriteAnalogyAllPermutations
+WARNING: no relevant rules for analogy (if(can(exercise *Adonis muscle))(can(flex *Adonis muscle))) returning nothing

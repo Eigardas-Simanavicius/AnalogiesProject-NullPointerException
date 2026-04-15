@@ -146,8 +146,10 @@ public class AnalogyDataHolder {
         private static ArrayList<String> getRewrites(String Source, Config config){
             ArrayList<String> re = new ArrayList<>();
             ArrayList<Predicate> preds = ReWriter.reWriteAnalogyAllPermutations(config.getRuleSet().getRuleForAnalogy(Source),AnalogyManager.ConvertToOOP(Source));
-            for(Predicate pred: preds){
-                re.add(pred.toString());
+            if(preds != null) {
+                for (Predicate pred : preds) {
+                    re.add(pred.toString());
+                }
             }
 
             return re;
