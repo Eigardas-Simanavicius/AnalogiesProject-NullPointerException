@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Stack;
 
 public class Clause implements Predicate{
-    private ArrayList<AnalogicalObject> children = new ArrayList<AnalogicalObject>();
+    private final ArrayList<AnalogicalObject> children = new ArrayList<AnalogicalObject>();
     private Predicate parent = null;
     private String name;
 
@@ -62,7 +62,6 @@ public class Clause implements Predicate{
                         int counter = 1;
                         Predicate possibleParent = current.getParent();
                         while(next.getParent() != possibleParent){
-                            System.out.println(possibleParent.getName());
                             possibleParent = possibleParent.getParent();
                             counter++;
                         }
@@ -150,11 +149,11 @@ public class Clause implements Predicate{
             return parent.getDepth() + 1;
         }
     }
-    public ArrayList<AnalogicalObject> getClauseChildren(){
+    public ArrayList<AnalogicalObject> getChildrensChildren(){
         ArrayList<AnalogicalObject> clauses = new ArrayList<>();
         for (AnalogicalObject obj: this.getChildren()){
             if(obj instanceof Clause){
-                clauses.add( obj);
+                clauses.addAll(((Clause) obj).getChildren());
             }
         }
         return clauses;
@@ -194,8 +193,29 @@ public class Clause implements Predicate{
         }
     }
 
+    @Override
     public boolean hasParent(){
         return !(this.getParent() == null);
+    }
+
+    @Override
+    public AnalogicalObject getDeepCopy(){
+        Clause copy = new Clause(name);
+
+        copy.addAllEmbedded(
+                new ArrayList<>(
+                        children.stream().map(
+                                x -> {
+                                    if(x == null) return null;
+                                    AnalogicalObject newChild = x.getDeepCopy();
+                                    newChild.setParent(copy);
+                                    return newChild;
+                                }
+                        ).toList()
+                )
+        );
+
+        return copy;
     }
 
 

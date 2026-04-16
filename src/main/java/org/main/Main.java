@@ -14,7 +14,6 @@ import java.util.logging.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-
         //logger initialization
         Logger rootLogger = Logger.getLogger("");
         try{
@@ -35,10 +34,15 @@ public class Main {
         // no given config
         Config config;
         if(args.length == 0){
-            config = ConfigSetup.findConfig();
+            //config = ConfigSetup.findConfig();
         }else{
             config = ConfigSetup.applyConfig(args[0]);
         }
+        config = ConfigSetup.applyConfig("config.txt");
+        System.out.println(config != null);
+        AnalogyDataHolder.addAnalogiesFromFile(config.getAnalogiesFilePath(),config);
+        System.out.println(AnalogyDataHolder.getAnalogies());
+
 
 
     }

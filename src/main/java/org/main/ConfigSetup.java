@@ -4,6 +4,8 @@ import org.main.Objects.Config;
 import org.main.Objects.RuleSet;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,12 +41,10 @@ public class ConfigSetup {
     private static Config createDefaultConfig(File configFile) throws IOException {
 
         logger.log(Level.WARNING, "No config found or provided, will create default file, empty by default,nothing will be loaded");
-        //return configFile.createNewFile();
         return null;
     }
 
     public static Config setupConfig(File configFile) {
-        System.out.println("here");
         Config config = new Config();
         try (Scanner myReader = new Scanner(configFile)) {
             while (myReader.hasNextLine()) {
@@ -56,8 +56,10 @@ public class ConfigSetup {
                     config.setAnalogiesFilePath(currLine[1]);
                 }else if(currLine[0].equals("rewrite")){
                     config.setRewrite(Boolean.parseBoolean(currLine[1]));
-                }else if(currLine[0].equals("abstracts")){
-                    config.setRewrite(Boolean.parseBoolean(currLine[1]));
+                }else if(currLine[0].equals("targets")){
+                    config.setTargets( Arrays.asList(currLine[1].split(",")));
+                } else if (currLine[0].equals("jumps")) {
+                    config.setJumps(Integer.parseInt(currLine[1]));
                 }
             }
         } catch (FileNotFoundException e) {

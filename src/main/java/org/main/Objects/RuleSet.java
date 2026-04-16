@@ -10,19 +10,24 @@ import java.util.*;
 public class RuleSet {
 
     // Variables are static to reduce memory usage across multiple instances
-    private static TreeMap<String, ArrayList<String>> stringRules = new TreeMap<>();     // Represents rules as strings (Populated on first instantiation)
-    private static TreeMap<String, ArrayList<RewriteRule>> parsedRules = new TreeMap<>();  // Represents rules using rewriteRule class (Populated as needed)
+    private static HashMap<String, ArrayList<String>> stringRules = new HashMap<>();     // Represents rules as strings (Populated on first instantiation)
+    private static HashMap<String, ArrayList<RewriteRule>> parsedRules = new HashMap<>();  // Represents rules using rewriteRule class (Populated as needed)
     private static ArrayList<String> loadedFiles = new ArrayList<>();
 
 
     public RuleSet(String fileDir) throws FileNotFoundException {
-        if (!loadedFiles.contains(fileDir)) { // Creates and populates the stringRules with content from a file if not done so already
-            loadRulesFromFile(fileDir);
-            loadedFiles.add(fileDir);
-        }
+        loadRulesFromFile(fileDir);
     }
 
-    private void loadRulesFromFile(String fileDir) throws FileNotFoundException {
+    public RuleSet(){}
+
+    public void loadRulesFromFile(String fileDir) throws FileNotFoundException {
+        if(loadedFiles.contains(fileDir)){ // Creates and populates the stringRules with content from a file if not done so already
+            return;
+        }
+
+        loadedFiles.add(fileDir);
+
         File ruleFile = new File(fileDir);
         Scanner scanner = new Scanner(ruleFile);
 
@@ -52,7 +57,6 @@ public class RuleSet {
                 }
             }
         }
-        System.out.println(stringRules);
     }
 
     // Returns string representation of rewriting rules for a given verb

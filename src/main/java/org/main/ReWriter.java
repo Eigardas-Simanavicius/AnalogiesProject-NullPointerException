@@ -29,13 +29,10 @@ public class ReWriter {
         Predicate replacement = null;
         Predicate parent = curr.getParent();
         curr.setParent(null);
-        children = ((Clause) curr).getChildren();
-        ((Clause) curr).removeClauses();
         parent.getChildren().remove(curr);
         replacement = rule.rewrite((Predicate) curr);
         if(replacement != null) {
             replacement.setParent(parent);
-            replacement.addAllEmbedded(children);
             parent.addEmbedded(replacement);
         }else{
 
@@ -43,7 +40,7 @@ public class ReWriter {
         }
     }
     // this is the main controller function,
-    public static ArrayList<Predicate> reWriteAnalogyAllPermuatations(ArrayList<RewriteRule> rules, Predicate source)  {
+    public static ArrayList<Predicate> reWriteAnalogyAllPermutations(ArrayList<RewriteRule> rules, Predicate source)  {
 
         removeNumbers((Clause) source);
         // Linked hash maps ensure items are returned in order of insertion, very important here
@@ -59,7 +56,7 @@ public class ReWriter {
         int[] currCount = new int[targets.size()];
 
         for (int i = 0; i < permutationCount; i++) {
-            permutations.add(reWriteAnalogy(rulesMap, AnalogyManager.ConvertToOOP(source.toString()),currCount,targets));
+            permutations.add(reWriteAnalogy(rulesMap,(Predicate) source.getDeepCopy(),currCount,targets));
             updatePermutation(currCount,currCount.length-1,maxCount);
         }
 

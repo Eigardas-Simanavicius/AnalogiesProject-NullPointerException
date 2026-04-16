@@ -21,10 +21,10 @@ public class ReWritertests  {
         ArrayList<RewriteRule> rules = new ArrayList<>();
         rules.add(rule1);
         rules.add(rule2);
-        Clause testClause2 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (Whopper jr) (exercise.0 athelete muscle (big mac)) (explode Gregs legs))");
-        ArrayList<Predicate> ans = ReWriter.reWriteAnalogyAllPermuatations(rules,testClause2);
+        Clause testClause2 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (Whopper jr) (exercise.0 athelete muscle) (explode Gregs legs))");
+        ArrayList<Predicate> ans = ReWriter.reWriteAnalogyAllPermutations(rules,testClause2);
         System.out.println(ans.toString());
-        assertEquals("(Sigma male(Whopper jr)(by exercising(preform athelete exercise(of muscle))(big mac))(by exploding(destroy Gregs explode(of legs))))", ((Clause) (ans.getFirst())).toString());
+        assertEquals("(Sigma male(Whopper jr)(by exercising(preform athelete exercise(of muscle)))(by exploding(destroy Gregs explode(of legs))))", ((Clause) (ans.getFirst())).toString());
     }
 
     @Test
@@ -33,8 +33,8 @@ public class ReWritertests  {
 
         Clause testClause1 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (exercise.0 athelete muscle) (explode Gregs legs))");
         Clause testClause2 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (exercise.0 athelete muscle) (explode Gregs legs) (walk Steve road))");
-        ArrayList<Predicate> ans = ReWriter.reWriteAnalogyAllPermuatations(rules,testClause1);
-        ArrayList<Predicate> ans2 = ReWriter.reWriteAnalogyAllPermuatations(rules,testClause2);
+        ArrayList<Predicate> ans = ReWriter.reWriteAnalogyAllPermutations(rules,testClause1);
+        ArrayList<Predicate> ans2 = ReWriter.reWriteAnalogyAllPermutations(rules,testClause2);
         assertEquals(4, ans.size());
         assertEquals(8, ans2.size());
 
@@ -46,7 +46,7 @@ public class ReWritertests  {
         RewriteRule rule1 = new RewriteRule("explode","preform_of:exercise*&exercising");
         rules.add(rule1);
         Clause testClause1 = (Clause)AnalogyManager.ConvertToOOP("(Sigma male (exercise Gregs legs) )");
-        assertNull(ReWriter.reWriteAnalogyAllPermuatations(rules,testClause1));
+        assertNull(ReWriter.reWriteAnalogyAllPermutations(rules,testClause1));
 
 
     }

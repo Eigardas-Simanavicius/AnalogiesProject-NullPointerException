@@ -2,6 +2,7 @@ package org.main.Objects;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Config {
 
@@ -9,26 +10,24 @@ public class Config {
     private static boolean abstracts = true;
     private static String analogiesFilePath;
     private static RuleSet ruleSet;
-    private static int threadsUsed;
-    private static ArrayList<String> targets = new ArrayList<>();
+    private static List<String> targets = null;
+    private static int jump = 3;
     public Config(){
 
     }
 
-
-    public  int getThreadsUsed() {
-        return threadsUsed;
+    public  int getJumps() {
+        return jump;
+    }
+    public  void setJumps(int jumps) {
+        Config.jump = jumps;
     }
 
-    public void setThreadsUsed(int threadsUsed) {
-        Config.threadsUsed = threadsUsed;
-    }
-
-    public  ArrayList<String> getTargets() {
+    public  List<String> getTargets() {
         return targets;
     }
 
-    public void setTargets(ArrayList<String> targets) {
+    public void setTargets(List<String> targets) {
         Config.targets = targets;
     }
 

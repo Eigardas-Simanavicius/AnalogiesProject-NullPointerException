@@ -1,142 +1,151 @@
 package org.main;
 
-import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 import org.main.Objects.Clause;
 import org.main.Objects.Config;
-import org.main.Objects.RewriteRule;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 // hold all the analogies, is incharge of parsing and what not
 public class AnalogyDataHolder {
 
-    private static final ConcurrentHashMap<String, ArrayList<String>> Analogies = new ConcurrentHashMap<>();
-    private static final Logger logger = Logger.getLogger(RewriteRule.class.getName());
+    private static final HashMap<String, ArrayList<String>> analogies = new HashMap<>();
+    private static HashMap<Integer, ArrayList<String>> structuresHash = new HashMap<>();
+    private static final Logger logger = Logger.getLogger(AnalogyDataHolder.class.getName());
 
     // setting up out threads
     public static void addAnalogiesFromFile(String filename, Config config) throws InterruptedException {
-        if(config.getThreadsUsed() < 1){
-            config.setThreadsUsed(1);
-            logger.warning("Threads given was less then zero, will default to one thread");
-        }
-        CountDownLatch latch = new CountDownLatch(config.getThreadsUsed());
-       int linesNumber = getLineNumber(filename);
-       int sets = linesNumber/config.getThreadsUsed();
-       int fixnumbers = 0;
-       for(int i = 0;  i < config.getThreadsUsed(); i++){
-            if (i == config.getThreadsUsed()-i){
-                // this is to make up for possible loss of lines when using integer division
-                fixnumbers = linesNumber - ((sets/config.getThreadsUsed()) * config.getThreadsUsed());
-            }
-            Thread t = new sortAnalogies(filename,sets*i,sets*(i+1)+fixnumbers,latch,config);
-            t.start();
-        }
-       try {
-           latch.await();
-       }catch (Exception e){
-           logger.warning("latch exploded");
-       }
-
-    }
-
-    private static int getLineNumber(String filename){
-        int counter = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-            while (br.readLine() != null) {
-                counter++;
+        try (BufferedReader br = new BufferedReader(new FileReader(config.getAnalogiesFilePath()))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                processLine(line,config);
             }
         } catch (IOException e) {
-            logger.warning("File not found, no rules will be written to");
+            System.out.println("Error reading file.");
         }
-        return counter;
     }
 
-    //the main function, each thread will read the their part of the file and work with the analogies
-    static class sortAnalogies extends Thread{
-        String filename;
-        int startLine;
-        int endline;
-        CountDownLatch latch;
-        Config config;
 
-        sortAnalogies(String filename,int startLine,int endline,CountDownLatch latch,Config config){
-            this.filename = filename;
-            this.endline = endline;
-            this.startLine = startLine;
-            this.latch = latch;
-            this.config = config;
-        }
+    // intaking a line, and trying to get something useful out of it
+    public static void processLine(String line, Config config) {
 
-        public void run(){
-            try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-                String line ;
-                for (int i = 0; i < endline; i++){
-                    if(i >= startLine){
-                        line = br.readLine();
-                        processLine(line,config);
-                    }
-                }
-            } catch (IOException e) {
-                logger.warning("File not found, no rules will be written to");
-            }
-            latch.countDown();
-
-        }
-
-        // intaking a line, and trying to get something useful out of it
-        public static void processLine(String line,Config config){
-            String[] arr = line.replace("\t","  ").split(" {2}");
+        String[] arr = line.replace("\t", "  ").split(" {2}");
+        if(config.getTargets() == null || (!config.getTargets().isEmpty() && config.getTargets().contains(arr[0]))) {
             String topic = arr[0];
-            int length = 1;
-            int jump = 3;
+            int jump = config.getJumps();
+            int length;
+            if (config.isRewrite()) {
+                length = 2;
+            } else {
+                length = arr.length;
+            }
+            int i = 0;
+            i = 1;
+            for (i = 1; i < length; i = i + jump) {
+                if (analogies.containsKey(topic)) {
+                    analogies.get(topic).add(arr[i]);
+                } else {
+                    analogies.put(topic, new ArrayList<String>());
+                    analogies.get(topic).add(arr[i]);
+                }
+                if (structuresHash.containsKey(hashPredicate(arr[i]))) {
+                    structuresHash.get(hashPredicate(arr[i])).add(arr[i].intern());
+                } else {
+                    structuresHash.put(hashPredicate(arr[i]), new ArrayList<String>());
+                    structuresHash.get(hashPredicate(arr[i])).add(arr[i].intern());
+                }
 
-            if(!config.isAbstracts()){
-                jump = 2;
+
             }
 
-            if(!config.isRewrite()){
-                length = (arr.length-1)/jump;
-            }
+            if (config.isRewrite()) {
+                ArrayList<String> rewrites = getRewrites(arr[1], config);
+                if (rewrites.isEmpty()) {
+                    analogies.get(topic).addAll(rewrites);
 
-            for(int i = 1; i < arr.length-1; i = i + jump){
-
-                if(Analogies.containsKey(topic)){
-                    Analogies.get(topic).add(arr[i]);
-                }else {
-                    Analogies.put(topic, new ArrayList<String>());
-                    Analogies.get(topic).add(arr[i]);
-                    if(config.isRewrite()){
-                        ArrayList<String> array =  getRewrites(arr[i],config);
-                        System.out.println();
+                    for (String rewrite : rewrites) {
+                        if (structuresHash.containsKey(hashPredicate(rewrite))) {
+                            structuresHash.get(hashPredicate(rewrite)).add(rewrite.intern());
+                        } else {
+                            structuresHash.put(hashPredicate(rewrite), new ArrayList<String>());
+                            structuresHash.get(hashPredicate(rewrite)).add(rewrite.intern());
+                        }
                     }
                 }
             }
-
         }
-
-
-        // incase we need all the rewrites
-        private static ArrayList<String> getRewrites(String Source, Config config){
-            ArrayList<String> re = new ArrayList<>();
-            ArrayList<Predicate> preds = ReWriter.reWriteAnalogyAllPermuatations(config.getRuleSet().getRuleForAnalogy(Source),AnalogyManager.ConvertToOOP(Source));
-
-            System.out.println(preds.getFirst().toString());
-            preds.getFirst().getAllChildren().forEach(f -> System.out.println(f.getName()));
-
-            return null;
-        }
-
     }
 
 
+    // incase we need all the rewrites
+    private static ArrayList<String> getRewrites(String Source, Config config) {
+        ArrayList<String> re = new ArrayList<>();
+        System.out.println(Source + " changeing");
+        ArrayList<Predicate> preds = ReWriter.reWriteAnalogyAllPermutations(config.getRuleSet().getRuleForAnalogy(Source), AnalogyManager.ConvertToOOP(Source));
+        if (preds != null) {
+            for (Predicate pred : preds) {
+                re.add(pred.toString());
+            }
+        }
+
+        return re;
+    }
+
+    private static int hashPredicate(String predicate) {
+        Clause pred = (Clause) AnalogyManager.ConvertToOOP(predicate);
+        String abstractPred = AnalogyManager.convertToAbstractString(pred, false);
+        return abstractPred.hashCode();
+    }
+
+
+    //for every analogy containing the target, find all analogies with matching structures, isolate the subject in them, add the subject to the output
+    public static ArrayList<String> getMappableConcepts(String target){
+        ArrayList<String> out = new ArrayList<>();
+        ArrayList<String> targetAnalogies = analogies.get(target);
+
+        for(String analogy : targetAnalogies){
+            int hash = hashPredicate(analogy);
+            ArrayList<String> sourceAnalogies = structuresHash.get(hash);
+            for(String source : sourceAnalogies){
+                String topic = isolateTopic(source);
+                if(topic == null){
+                    logger.log(Level.WARNING, "no concrete subject found in potential source analogy \"" + source + "\": Analogy has been skipped.");
+                    continue;
+                }
+                if(!out.contains(topic)){
+                    out.add(topic);
+                }
+            }
+        }
+
+        return out;
+    }
+
+    private static String isolateTopic(String analogy){
+        String[] arr = analogy.split(" ");
+        for(String str : arr){
+            if(str.charAt(0) == '*'){
+                return str;
+            }
+        }
+        return null;
+    }
+
+
+    public static HashMap<String, ArrayList<String>> getAnalogies(){
+        return analogies;
+    }
+    public static HashMap<Integer, ArrayList<String>> getStructureHash(){
+        return structuresHash;
+    }
 
 }
+

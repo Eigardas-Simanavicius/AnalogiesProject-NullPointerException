@@ -85,23 +85,6 @@ public class AnalogyManager {
         return next;
     }
 
-    // Is helper function for flatStringMapping method. Do not use elsewhere
-    private static Map.Entry<String,Integer> readToken(String string, int position){
-        StringBuilder stringBuilder = new StringBuilder();
-
-        if (string.length() <= position) return null;
-
-        while (string.charAt(position) != ' ' && string.charAt(position) != '(' && string.charAt(position) != ')') {
-            stringBuilder.append(string.charAt(position++));
-        }
-
-        if(stringBuilder.isEmpty()){
-            return null;
-        }else {
-            return Map.entry(stringBuilder.toString(), position);
-        }
-    }
-
     public static String convertToAbstractString(Predicate analogicalObject, Boolean prettified){
         HashMap<String,Integer> abstractionMapping = new HashMap<>();
         Stack<AnalogicalObject> stack = new Stack<>();
