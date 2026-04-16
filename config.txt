@@ -1,5 +1,4 @@
-#as of now empty,will be filled later
-rewrite=false
-rules=rewrite_rules.txt
-analogies=structureddomains.txt
-targets=AIDS,Adonis
+rewrite= 
+ rules= 
+ targets= 
+ analogies= 

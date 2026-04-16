@@ -34,16 +34,11 @@ public class Main {
         // no given config
         Config config;
         if(args.length == 0){
-            //config = ConfigSetup.findConfig();
+            config = ConfigSetup.findConfig();
         }else{
             config = ConfigSetup.applyConfig(args[0]);
         }
-        config = ConfigSetup.applyConfig("config.txt");
-        System.out.println(config != null);
-        AnalogyDataHolder.addAnalogiesFromFile(config.getAnalogiesFilePath(),config);
-        System.out.println(AnalogyDataHolder.getAnalogies());
-
-
+        System.out.println(config.getAnalogiesFilePath());
 
     }
 }

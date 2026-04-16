@@ -25,27 +25,35 @@ public class ConfigSetup {
     }
     // if no config was given we are going to try out best to find it
     public static Config findConfig(){
-        Config config;
+        Config config = null;
         try {
             File configFile = new File("config.txt");
             if(configFile.createNewFile()) {
-                //config = createDefaultConfig(configFile);
-            }else { config = setupConfig(configFile);}
+                config = createDefaultConfig(configFile);
+            }else { 
+                config = setupConfig(configFile);}
         }catch (Exception e){
-
+            logger.log(Level.WARNING, "Config setup failure, no config was found, created or ");
         }
-        //return config;
-        return null;
+        return config;
+ 
     }
 
     private static Config createDefaultConfig(File configFile) throws IOException {
-
-        logger.log(Level.WARNING, "No config found or provided, will create default file, empty by default,nothing will be loaded");
-        return null;
+        Config newConfig = new Config();
+        try {
+            FileWriter myWriter = new FileWriter("config.txt");
+            myWriter.write("rewrite= \nrules= \ntargets= \nanalogies= \n");
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return newConfig;
     }
 
     public static Config setupConfig(File configFile) {
         Config config = new Config();
+        System.out.println("setup");
         try (Scanner myReader = new Scanner(configFile)) {
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
