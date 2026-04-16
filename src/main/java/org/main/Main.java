@@ -14,7 +14,6 @@ import java.util.logging.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-
         //logger initialization
         Logger rootLogger = Logger.getLogger("");
         try{
@@ -30,6 +29,7 @@ public class Main {
         }catch(IOException e){
             System.out.println("failed config " + e.getMessage());
         }
+
 
         //Config Init
         // no given config
