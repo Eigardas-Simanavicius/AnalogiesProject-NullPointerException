@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 // hold all the analogies, is incharge of parsing and what not
@@ -103,6 +104,42 @@ public class AnalogyDataHolder {
         String abstractPred = AnalogyManager.convertToAbstractString(pred, false);
         return abstractPred.hashCode();
     }
+
+
+    //for every analogy containing the target, find all analogies with matching structures, isolate the subject in them, add the subject to the output
+    public static ArrayList<String> getMappableConcepts(String target){
+        ArrayList<String> out = new ArrayList<>();
+        ArrayList<String> targetAnalogies = analogies.get(target);
+
+        for(String analogy : targetAnalogies){
+            int hash = hashPredicate(analogy);
+            ArrayList<String> sourceAnalogies = structuresHash.get(hash);
+            for(String source : sourceAnalogies){
+                String topic = isolateTopic(source);
+                if(topic == null){
+                    logger.log(Level.WARNING, "no concrete subject found in potential source analogy \"" + source + "\": Analogy has been skipped.");
+                    continue;
+                }
+                if(!out.contains(topic)){
+                    out.add(topic);
+                }
+            }
+        }
+
+        return out;
+    }
+
+    private static String isolateTopic(String analogy){
+        String[] arr = analogy.split(" ");
+        for(String str : arr){
+            if(str.charAt(0) == '*'){
+                return str;
+            }
+        }
+        return null;
+    }
+
+
     public static HashMap<String, ArrayList<String>> getAnalogies(){
         return analogies;
     }
