@@ -7,7 +7,6 @@ import java.util.List;
 public class Config {
 
     private static boolean rewrite = false;
-    private static boolean abstracts = true;
     private static String analogiesFilePath;
     private static RuleSet ruleSet;
     private static List<String> targets = null;
@@ -49,14 +48,6 @@ public class Config {
 
     public  void setAnalogiesFilePath(String analogiesFilePath) {
         Config.analogiesFilePath = analogiesFilePath;
-    }
-
-    public  boolean isAbstracts() {
-        return abstracts;
-    }
-
-    public void setAbstracts(boolean abstracts) {
-        Config.abstracts = abstracts;
     }
 
     public  boolean isRewrite() {

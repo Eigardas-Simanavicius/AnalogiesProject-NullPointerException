@@ -22,7 +22,7 @@ public class AnalogyDataHolder {
     private static final Logger logger = Logger.getLogger(AnalogyDataHolder.class.getName());
 
     // setting up out threads
-    public static void addAnalogiesFromFile(String filename, Config config) throws InterruptedException {
+    public static void addAnalogiesFromFile(String filename, Config config){
         try (BufferedReader br = new BufferedReader(new FileReader(config.getAnalogiesFilePath()))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -35,7 +35,7 @@ public class AnalogyDataHolder {
 
 
     // intaking a line, and trying to get something useful out of it
-    public static void processLine(String line, Config config) {
+    private static void processLine(String line, Config config) {
 
         String[] arr = line.replace("\t", "  ").split(" {2}");
         if(config.getTargets() == null || (!config.getTargets().isEmpty() && config.getTargets().contains(arr[0]))) {

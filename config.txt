@@ -1,4 +1,4 @@
-rewrite= 
- rules= 
- targets= 
- analogies= 
+rewrite=
+rules=
+targets=
+analogies=

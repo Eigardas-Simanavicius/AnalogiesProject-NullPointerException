@@ -1,0 +1,2 @@
+AIDS	(if (can (cause.0 *AIDS (some death (when crushing (crush something))))) (can (succeed_at *AIDS (crush something))))	(if (can (cause.0 * (some 0 (when 1 (crush 2))))) (can (succeed_at * (crush 2))))	47	(if (by causing (produce *AIDS (some death (when crushing (crush something))) (for victim))) (can (succeed_at *AIDS (crush something))))	(if (by 0 (produce * (some 1 (when 2 (crush 3))) (for 4))) (can (succeed_at * (crush 3))))	50
+Adonis  (if (can (exercise.0 *Adonis muscle)) (can (flex.0 *Adonis muscle)))	(if (can (exercise.0 * 0)) (can (flex.0 * 0)))	17
