@@ -53,7 +53,6 @@ public class ConfigSetup {
 
     public static Config setupConfig(File configFile) {
         Config config = new Config();
-        System.out.println("setup");
         try (Scanner myReader = new Scanner(configFile)) {
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();

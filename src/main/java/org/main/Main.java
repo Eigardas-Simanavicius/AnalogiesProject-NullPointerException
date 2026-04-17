@@ -40,5 +40,9 @@ public class Main {
         }
         System.out.println(config.getAnalogiesFilePath());
 
+        AnalogyDataHolder.addAnalogiesFromFile("structureddomains.txt", config);
+        ArrayList<String> topics = AnalogyDataHolder.getMappableConcepts("Adonis");
+        System.out.println(topics);
+
     }
 }

@@ -21,7 +21,7 @@ public class AnalogyDataHolder {
     private static HashMap<Integer, ArrayList<String>> structuresHash = new HashMap<>();
     private static final Logger logger = Logger.getLogger(AnalogyDataHolder.class.getName());
 
-    // setting up out threads
+    // must be run to load analogies, before running any other meaningful method in this class
     public static void addAnalogiesFromFile(String filename, Config config){
         try (BufferedReader br = new BufferedReader(new FileReader(config.getAnalogiesFilePath()))) {
             String line;
@@ -120,7 +120,7 @@ public class AnalogyDataHolder {
                     logger.log(Level.WARNING, "no concrete subject found in potential source analogy \"" + source + "\": Analogy has been skipped.");
                     continue;
                 }
-                if(!out.contains(topic)){
+                if(!out.contains(topic) && !topic.equals(target)){
                     out.add(topic);
                 }
             }
@@ -130,10 +130,12 @@ public class AnalogyDataHolder {
     }
 
     private static String isolateTopic(String analogy){
+        //clears out all brackets from the given analogy before looking for the topic
+        analogy = analogy.replaceAll("[()]", "");
         String[] arr = analogy.split(" ");
         for(String str : arr){
             if(str.charAt(0) == '*'){
-                return str;
+                return str.substring(1);
             }
         }
         return null;
