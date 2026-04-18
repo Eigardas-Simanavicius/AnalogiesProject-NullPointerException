@@ -5,9 +5,12 @@ import org.main.ConfigSetup;
 import org.main.Objects.Config;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AnalogyDataHolderTest {
 
@@ -31,6 +34,15 @@ public class AnalogyDataHolderTest {
         for(String key: analogiesRecieved.keySet()){
             assertEquals(analogies.get(key),analogiesRecieved.get(key));
         }
+    }
+
+    @Test
+    public void checkStructureHash(){
+        String newAnalogy = "(if (can (exercise.0 *Greg muscle)) (can (flex.0 *Greg muscle)))";
+        AnalogyDataHolder.addAnalogiesFromFile(testconfig.getAnalogiesFilePath(),testconfig);
+        HashMap<Integer, ArrayList<String>> structuresHash = AnalogyDataHolder.getStructureHash();
+        assertEquals(newAnalogy.hashCode());
+
     }
 
 }

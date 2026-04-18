@@ -1,4 +1,3 @@
-rewrite=
-rules=
-targets=
-analogies=
+rewrite=false
+rules=rewrite_rules.txt
+analogies=structureddomains.txt
