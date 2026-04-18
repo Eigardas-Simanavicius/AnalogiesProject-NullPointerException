@@ -147,5 +147,14 @@ public class AnalogyDataHolder {
         return structuresHash;
     }
 
+    public static ArrayList<String> getAnalogiesFor(String analogy){
+        ArrayList<String> a = analogies.get(analogy);
+        if(a == null){
+            return new ArrayList<>();
+        }else{
+            return a;
+        }
+    }
+
 }
 
