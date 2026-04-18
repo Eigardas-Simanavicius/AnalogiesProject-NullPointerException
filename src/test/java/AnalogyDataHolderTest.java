@@ -33,4 +33,13 @@ public class AnalogyDataHolderTest {
         }
     }
 
+    @Test
+    public void checkStructureHash(){
+        String newAnalogy = "(if (can (exercise.0 *Greg muscle)) (can (flex.0 *Greg muscle)))";
+        AnalogyDataHolder.addAnalogiesFromFile(testconfig.getAnalogiesFilePath(),testconfig);
+        HashMap<Integer, ArrayList<String>> structuresHash = AnalogyDataHolder.getStructureHash();
+        assertEquals(newAnalogy.hashCode());
+
+    }
+
 }

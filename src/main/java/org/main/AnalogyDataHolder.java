@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class AnalogyDataHolder {
 
     private static final HashMap<String, ArrayList<String>> analogies = new HashMap<>();
-    private static HashMap<Integer, ArrayList<String>> structuresHash = new HashMap<>();
+    private static final HashMap<Integer, ArrayList<String>> structuresHash = new HashMap<>();
     private static final Logger logger = Logger.getLogger(AnalogyDataHolder.class.getName());
 
     // setting up out threads
