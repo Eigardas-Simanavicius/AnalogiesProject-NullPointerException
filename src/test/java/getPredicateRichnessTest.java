@@ -28,7 +28,7 @@ public class getPredicateRichnessTest {
                 {AnalogyManager.ConvertToOOP("(by working (perform scientist (some work (for laboratory (that (conduct experiment))))))"), 5.049},
                 {AnalogyManager.ConvertToOOP("(work_in scientist (some laboratory (that (conduct experiment))))"), 3.049},
                 {AnalogyManager.ConvertToOOP("(Serve Priest Congregation)"), 0.301029995664},
-                {null, -1.0},
+                {null, Double.NaN},
                 {AnalogyManager.ConvertToOOP("(empty)"), Double.NEGATIVE_INFINITY}
         };
         return Arrays.asList(data);

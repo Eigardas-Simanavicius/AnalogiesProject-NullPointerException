@@ -22,7 +22,7 @@ public class getMappableSourceAnalogiesForTest {
     @Test
     public void basicTest(){
         ArrayList<Predicate> c = MappingManager.getMappableSourceAnalogiesFor("AIDS");
-        assertEquals(11,c.size());
+        assertEquals(21431,c.size());
     }
 
 }

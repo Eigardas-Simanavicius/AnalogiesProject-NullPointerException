@@ -131,10 +131,21 @@ public class MappingManager {
         final ArrayList<Predicate> targetAnalogies = new ArrayList<>(AnalogyDataHolder.getAnalogiesFor(targetTopic).stream().map(AnalogyManager::ConvertToOOP).toList());
 
         ArrayList<Predicate> sourceAnalogies = new ArrayList<>();
-        ArrayList<String> sourceTopics = new ArrayList<>(AnalogyDataHolder.getMappableConcepts(targetTopic).stream().map(x -> x.replaceAll("\\*","")).toList());
+        ArrayList<String> sourceTopics = new ArrayList<>(
+                AnalogyDataHolder
+                        .getMappableConcepts(targetTopic)
+                        .stream()
+                        .map(x -> x.replaceAll("\\*",""))
+                        .toList()
+        );
 
         for(String source: sourceTopics){
-            sourceAnalogies.addAll(AnalogyDataHolder.getAnalogiesFor(source).stream().map(AnalogyManager::ConvertToOOP).toList());
+            sourceAnalogies
+                    .addAll(AnalogyDataHolder.getAnalogiesFor(source)
+                            .stream()
+                            .map(AnalogyManager::ConvertToOOP)
+                            .toList()
+                    );
         }
 
         ArrayList<AbstractMap.SimpleEntry<Double,Predicate>> mappableAnalogies = new ArrayList (
@@ -144,8 +155,6 @@ public class MappingManager {
                         .map(y -> new AbstractMap.SimpleEntry<Double,Predicate>(AnalogyManager.getPredicateRichness(y),y))
                         .toList()
         );
-
-        TreeMap<Double,Predicate> mappableSourceAnalogies = new TreeMap<>();
 
         mappableAnalogies.sort(
                 (x,y)->
