@@ -56,17 +56,17 @@ public class ConfigSetup {
         try (Scanner myReader = new Scanner(configFile)) {
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
-                String[] currLine = line.replace(" ","").split("=");
+                String[] currLine = line.split("=");
                 if(currLine[0].equals("rules")){
-                    config.setRuleSet(new RuleSet(currLine[1]));
+                    config.setRuleSet(new RuleSet(currLine[1].trim()));
                 }else if(currLine[0].equals("analogies")){
-                    config.setAnalogiesFilePath(currLine[1]);
+                    config.setAnalogiesFilePath(currLine[1].trim());
                 }else if(currLine[0].equals("rewrite")){
-                    config.setRewrite(Boolean.parseBoolean(currLine[1]));
+                    config.setRewrite(Boolean.parseBoolean(currLine[1].trim()));
                 }else if(currLine[0].equals("targets")){
-                    config.setTargets( Arrays.asList(currLine[1].split(",")));
+                    config.setTargets( new ArrayList<>(Arrays.stream(currLine[1].split(",")).map(String::trim).toList()));
                 } else if (currLine[0].equals("jumps")) {
-                    config.setJumps(Integer.parseInt(currLine[1]));
+                    config.setJumps(Integer.parseInt(currLine[1].trim()));
                 }
             }
         } catch (FileNotFoundException e) {

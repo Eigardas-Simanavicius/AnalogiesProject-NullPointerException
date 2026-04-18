@@ -5,8 +5,10 @@ import org.main.Interfaces.Predicate;
 import org.main.Objects.Clause;
 import org.main.Objects.Subject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.TreeMap;
 
 public class MappingManager {
     public static Boolean canMap(Predicate head1, Predicate head2){
@@ -124,6 +126,32 @@ public class MappingManager {
             }
         }
         return mapping;
+    }
+
+    public static ArrayList<Predicate> getMappableSourceAnalogiesFor(String targetTopic){
+        ArrayList<String> sourceTopics = new ArrayList<>(AnalogyDataHolder.getMappableConcepts(targetTopic).stream().map(x -> x.replaceAll("\\*","")).toList());
+
+        ArrayList<String> targetAnalogies = AnalogyDataHolder.getAnalogiesFor(targetTopic);
+        TreeMap<Double,Predicate> mappableSourceAnalogies = new TreeMap<>();
+
+        ArrayList<String> sourceAnalogies;
+
+        for(String sourceTopic : sourceTopics){
+            if(sourceTopic == null)continue;
+            sourceAnalogies = AnalogyDataHolder.getAnalogiesFor(sourceTopic);
+            for(String sourceAnalogy : sourceAnalogies){
+                if(sourceAnalogy == null)continue;
+                for(String targetAnalogy : targetAnalogies){
+                    if(targetAnalogy == null)continue;
+                    Predicate a = AnalogyManager.ConvertToOOP(sourceAnalogy);
+                    if(canMap(a,AnalogyManager.ConvertToOOP(targetAnalogy))){
+                        mappableSourceAnalogies.put(AnalogyManager.getPredicateRichness(a),a);
+                    }
+                }
+            }
+        }
+
+        return new ArrayList<>(mappableSourceAnalogies.values());
     }
 
     private static boolean bracketMatch(char[] brackets1,char[] brackets2){
