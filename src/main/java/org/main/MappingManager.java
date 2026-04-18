@@ -5,10 +5,9 @@ import org.main.Interfaces.Predicate;
 import org.main.Objects.Clause;
 import org.main.Objects.Subject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class MappingManager {
     public static Boolean canMap(Predicate head1, Predicate head2){
@@ -131,29 +130,31 @@ public class MappingManager {
 
 
     public static ArrayList<Predicate> getMappableSourceAnalogiesFor(String targetTopic){
+        final ArrayList<Predicate> targetAnalogies = new ArrayList<>(AnalogyDataHolder.getAnalogiesFor(targetTopic).stream().map(AnalogyManager::ConvertToOOP).toList());
+
+        ArrayList<Predicate> sourceAnalogies = new ArrayList<>();
         ArrayList<String> sourceTopics = new ArrayList<>(AnalogyDataHolder.getMappableConcepts(targetTopic).stream().map(x -> x.replaceAll("\\*","")).toList());
 
-        ArrayList<String> targetAnalogies = AnalogyDataHolder.getAnalogiesFor(targetTopic);
-        TreeMap<Double,Predicate> mappableSourceAnalogies = new TreeMap<>();
-
-        ArrayList<String> sourceAnalogies;
-
-        for(String sourceTopic : sourceTopics){
-            if(sourceTopic == null)continue;
-            sourceAnalogies = AnalogyDataHolder.getAnalogiesFor(sourceTopic);
-            for(String sourceAnalogy : sourceAnalogies){
-                if(sourceAnalogy == null)continue;
-                for(String targetAnalogy : targetAnalogies){
-                    if(targetAnalogy == null)continue;
-                    Predicate a = AnalogyManager.ConvertToOOP(sourceAnalogy);
-                    if(canMap(a,AnalogyManager.ConvertToOOP(targetAnalogy))){
-                        mappableSourceAnalogies.put(AnalogyManager.getPredicateRichness(a),a);
-                    }
-                }
-            }
+        for(String source: sourceTopics){
+            sourceAnalogies.addAll(AnalogyDataHolder.getAnalogiesFor(source).stream().map(AnalogyManager::ConvertToOOP).toList());
         }
 
-        return new ArrayList<>(mappableSourceAnalogies.values());
+        ArrayList<AbstractMap.SimpleEntry<Double,Predicate>> mappableAnalogies = new ArrayList (
+                sourceAnalogies
+                        .parallelStream()
+                        .filter(x -> targetAnalogies.stream().anyMatch(y -> MappingManager.canMap(x,y)))
+                        .map(y -> new AbstractMap.SimpleEntry<Double,Predicate>(AnalogyManager.getPredicateRichness(y),y))
+                        .toList()
+        );
+
+        TreeMap<Double,Predicate> mappableSourceAnalogies = new TreeMap<>();
+
+        mappableAnalogies.sort(
+                (x,y)->
+                Double.compare(y.getKey(),x.getKey())
+        );
+
+        return new ArrayList<>(mappableAnalogies.stream().map(AbstractMap.SimpleEntry::getValue).toList());
     }
 
     private static boolean bracketMatch(char[] brackets1,char[] brackets2){
