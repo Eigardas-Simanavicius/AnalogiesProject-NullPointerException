@@ -99,7 +99,8 @@ public class AnalogyDataHolder {
         return re;
     }
 
-    private static int hashPredicate(String predicate) {
+    // public for testing purposes
+    public static int hashPredicate(String predicate) {
         Clause pred = (Clause) AnalogyManager.ConvertToOOP(predicate);
         String abstractPred = AnalogyManager.convertToAbstractString(pred, false);
         return abstractPred.hashCode();

@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.main.AnalogyDataHolder;
 import org.main.ConfigSetup;
+import org.main.MappingManager;
 import org.main.Objects.Config;
 
 import java.util.ArrayList;
@@ -41,8 +42,7 @@ public class AnalogyDataHolderTest {
         String newAnalogy = "(if (can (exercise.0 *Greg muscle)) (can (flex.0 *Greg muscle)))";
         AnalogyDataHolder.addAnalogiesFromFile(testconfig.getAnalogiesFilePath(),testconfig);
         HashMap<Integer, ArrayList<String>> structuresHash = AnalogyDataHolder.getStructureHash();
-        assertEquals(newAnalogy.hashCode());
-
+        assertEquals("(if (can (exercise.0 *Adonis muscle)) (can (flex.0 *Adonis muscle)))", structuresHash.get(AnalogyDataHolder.hashPredicate(newAnalogy)).getFirst());
     }
 
 }
