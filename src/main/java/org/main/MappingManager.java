@@ -130,26 +130,38 @@ public class MappingManager {
 
 
     public static ArrayList<Predicate> getMappableSourceAnalogiesFor(String targetTopic){
-        final ArrayList<Predicate> targetAnalogies = new ArrayList<>(AnalogyDataHolder.getAnalogiesFor(targetTopic).stream().map(AnalogyManager::ConvertToOOP).toList());
+        // Gets analogies for the target topic
+        final ArrayList<Predicate> targetAnalogies = new ArrayList<>(
+                AnalogyDataHolder
+                        .getAnalogiesFor(targetTopic)
+                        .stream()
+                        .map(AnalogyManager::ConvertToOOP)
+                        .toList()
+        );
 
         ArrayList<Predicate> sourceAnalogies = new ArrayList<>();
+
+        // Creates sourceTopics with concepts that can be mapped to the target topic (Also removes the * that in the topic names)
         ArrayList<String> sourceTopics = new ArrayList<>(
                 AnalogyDataHolder
                         .getMappableConcepts(targetTopic)
                         .stream()
-                        .map(x -> x.replaceAll("\\*",""))
+                        .map(x -> x.replaceFirst("\\*",""))
                         .toList()
         );
 
+        // For each sourceTopic, gets the analogies for that topic, converts them to OOP representation and stores them in sourceAnalogies
         for(String source: sourceTopics){
             sourceAnalogies
-                    .addAll(AnalogyDataHolder.getAnalogiesFor(source)
+                    .addAll(
+                            AnalogyDataHolder.getAnalogiesFor(source)
                             .stream()
                             .map(AnalogyManager::ConvertToOOP)
                             .toList()
                     );
         }
 
+        // Filters sourceAnalogies for source analogies that can be mapped to any target analogies, and then gets their richness (Parallelized using parallel stream)
         ArrayList<AbstractMap.SimpleEntry<Double,Predicate>> mappableAnalogies = new ArrayList (
                 sourceAnalogies
                         .parallelStream()
@@ -158,11 +170,13 @@ public class MappingManager {
                         .toList()
         );
 
+        // Sorts analogies based on their richness
         mappableAnalogies.sort(
                 (x,y)->
                 Double.compare(y.getKey(),x.getKey())
         );
 
+        // Removes the calculated richness values from the analogies and returns them in order
         return new ArrayList<>(mappableAnalogies.stream().map(AbstractMap.SimpleEntry::getValue).toList());
     }
 
