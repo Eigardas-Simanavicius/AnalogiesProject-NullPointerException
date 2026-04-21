@@ -38,9 +38,8 @@ public class Main {
         }else{
             config = ConfigSetup.applyConfig(args[0]);
         }
-        AnalogyDataHolder.addAnalogiesFromFile(config);
-        ArrayList<String> topics = AnalogyDataHolder.getMappableConcepts("Adonis");
-        System.out.println(topics);
+
+        AnalogyDataHolder.addAnalogyToHash("(if (can (exercise.0 *Greg muscle)) (can (flex.0 *Greg muscle)))");
 
     }
 }

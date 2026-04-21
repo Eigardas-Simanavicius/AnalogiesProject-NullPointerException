@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
@@ -50,19 +51,7 @@ public class AnalogyDataHolder {
             int i = 0;
             i = 1;
             for (i = 1; i < length; i = i + jump) {
-                if (analogies.containsKey(topic)) {
-                    analogies.get(topic).add(arr[i]);
-                } else {
-                    analogies.put(topic, new ArrayList<String>());
-                    analogies.get(topic).add(arr[i]);
-                }
-                if (structuresHash.containsKey(hashPredicate(arr[i]))) {
-                    structuresHash.get(hashPredicate(arr[i])).add(arr[i].intern());
-                } else {
-                    structuresHash.put(hashPredicate(arr[i]), new ArrayList<String>());
-                    structuresHash.get(hashPredicate(arr[i])).add(arr[i].intern());
-                }
-
+                addAnalogyToHash(arr[i],topic);
 
             }
 
@@ -84,7 +73,32 @@ public class AnalogyDataHolder {
         }
     }
 
+    // adding a string directly to the hash, mostly for testing purposes
+    public static void addAnalogyToHash(String analogy){
+        String[] words = (analogy.replace(")","").replace("(","").split(" "));
+        for(String word: words){
+            if(word.charAt(0) == '*'){
+                addAnalogyToHash(analogy,word);
+                break;
+            }
+        }
+    }
 
+    public static void addAnalogyToHash(String analogy,String topic){
+        if (analogies.containsKey(topic)) {
+            analogies.get(topic).add(analogy);
+        } else {
+            analogies.put(topic, new ArrayList<String>());
+            analogies.get(topic).add(analogy);
+        }
+
+        if (structuresHash.containsKey(hashPredicate(analogy))) {
+            structuresHash.get(hashPredicate(analogy)).add(analogy.intern());
+        } else {
+            structuresHash.put(hashPredicate(analogy), new ArrayList<String>());
+            structuresHash.get(hashPredicate(analogy)).add(analogy.intern());
+        }
+    }
     // incase we need all the rewrites
     private static ArrayList<String> getRewrites(String Source, Config config) {
         ArrayList<String> re = new ArrayList<>();
