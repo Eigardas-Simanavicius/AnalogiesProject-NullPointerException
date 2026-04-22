@@ -8,6 +8,7 @@ import org.main.Objects.RewriteRule;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.*;
 
@@ -39,7 +40,13 @@ public class Main {
             config = ConfigSetup.applyConfig(args[0]);
         }
 
+
         AnalogyDataHolder.addAnalogyToHash("(if (can (exercise.0 *Greg muscle)) (can (flex.0 *Greg muscle)))");
+        AnalogyDataHolder.addAnalogyToHash("(if (can (exercise.0 *Jeff legs)) (can (flex.0 *Jeff legs)))");
+        AnalogyDataHolder.addAnalogyToHash("(be *Greg sigma)");
+        AnalogyDataHolder.addAnalogyToHash("(be *Jeff beta)");
+        ArrayList<String> stuff = CompositeBuilder.buildCompositeAnalogy("Greg","Jeff");
+        System.out.println(stuff.toString());
 
     }
 }

@@ -3,6 +3,7 @@ package org.main;
 import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 import org.main.Objects.Clause;
+import org.main.Objects.CoalescentMapping;
 import org.main.Objects.Subject;
 
 import java.util.*;
@@ -10,6 +11,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class MappingManager {
+    private static HashMap<String,ArrayList<CoalescentMapping>> coalesentMappings = new HashMap<>();
+
     public static Boolean canMap(Predicate head1, Predicate head2){
         if(head1 == null || head2 == null){
             System.out.println("One of the input predicates is null, cannot attempt mapping.");
@@ -194,5 +197,21 @@ public class MappingManager {
     // right now this will only check asterisks, im sure there will be more conditions in the future
     private static boolean checkEquality(String s1,String s2){
         return (s1.toCharArray()[0] == '*') == (s2.toCharArray()[0] == '*');
+    }
+
+    public static int getMappingRichness(ArrayList<String> mapping){
+        int richness = 0;
+        for (int i = 0; i < mapping.size(); i+=2) {
+            richness += flatStringMapping(mapping.get(i),mapping.get(i+1)).size();
+        }
+        return richness;
+    }
+
+    public static void createNewCoalesentMapping(String source, String target){
+        if(!coalesentMappings.containsKey(source)){
+            coalesentMappings.put(source,new ArrayList<CoalescentMapping>());
+        }
+        coalesentMappings.get(source).add(new CoalescentMapping(source,target));
+
     }
 }

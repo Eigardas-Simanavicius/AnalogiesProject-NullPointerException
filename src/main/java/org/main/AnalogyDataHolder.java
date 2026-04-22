@@ -78,6 +78,7 @@ public class AnalogyDataHolder {
         String[] words = (analogy.replace(")","").replace("(","").split(" "));
         for(String word: words){
             if(word.charAt(0) == '*'){
+                word = word.replace("*", "");
                 addAnalogyToHash(analogy,word);
                 break;
             }

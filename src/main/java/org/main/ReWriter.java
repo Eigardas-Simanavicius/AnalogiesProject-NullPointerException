@@ -46,7 +46,6 @@ public class ReWriter {
         // Linked hash maps ensure items are returned in order of insertion, very important here
         LinkedHashMap<String,ArrayList<RewriteRule>> rulesMap = mapAllRules(rules,source);
         if(rulesMap.isEmpty()){
-            logger.log(Level.WARNING, "no relevant rules for analogy " + source + " returning nothing");
             return null;
         }
         ArrayList<Integer> targets = findPredicatestoChange(source,rulesMap);
