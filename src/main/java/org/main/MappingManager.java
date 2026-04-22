@@ -212,6 +212,21 @@ public class MappingManager {
             coalesentMappings.put(source,new ArrayList<CoalescentMapping>());
         }
         coalesentMappings.get(source).add(new CoalescentMapping(source,target));
+    }
 
+    public static ArrayList<ArrayList<String>>  rankBestAnalogiesSingleTarget(String source, String target){
+        ArrayList<ArrayList<String>> mappings = CompositeBuilder.buildMultipleCompositeAnalogies(source,target,5);
+        mappings.sort(
+                Comparator.comparingInt(MappingManager::getMappingRichness)
+        );
+        return mappings;
+    }
+
+    public static ArrayList<CoalescentMapping> rankBestCoalesentMapping(String source){
+        ArrayList<CoalescentMapping> mappings = coalesentMappings.get(source);
+        mappings.sort(
+                Comparator.comparingInt(CoalescentMapping::getRichness)
+        );
+        return mappings;
     }
 }
