@@ -19,7 +19,7 @@ public class CompositeBuilderTest {
         ArrayList<String> t = new ArrayList<String>(testconfig.getTargets());
         t.add("barbarian");
         testconfig.setTargets(t);
-        AnalogyDataHolder.addAnalogiesFromFile(testconfig.getAnalogiesFilePath(), testconfig);
+        AnalogyDataHolder.addAnalogiesFromFile(testconfig);
     }
 
     @Test

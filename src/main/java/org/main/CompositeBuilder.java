@@ -54,13 +54,13 @@ public class CompositeBuilder {
             ArrayList<String> currentSources = sourceAnalogiesMap.get(currIndex);
             ArrayList<String> currentTargets = targetAnalogiesMap.get(currIndex);
             for (int j = 0; j < currentSources.size(); j++) {
-                if (i >= currentTargets.size()) {
+                if (j >= currentTargets.size()) {
                     break;
                 }
                 //checks if two current analogies can be added to the composite, if yes then adds them (and adds all of their subject mappings to the subject map)
-                if (coalesce(currentSources.get(i), currentTargets.get(i))) {
-                    compositeAnalogy.add(currentSources.get(i));
-                    compositeAnalogy.add(currentTargets.get(i));
+                if (coalesce(currentSources.get(j), currentTargets.get(j))) {
+                    compositeAnalogy.add(currentSources.get(j));
+                    compositeAnalogy.add(currentTargets.get(j));
                 }
             }
             //considers all analogies "above" the one we started with
