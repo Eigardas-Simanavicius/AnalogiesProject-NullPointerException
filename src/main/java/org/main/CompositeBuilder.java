@@ -28,7 +28,7 @@ public class CompositeBuilder {
 
     public ArrayList<ArrayList<String>> buildMultipleCompositeAnalogies(String source, String target, int N){
         setup(source, target);
-        List<Double> index = this.sourceAnalogiesMap.keySet().stream().sorted().toList(); //controls which source analogy is currently being looked at
+        List<Double> index = this.sourceAnalogiesMap.keySet().stream().sorted().toList().reversed(); //controls which source analogy is currently being looked at
 
         ArrayList<ArrayList<String>> listOfComposites = new ArrayList<>();
 
@@ -37,6 +37,10 @@ public class CompositeBuilder {
         int startJ = 0;
 
         for(int i = 0; i < N; i++){
+            if(startI >= index.size()){
+                logger.log(Level.WARNING, "Requested more permutations than possible, stopping early.");
+                break;
+            }
             ArrayList<String> arr = searchOnce(index, startI, startJ);
             //if the set of analogies tied to the current richness is greater than startJ, increment J instead of I
             //Basically makes it so that the greedy searches travel down the source analogies one analogy at a time, instead of one richness level at a time
@@ -49,10 +53,6 @@ public class CompositeBuilder {
             }
             if(arr != null) {
                 listOfComposites.add(arr);
-            }
-            if(startI >= index.size()){
-                logger.log(Level.WARNING, "Requested more permutations than possible, stopping early.");
-                break;
             }
         }
 
@@ -75,7 +75,9 @@ public class CompositeBuilder {
             double currIndex = index.get(i); //richness of the current set of source/target to be fetched from the maps
             ArrayList<String> currentSources = this.sourceAnalogiesMap.get(currIndex);
             ArrayList<String> currentTargets = this.targetAnalogiesMap.get(currIndex);
-
+            if(currentTargets.size() > currentSources.size()){
+                logger.log(Level.INFO, "More targets than sources for richness " + currIndex + ", some targets will be ignored.");
+            }
             boolean firstLoopReset = false;
             for (int j = 0; j < currentSources.size(); j++) {
                 //if this is the first outer loop, set j to its correct initial index
