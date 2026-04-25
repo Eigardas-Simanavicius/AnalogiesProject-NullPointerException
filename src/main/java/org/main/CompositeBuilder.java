@@ -261,22 +261,5 @@ public class CompositeBuilder {
         }
     }
 
-    public static ArrayList<String> getNBestSourcesFor(String targetTopic, int n){
-        if(n <= 0)return new ArrayList<>();
-        if(targetTopic.isBlank()) return new ArrayList<>();
 
-        ArrayList<CoalescentMapping> sourceTopicMappings = new ArrayList<>(AnalogyDataHolder
-                .getMappableConcepts(targetTopic)
-                .parallelStream()
-                .map(
-                    x -> new CoalescentMapping(x,targetTopic)
-                )
-                .toList()
-        );
-
-        sourceTopicMappings.sort(Comparator.comparingDouble(CoalescentMapping::getRichness));
-
-
-        return new ArrayList<>(sourceTopicMappings.stream().limit(n).map(CoalescentMapping::getSource).toList());
-    }
 }
