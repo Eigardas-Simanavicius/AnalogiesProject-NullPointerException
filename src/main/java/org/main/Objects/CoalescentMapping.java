@@ -24,7 +24,7 @@ public class CoalescentMapping {
 
     public String getSource(){return source;}
     public String getTarget(){return target;}
-
+    public ArrayList<String> getMapping(){return compositeAnalogy;}
     public int getRichness() {
         return richness;
     }

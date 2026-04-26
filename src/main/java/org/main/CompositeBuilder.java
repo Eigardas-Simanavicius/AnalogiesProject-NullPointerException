@@ -65,7 +65,6 @@ public class CompositeBuilder {
         ArrayList<String> compositeAnalogy = new ArrayList<>();
         ArrayList<Pair> mappingPairs = new ArrayList<>();
         boolean wasReset = false;
-
         //Iterates over richness maps
         for (int i = startI; i < index.size(); i++) {
             //avoid adding duplicates
@@ -103,7 +102,6 @@ public class CompositeBuilder {
             }
         }
 
-
         if(notDuplicate(mappingPairs)) {
             return compositeAnalogy;
         }else {
@@ -119,7 +117,6 @@ public class CompositeBuilder {
         this.targetAnalogiesMap = mapByRichness(targetAnalogiesArr);
         pairMap = new ConcurrentHashMap<>();
         sanitizeInputAnalogies();
-
         this.forwardMap = new HashMap<>(); //resets static hashmap of subjects
         this.backwardMap = new HashMap<>();
     }
