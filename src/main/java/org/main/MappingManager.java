@@ -205,11 +205,13 @@ public class MappingManager {
         return richness;
     }
 
-    public static void createNewCoalesentMapping(String source, String target){
+    public static CoalescentMapping createNewCoalesentMapping(String source, String target){
         if(!coalesentMappings.containsKey(source)){
             coalesentMappings.put(source,new ArrayList<CoalescentMapping>());
         }
-        coalesentMappings.get(source).add(new CoalescentMapping(source,target));
+        CoalescentMapping curr = new CoalescentMapping(source,target);
+        coalesentMappings.get(source).add(curr);
+        return curr;
     }
 
     public static ArrayList<ArrayList<String>>  rankBestAnalogiesSingleTarget(String source, String target){
@@ -227,6 +229,10 @@ public class MappingManager {
                 Comparator.comparingInt(CoalescentMapping::getRichness)
         );
         return mappings;
+    }
+
+    public static HashMap<String,ArrayList<CoalescentMapping>> getCoalesentMappings(){
+        return coalesentMappings;
     }
 
     public static ArrayList<String> getNBestSourcesFor(String targetTopic, int n){

@@ -3,6 +3,7 @@ package org.main;
 import org.main.Interfaces.AnalogicalObject;
 import org.main.Interfaces.Predicate;
 import org.main.Objects.Clause;
+import org.main.Objects.CoalescentMapping;
 import org.main.Objects.Config;
 import org.main.Objects.RewriteRule;
 
@@ -40,12 +41,10 @@ public class Main {
             config = ConfigSetup.applyConfig(args[0]);
         }
 
-        AnalogyDataHolder.addAnalogyToHash("(be *Jeff beta)");
-        AnalogyDataHolder.addAnalogyToHash("(be *Greg sigma)");
-        AnalogyDataHolder.addAnalogyToHash("(be *Greg Delta)");
-        ArrayList<ArrayList<String>> composite = new CompositeBuilder().buildMultipleCompositeAnalogies("Greg","Jeff",2);
-        System.out.println(composite + " " + composite.size());
-
+        AnalogyDataHolder.addAnalogyToHash("(if (train.0 *barbarian self) (display *barbarian self))");
+        AnalogyDataHolder.addAnalogyToHash("(if (train.0 *Adonis body) (display *Adonis body))");
+        CoalescentMapping mapping = MappingManager.createNewCoalesentMapping("Adonis","barbarian");
+        System.out.println(mapping.getMapping());
 
     }
 }
