@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.main.AnalogyDataHolder;
@@ -24,7 +25,12 @@ public class getMappableSourceAnalogiesForTest {
         long s = System.currentTimeMillis();
         ArrayList<Predicate> c = MappingManager.getMappableSourceAnalogiesFor("AIDS");
         System.out.println((System.currentTimeMillis()-s)/1000.0);
-        assertEquals(21431,c.size());
+        assertEquals(4583,c.size());
+    }
+
+    @After
+    public void reset(){
+        ConfigSetup.resetConfig();
     }
 
 }

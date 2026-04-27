@@ -253,4 +253,8 @@ public class MappingManager {
 
         return new ArrayList<>(sourceTopicMappings.stream().limit(n).map(CoalescentMapping::getSource).toList());
     }
+
+    public static void clearData(){
+        coalesentMappings = new HashMap<>();
+    }
 }

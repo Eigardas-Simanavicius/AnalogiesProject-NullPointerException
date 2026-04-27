@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.main.AnalogyDataHolder;
@@ -43,6 +44,11 @@ public class AnalogyDataHolderTest {
         AnalogyDataHolder.addAnalogiesFromFile(testconfig);
         HashMap<Integer, ArrayList<String>> structuresHash = AnalogyDataHolder.getStructureHash();
         assertEquals("(if (can (exercise.0 *Adonis muscle)) (can (flex.0 *Adonis muscle)))", structuresHash.get(AnalogyDataHolder.hashPredicate(newAnalogy)).getFirst());
+    }
+
+    @After
+    public void reset(){
+        ConfigSetup.resetConfig();
     }
 
 }

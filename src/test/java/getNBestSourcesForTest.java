@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.main.AnalogyDataHolder;
@@ -63,5 +64,9 @@ public class getNBestSourcesForTest {
         assertFalse(c.contains(null));
     }
 
+    @After
+    public void reset(){
+        ConfigSetup.resetConfig();
+    }
 
 }

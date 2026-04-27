@@ -1,4 +1,4 @@
-rewrite=true
+rewrite=false
 rules=testrules.txt
 analogies=test.txt
 targets=Adonis,AIDS

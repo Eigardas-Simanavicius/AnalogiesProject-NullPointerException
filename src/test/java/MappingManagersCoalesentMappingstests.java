@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Test;
 import org.main.AnalogyDataHolder;
 import org.main.CompositeBuilder;
@@ -30,5 +31,10 @@ public class MappingManagersCoalesentMappingstests {
         string.add("(if (train.0 *barbarian self) (display *barbarian self))");
         CoalescentMapping mapping = MappingManager.createNewCoalesentMapping("Adonis","barbarian");
         assertEquals(mapping.getMapping(), string);
+    }
+
+    @After
+    public void reset(){
+        ConfigSetup.resetConfig();
     }
 }

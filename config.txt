@@ -1,3 +1,3 @@
 rewrite=true
 rules=testrules.txt
-analogies=structureddomains.txt
+analogies=structured domains.txt

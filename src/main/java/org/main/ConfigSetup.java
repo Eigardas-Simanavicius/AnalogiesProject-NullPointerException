@@ -77,7 +77,7 @@ public class ConfigSetup {
         return config;
     }
 
-    public static void clearConfig(){
+    public static void resetConfig(){
         Config config = new Config();
 
         config.setTargets(null);
@@ -85,5 +85,8 @@ public class ConfigSetup {
         config.setJumps(3);
         config.setRewrite(false);
         config.setRuleSet(null);
+
+        MappingManager.clearData();
+        AnalogyDataHolder.clearData();
     }
 }

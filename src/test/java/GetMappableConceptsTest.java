@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.main.AnalogyDataHolder;
@@ -52,5 +53,10 @@ public class GetMappableConceptsTest {
         Clause pred2 = (Clause)AnalogyManager.ConvertToOOP(str2);
 
         assertNotEquals(AnalogyManager.convertToAbstractString(pred1, false), AnalogyManager.convertToAbstractString(pred2, false));
+    }
+
+    @After
+    public void reset(){
+        ConfigSetup.resetConfig();
     }
 }

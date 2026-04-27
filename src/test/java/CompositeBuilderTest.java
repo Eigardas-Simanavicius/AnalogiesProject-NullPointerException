@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.main.AnalogyDataHolder;
@@ -139,6 +140,11 @@ public class CompositeBuilderTest {
         CompositeBuilder comp = new CompositeBuilder();
         ArrayList<ArrayList<String>> source = comp.buildMultipleCompositeAnalogies("Bill","Bob",4);
         assertEquals(1, source.size());
+    }
+
+    @After
+    public void reset(){
+        ConfigSetup.resetConfig();
     }
 
 }

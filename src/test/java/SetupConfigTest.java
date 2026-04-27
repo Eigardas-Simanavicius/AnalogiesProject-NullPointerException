@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.main.AnalogyDataHolder;
@@ -36,6 +37,11 @@ public class SetupConfigTest {
     public void checkTargets(){
         assertEquals(testconfig.getTargets().get(0),"Adonis");
         assertEquals(testconfig.getTargets().get(1),"AIDS");
+    }
+
+    @After
+    public void reset(){
+        ConfigSetup.resetConfig();
     }
 
 }

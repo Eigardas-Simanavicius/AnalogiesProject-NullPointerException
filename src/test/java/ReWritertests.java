@@ -1,6 +1,8 @@
 import org.jspecify.annotations.NonNull;
+import org.junit.After;
 import org.junit.Test;
 import org.main.AnalogyManager;
+import org.main.ConfigSetup;
 import org.main.Objects.Clause;
 import org.main.Interfaces.Predicate;
 import org.main.ReWriter;
