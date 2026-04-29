@@ -16,7 +16,7 @@ public class CoalescentMapping {
     private final double richness;
     private ArrayList<String> analogies;
     private HashMap<String,String> coalescedMapping;
-    private HashMap<String, HashSet<String>> inferredMapping;
+    private HashMap<String, String> inferredMapping;
 
     public CoalescentMapping(String source,String target){
         this.source = source;
@@ -48,7 +48,7 @@ public class CoalescentMapping {
         }
     }
 
-    public HashMap<String,HashSet<String>> getInferredMapping(){
+    public HashMap<String,String> getInferredMapping(){
         if(inferredMapping == null){
             createInferredMapping();
         }
@@ -66,14 +66,7 @@ public class CoalescentMapping {
     private void createInferredMappingHelper(String sourceAnalogy, String targetAnalogy){
         HashMap<String,String> map = MappingManager.flatStringMapping(sourceAnalogy,targetAnalogy);
         if(map != null){
-            map.forEach(
-                    (String source, String target) -> {
-                        if(!inferredMapping.containsKey(source)){
-                            inferredMapping.put(source,new HashSet<>());
-                        }
-                        inferredMapping.get(source).add(target);
-                }
-            );
+            inferredMapping.putAll(map);
         }
     }
 }
