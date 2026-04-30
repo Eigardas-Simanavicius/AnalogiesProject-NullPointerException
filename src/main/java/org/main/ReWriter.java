@@ -55,6 +55,8 @@ public class ReWriter {
         int[] currCount = new int[targets.size()];
 
         for (int i = 0; i < permutationCount; i++) {
+            System.out.println(permutationCount);
+            System.out.println(Arrays.toString(maxCount));
             permutations.add(reWriteAnalogy(rulesMap, (Predicate) source.getDeepCopy(), currCount, targets));
             updatePermutation(currCount, currCount.length - 1, maxCount);
         }
@@ -86,6 +88,9 @@ public class ReWriter {
     //how many permutations we need
     private static int getPermutationsCount(int[] maxCount){
         int permutationCount = 1;
+        if(maxCount.length == 0){
+            return 0;
+        }
         for(int i : maxCount){
             permutationCount *= i+1;
         }
@@ -127,7 +132,7 @@ public class ReWriter {
                 updatePermutation(currCount, n - 1, maxCount);
             }
         }else {
-            logger.log(Level.WARNING, "Permutation count failure");
+            logger.log(Level.WARNING, "Permutation count failure for" );
         }
     }
     private static void removeNumbers(Clause source){
