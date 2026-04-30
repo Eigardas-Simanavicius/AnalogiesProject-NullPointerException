@@ -186,6 +186,7 @@ public class AnalogyManager {
         return richness;
     }
 
+    // Extracts all subjects as strings from a string representation of an analogy
     public static HashSet<String> getUniqueSubjects(String analogy){
         return new HashSet<>(Arrays.stream(analogy.split("\\(\\s*\\S*|[ )]")).filter(x -> !x.isBlank()).toList());
     }

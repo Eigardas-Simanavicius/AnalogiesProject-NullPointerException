@@ -41,6 +41,7 @@ public class CoalescentMapping {
         return coalescedMapping;
     }
 
+    // Used to lazily instantiate coalesced mapping (From analogies in the source to analogies in the target)
     private void createCoalescedMapping(){
         coalescedMapping = new HashMap<>();
         for(int i = 1; i < analogies.size(); i += 2){
@@ -50,23 +51,25 @@ public class CoalescentMapping {
 
     public HashMap<String,String> getSubjectMapping(){
         if(subjectMapping == null){
-            createInferredMapping();
+            createSubjectMapping();
         }
         return subjectMapping;
     }
 
-    private void createInferredMapping(){
+    // Used lazily instantiates inferred mapping (from subjects in the source to subjects in the target) using the coalesced mappings
+    private void createSubjectMapping(){
         subjectMapping = new HashMap<>();
 
         if(coalescedMapping == null) createCoalescedMapping();
 
-        coalescedMapping.forEach(this::createInferredMappingHelper);
+        coalescedMapping.forEach(this::createSubjectMappingHelper);
         improvedRichness = richness + MappingManager.getMappingRichness(infferedAnalogies);
     }
 
-    private void createInferredMappingHelper(String sourceAnalogy, String targetAnalogy){
+    private void createSubjectMappingHelper(String sourceAnalogy, String targetAnalogy){
         HashMap<String,String> map = MappingManager.flatStringMapping(sourceAnalogy,targetAnalogy);
         if(map != null){
+            subjectMapping.putAll(map);
             infferedAnalogies.add(sourceAnalogy);
             infferedAnalogies.add(targetAnalogy);
             subjectMapping.putAll(map);

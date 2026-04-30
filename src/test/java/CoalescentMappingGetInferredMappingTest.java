@@ -5,10 +5,7 @@ import org.main.ConfigSetup;
 import org.main.MappingManager;
 import org.main.Objects.CoalescentMapping;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 

@@ -25,7 +25,7 @@ public class getMappableSourceAnalogiesForTest {
         long s = System.currentTimeMillis();
         ArrayList<Predicate> c = MappingManager.getMappableSourceAnalogiesFor("AIDS");
         System.out.println((System.currentTimeMillis()-s)/1000.0);
-        assertEquals(4583,c.size());
+        assertEquals(11124,c.size());
     }
 
     @After

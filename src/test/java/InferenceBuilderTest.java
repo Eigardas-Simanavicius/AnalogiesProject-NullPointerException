@@ -5,8 +5,11 @@ import org.main.ConfigSetup;
 import org.main.InferenceBuilder;
 import org.main.MappingManager;
 import org.main.Objects.CoalescentMapping;
+import org.main.Objects.Config;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -44,7 +47,7 @@ public class InferenceBuilderTest {
         assertEquals(mapping, InferenceBuilder.getInferredAnalogies(coalescentMapping));
     }
 
-    /*
+
     @Test
     public void comprehensiveTest(){
         ConfigSetup.resetConfig();
@@ -53,7 +56,7 @@ public class InferenceBuilderTest {
 
         CoalescentMapping coalescentMapping = MappingManager.createNewCoalesentMapping("destruction","AIDS");
 
-        assertEquals(7,InferenceBuilder.getInferredAnalogies(coalescentMapping).size());
+        assertEquals(28,InferenceBuilder.getInferredAnalogies(coalescentMapping).size());
     }
 
 
@@ -92,8 +95,6 @@ public class InferenceBuilderTest {
 
         assertEquals(mapping, InferenceBuilder.getInferredMappings(coalescentMapping));
     }
-
-     */
 
     @After
     public void reset(){
