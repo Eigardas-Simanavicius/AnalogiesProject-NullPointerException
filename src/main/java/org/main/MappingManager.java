@@ -202,6 +202,7 @@ public class MappingManager {
         return getMappingRichness(mapping,3);
     }
 
+
     private static double getMappingRichness(ArrayList<String> mapping, double beta){
         return mapping.stream().map(
                 (String x) ->
@@ -234,6 +235,14 @@ public class MappingManager {
         ArrayList<CoalescentMapping> mappings = coalesentMappings.get(source);
         mappings.sort(
                 Comparator.comparingDouble(CoalescentMapping::getRichness)
+        );
+        return mappings;
+    }
+
+    public static ArrayList<CoalescentMapping> rankBestCoalesentMappingsOnImprovedRichness(String source){
+        ArrayList<CoalescentMapping> mappings = coalesentMappings.get(source);
+        mappings.sort(
+                Comparator.comparingDouble(CoalescentMapping::getImprovedRichness)
         );
         return mappings;
     }

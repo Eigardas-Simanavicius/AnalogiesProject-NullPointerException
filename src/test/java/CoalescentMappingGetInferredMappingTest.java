@@ -25,7 +25,7 @@ public class CoalescentMappingGetInferredMappingTest {
 
         CoalescentMapping coalescentMapping = MappingManager.createNewCoalesentMapping("Adonis","barbarian");
 
-        assertEquals(mapping,coalescentMapping.getInferredMapping());
+        assertEquals(mapping,coalescentMapping.getSubjectMapping());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class CoalescentMappingGetInferredMappingTest {
 
         CoalescentMapping coalescentMapping = MappingManager.createNewCoalesentMapping("Adonis","barbarian");
 
-        assertEquals(mapping,coalescentMapping.getInferredMapping());
+        assertEquals(mapping,coalescentMapping.getSubjectMapping());
     }
 
     @After
