@@ -4,6 +4,7 @@ import org.main.Objects.CoalescentMapping;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class InferenceBuilder {
 
@@ -13,7 +14,7 @@ public class InferenceBuilder {
 
         sourceTopicAnalogies = new ArrayList<>(sourceTopicAnalogies.stream().filter(source -> !mapping.getCoalescedMapping().containsKey(source)).toList());
 
-        return new ArrayList<>(sourceTopicAnalogies.stream().filter(source -> canBeInferred(mapping.getInferredMapping(),source)).toList());
+        return new ArrayList<>(sourceTopicAnalogies.stream().filter(source -> canBeInferred(mapping.getSubjectMapping(),source)).toList());
     }
 
     private static boolean canBeInferred(HashMap<String,String> inferredMapping, String analogy){
@@ -24,7 +25,7 @@ public class InferenceBuilder {
         HashMap<String,String> inferredMappedAnalogies = new HashMap<>();
 
         for(String mappableSource: getInferredAnalogies(mapping)){
-            inferredMappedAnalogies.put(mappableSource,getInferredTarget(mapping.getInferredMapping(),mappableSource));
+            inferredMappedAnalogies.put(mappableSource,getInferredTarget(mapping.getSubjectMapping(),mappableSource));
         }
 
         return inferredMappedAnalogies;
@@ -39,5 +40,21 @@ public class InferenceBuilder {
         }
 
         return inferredString.toString();
+    }
+
+    public CoalescentMapping updateCompositeWithInferences(CoalescentMapping initialMapping){
+        HashMap<String, String> inferences = getInferredMappings(initialMapping);
+        ArrayList<String> analogies = initialMapping.getAnalogies();
+        HashMap<String, String> mappedAnalogies = initialMapping.getCoalescedMapping();
+
+        List<String> sources = inferences.keySet().stream().toList();
+        for(String source : sources){
+            mappedAnalogies.put(source, inferences.get(source));
+            analogies.add(source);
+            analogies.add(inferences.get(source));
+        }
+        initialMapping.setCoalescedMapping(mappedAnalogies);
+        initialMapping.setAnalogies(analogies);
+        return initialMapping;
     }
 }
