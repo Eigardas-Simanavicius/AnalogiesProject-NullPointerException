@@ -51,7 +51,7 @@ public class AnalogyDataHolderTest {
         testconfig.setRewrite(true);
         AnalogyDataHolder.addAnalogiesFromFile(testconfig);
         HashMap<String, ArrayList<String>> analogiesRecieved = AnalogyDataHolder.getAnalogies();
-        System.out.println(analogiesRecieved);
+        assertEquals(2, analogiesRecieved.get("AIDS").size());
     }
 
     @After
